@@ -39,7 +39,7 @@ class Authentication(BaseModel):
     user = ForeignKeyField(User)
     key = TextField()
 
-    expire = DateField()
+    expire = DateField(default=date.today)
 
 
 def reset():

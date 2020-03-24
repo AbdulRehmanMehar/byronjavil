@@ -2,7 +2,7 @@
 # app/server/dbo/__init__.py
 
 from app.models import User, UserRole, Authentication
-from app.models import hash_password, verify_password
+from app.models import hash_password, verify_password, generate_key
 
 class UserDBO:
 
@@ -37,7 +37,7 @@ class UserDBO:
     def verify_username(self, username):
 
         try:
-            user = User.select().where(User.username==username).get()
+            User.select().where(User.username==username).get()
         except:
             return False
         
@@ -48,6 +48,8 @@ class UserDBO:
         user = self.read(username)
 
         if verify_password(user.password, password):
+            
+            self._set_key(username)
 
             return True
 
@@ -55,4 +57,36 @@ class UserDBO:
 
     def logout(self, username):
 
+        self._delete_key(username)
+
         return True
+
+    def _delete_key(self, username):
+
+        user = self.read(username)
+
+        try:
+            auth = Authentication.select().where(Authentication.user_id==user.id).get()
+            auth.delete_instance()
+        except:
+            pass
+
+    def _set_key(self, username):
+
+        user = self.read(username)
+        key = generate_key()
+
+        self._delete_key(username)
+
+        Authentication.create(user_id=user.id, key=key)
+
+    def _get_key(self, username):
+
+        user = self.read(username)
+
+        try:
+            auth = Authentication.select().where(Authentication.user_id==user.id).get()
+        except:
+            return False
+
+        return auth.key
