@@ -40,3 +40,25 @@ class Authentication(BaseModel):
     key = TextField()
 
     expire = DateField()
+
+
+def reset():
+
+    db.connect()
+
+    models = [
+        UserRole,
+        User,
+        Authentication
+    ]
+
+    db.drop_tables(models)
+    db.create_tables(models)
+
+    ROLES = ["SUPERVISOR", "RESEARCH", "DATA", "MANAGER"]
+
+    for ROLE in ROLES:
+
+        role =  UserRole.create(role=ROLE)
+        role.save()
+    
