@@ -6,6 +6,8 @@ import os
 
 from app.server.instance import server
 
+app = server.get_app()
 
 if __name__ == "__main__":
-    server.run()
+    
+    app.run()

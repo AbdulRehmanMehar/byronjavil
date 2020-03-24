@@ -7,6 +7,8 @@ from flask_peewee.db import Database
 
 from peewee import SqliteDatabase
 
+from .dbo import *
+
 # configure our database
 DATABASE = {
     'name': 'id.db',
@@ -80,6 +82,8 @@ class Server(object):
         # from app.api import create_api
         
         self.api = create_api(self.app)
+
+        self.app.user_dbo = UserDBO()
 
         @self.app.before_request
         def before_request():

@@ -1,29 +1,58 @@
 # -*- coding: utf-8 -*-
 # app/server/dbo/__init__.py
 
+from app.models import User, UserRole, Authentication
+from app.models import hash_password, verify_password
 
 class UserDBO:
 
-    def create(self):
+    def create(self, role, **kwargs):
 
-        pass
+        role = UserRole.select().where(UserRole.role==role).get()
 
-    def read(self):
+        kwargs["password"] = hash_password(kwargs["password"])
 
-        pass
+        user = User.create(role_id=role.id, **kwargs)
+
+        return user
+
+    def read(self, username):
+
+        user = User.select().where(User.username==username).get()
+
+        return user
 
     def update(self):
 
         pass
 
-    def delete(self):
+    def delete(self, username):
 
-        pass
+        user = User.select().where(User.username==username).get()
 
-    def login(self):
+        user.delete_instance()
+        
+        return True
 
-        pass
+    def verify_username(self, username):
 
-    def logout(self):
+        try:
+            user = User.select().where(User.username==username).get()
+        except:
+            return False
+        
+        return True
 
-        pass
+    def login(self, username, password):
+
+        user = self.read(username)
+
+        if verify_password(user.password, password):
+
+            return True
+
+        return False
+
+    def logout(self, username):
+
+        return True

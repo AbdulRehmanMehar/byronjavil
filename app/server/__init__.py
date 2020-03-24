@@ -2,3 +2,5 @@
 # app/server/__init__.py
 
 from .instance import server
+
+from .dbo import *
