@@ -16,10 +16,10 @@ def generate_key():
 
 def hash_password(password):
 
-    hash = md5(password.encode())
+    _hash = md5(password.encode())
 
-    return hash.hexdigest()
+    return _hash.hexdigest()
 
-def verify_password(hash, password):
+def verify_password(_hash, password):
 
-    return hash == hash_password(password)
+    return _hash == hash_password(password)
