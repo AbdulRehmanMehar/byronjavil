@@ -86,7 +86,7 @@ def home():
 
     user = dbo.read_by_id(current_user.id)
 
-    return Response("Hello {}".format(user.username))
+    return Response("Hello {}!".format(user.username))
 
 
 @app.errorhandler(401)
