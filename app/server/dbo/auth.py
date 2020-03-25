@@ -22,6 +22,20 @@ class UserDBO:
 
         return user
 
+    def read_by_id(self, _id):
+
+        user = User.select().where(User.id==_id).get()
+
+        return user
+
+    def read_by_key(self, key):
+
+        auth = Authentication.select().where(Authentication.key==key).get()
+
+        user = User.select().where(User.id==auth.user_id).get()
+
+        return user
+
     def update(self):
 
         pass
@@ -60,6 +74,14 @@ class UserDBO:
         self._delete_key(username)
 
         return True
+    
+    def verify_key(self, key):
+
+        try:
+            auth = Authentication.select().where(Authentication.key==key).get()
+            return True
+        except:
+            return False
 
     def _delete_key(self, key):
 

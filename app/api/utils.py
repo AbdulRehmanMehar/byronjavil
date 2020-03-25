@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 # app/utils/auth.py
 
-from functools import wraps 
+from functools import wraps
 
 from flask import request
+
+from app.server import server
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+
+        app = server.get_app()
+        dbo = app.user_dbo
 
         token = None
 
@@ -15,10 +20,10 @@ def token_required(f):
             token = request.headers['X-API-KEY']
 
         if not token:
-            return {'message' : 'Token is missing.'}, 401
+            return {'message' : 'Key is missing.'}, 401
 
-        if token != 'mytoken':
-            return {'message' : 'Your token is wrong, wrong, wrong!!!'}, 401
+        if not dbo.verify_key(token):
+            return {'message' : 'Invalid credentials!!!'}, 401
 
         print('TOKEN: {}'.format(token))
         return f(*args, **kwargs)

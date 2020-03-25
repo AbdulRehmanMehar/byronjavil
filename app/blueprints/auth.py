@@ -30,37 +30,35 @@ def login():
 
     dbo = current_app.user_dbo
 
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        if dbo.verify_username(username):
-            if dbo.login(username, password):
-                
-                user = dbo.read(username)
-                user = User(user.id)
-                login_user(user)
-                
-                _next = request.args.get("next")
-                
-                if _next:
-
-                    return redirect(_next)
-
-                else:
-                    return redirect(url_for("auth.home"))
-            else:
-                return Response('''
-                <b>
-                    Invalid credentials...
-                </b>
-                ''')
-
-        else:
-            return abort(401)
-    
-    else:
+    if not request.method == 'POST':
         return render_template('login.html')
+
+    username = request.form['username']
+    password = request.form['password']
+
+    if not dbo.verify_username(username):
+        return abort(401)
+    
+    if not dbo.login(username, password):
+
+        return Response('''
+        <b>
+            Invalid credentials...
+        </b>
+        ''')
+
+        
+    user = dbo.read(username)
+    user = User(user.id)
+    login_user(user)
+    
+    _next = request.args.get("next")
+    
+    if not _next:
+        return redirect(url_for("auth.home"))
+    
+    return redirect(_next)
+
 
 @auth.route('/logout')
 @login_required
@@ -83,7 +81,13 @@ def logout():
 @auth.route('/home')
 @login_required
 def home():
-    return Response("Hello World!")
+
+    dbo = current_app.user_dbo
+
+    user = dbo.read_by_id(current_user.id)
+
+    return Response("Hello {}".format(user.username))
+
 
 @app.errorhandler(401)
 def page_not_found(e):

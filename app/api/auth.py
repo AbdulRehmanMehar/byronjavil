@@ -2,7 +2,7 @@
 # app/api/auth.py
 
 from flask import request
-from flask_restplus import Resource
+from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
 from app.server import server
@@ -13,10 +13,16 @@ api = server.get_api()
 app = server.get_app()
 ns = server.get_namespace("auth")
 
+login_model = api.model("login_model", {
+    'username': fields.String(required=True, description='Username'),
+    'password': fields.String(required=True, description='Password')
+})
+
 
 @ns.route('/login')
 class AuthLoginResource(Resource):
 
+    @ns.expect(login_model)
     def post(self):
 
         dbo = app.user_dbo
@@ -41,7 +47,7 @@ class AuthLoginResource(Resource):
         return response
 
 
-@ns.route('logout')
+@ns.route('/logout')
 class AuthLogoutResource(Resource):
     
     @api.doc(security='apikey')
@@ -55,6 +61,23 @@ class AuthLogoutResource(Resource):
         dbo._delete_key(key)
 
         return {"message": "Logout succesfully"}
+
+
+
+@ns.route('/home')
+class AuthHomeResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
+    def get(self):
+
+        dbo = app.user_dbo
+
+        key = request.headers['X-API-KEY']
+
+        user = dbo.read_by_key(key)
+
+        return {"message": "Hello {}!".format(user.username)}
 
 
 
