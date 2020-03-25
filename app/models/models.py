@@ -31,6 +31,7 @@ class User(BaseModel):
 
     username = TextField()
     password = TextField()
+    email = TextField()
     role = ForeignKeyField(UserRole)
 
 
@@ -41,6 +42,17 @@ class Authentication(BaseModel):
 
     expire = DateField(default=date.today)
 
+class Customer(BaseModel):
+
+    company = TextField()
+    client_code = TextField()
+    website = TextField()
+    
+    user = ForeignKeyField(User)
+
+class Comment(BaseModel):
+
+    text = TextField()
 
 class Attachment(BaseModel):
 
