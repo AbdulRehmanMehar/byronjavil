@@ -42,6 +42,14 @@ class Authentication(BaseModel):
     expire = DateField(default=date.today)
 
 
+class Attachment(BaseModel):
+
+    filename = TextField()
+    filetype = TextField()
+
+    base64 = TextField()
+
+
 def reset():
 
     db.connect()
