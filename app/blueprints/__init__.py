@@ -18,3 +18,4 @@ from .attachment import *
 
 app = server.get_app()
 app.register_blueprint(auth)
+app.register_blueprint(attachment)

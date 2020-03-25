@@ -2,3 +2,4 @@
 # app/api/__init__.py
 
 from .auth import *
+from .attachment import *

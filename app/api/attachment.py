@@ -19,7 +19,7 @@ upload_model = api.model("upload_model", {
     'base64': fields.String(required=True, description='File base64')
 })
 
-@ns.route('/attachment')
+@ns.route('/upload')
 class UploadResource(Resource):
 
     @ns.expect(upload_model)

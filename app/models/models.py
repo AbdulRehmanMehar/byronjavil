@@ -58,7 +58,8 @@ def reset():
     models = [
         UserRole,
         User,
-        Authentication
+        Authentication,
+        Attachment
     ]
 
     db.drop_tables(models)

@@ -15,7 +15,7 @@ mime_types = {
     ".docx": "application/msword"
 }
 
-@attachment.route('/attachment/<str:uuid>')
+@attachment.route('/attachment/<uuid>')
 def file(uuid):
     
     dbo = current_app.attachment_dbo
@@ -27,6 +27,8 @@ def file(uuid):
 
     filename += "." + attachment.filetype
     image_binary = attachment.base64
+
+    print(image_binary)
 
     return send_file(
         io.BytesIO(image_binary),
