@@ -93,10 +93,11 @@ class Server(object):
         # API
 
         self.api = create_api(self.app)
-        
+
         # Database Objects
 
         self.app.user_dbo = UserDBO()
+        self.app.attachment_dbo = AttachmentDBO()
 
         # Flask-Login
 

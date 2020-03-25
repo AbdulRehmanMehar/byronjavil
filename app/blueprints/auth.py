@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 # app/blueprints/auth.py
 
-# -*- coding: utf-8 -*-
-# app/blueprints/auth.py
-
 from flask import Response, render_template, redirect, url_for, request, session, abort, current_app
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 

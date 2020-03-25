@@ -4,6 +4,7 @@
 from app.models import User, UserRole, Authentication
 from app.models import hash_password, verify_password, generate_key
 
+
 class UserDBO:
 
     def create(self, role, **kwargs):
@@ -95,7 +96,7 @@ class UserDBO:
 
         user = self.read(username)
         key = generate_key()
-
+        
         self._delete_key(username)
 
         Authentication.create(user_id=user.id, key=key)

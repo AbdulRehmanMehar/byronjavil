@@ -11,7 +11,7 @@ import json
 from datetime import datetime, date
 
 from flask_restplus import fields
-from peewee import Model, SqliteDatabase, TextField, FloatField, DateField, ForeignKeyField
+from peewee import Model, SqliteDatabase, TextField, BlobField, FloatField, DateField, ForeignKeyField
 
 db = SqliteDatabase("id.db")
 
@@ -44,10 +44,11 @@ class Authentication(BaseModel):
 
 class Attachment(BaseModel):
 
+    uuid = TextField()
     filename = TextField()
     filetype = TextField()
 
-    base64 = TextField()
+    base64 = BlobField()
 
 
 def reset():

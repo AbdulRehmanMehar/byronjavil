@@ -11,8 +11,10 @@ supervisor = Blueprint('supervisor', __name__)
 research = Blueprint('research', __name__)
 data = Blueprint('data', __name__)
 manager = Blueprint('manager', __name__)
+attachment = Blueprint('attachment', __name__)
 
 from .auth import *
+from .attachment import *
 
 app = server.get_app()
 app.register_blueprint(auth)

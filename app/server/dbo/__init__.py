@@ -2,3 +2,4 @@
 # app/server/dbo/__init__.py
 
 from .auth import UserDBO
+from .attachment import AttachmentDBO
