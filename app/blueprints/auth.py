@@ -32,6 +32,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
+        print(username, password)
+
         if dbo.verify_username(username):
             if dbo.login(username, password):
                 
@@ -39,19 +41,26 @@ def login():
                 user = User(user.id)
                 login_user(user)
                 
-                return redirect(request.args.get("next"))
+                _next = request.args.get("next")
+                
+                if _next:
+
+                    return redirect(_next)
+
+                else:
+                    return redirect(url_for("auth.home"))
+            else:
+                return Response('''
+                <b>
+                    Invalid credentials...
+                </b>
+                ''')
 
         else:
             return abort(401)
     
     else:
-        return Response('''
-        <form action="" method="post">
-            <p><input type=text name=username>
-            <p><input type=password name=password>
-            <p><input type=submit value=Login>
-        </form>
-        ''')
+        return render_template('login.html')
 
 @auth.route('/logout')
 @login_required
