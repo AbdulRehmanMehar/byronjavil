@@ -25,27 +25,31 @@ def token_required(f):
 
         if not dbo.verify_key(token):
             return {'message' : 'Invalid credentials!!!'}, 401
-            
-        return f(*args, **kwargs)
-
-    return decorated
-
-def role_required(f, role):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-
-        app = server.get_app()
-        dbo = app.user_dbo
-
-        token = request.headers['X-API-KEY']
-
-        user = dbo.read_by_key(token)
-
-        user_role = UserRole.select().where(UserRole.id==user.role_id).get()
-
-        if not user_role.role == role:
-            return {'message' : 'You are not authorized.'}, 401
 
         return f(*args, **kwargs)
 
     return decorated
+
+def role_required(role):
+    
+    def inner_function(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+
+            app = server.get_app()
+            dbo = app.user_dbo
+
+            token = request.headers['X-API-KEY']
+
+            user = dbo.read_by_key(token)
+
+            user_role = UserRole.select().where(UserRole.id==user.role_id).get()
+
+            if not user_role.role == role:
+                return {'message' : 'You are not authorized.'}, 401
+
+            return f(*args, **kwargs)
+        
+        return decorated
+
+    return inner_function

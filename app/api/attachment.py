@@ -7,7 +7,7 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 
-from .utils import token_required
+from .utils import token_required, role_required
 
 api = server.get_api()
 app = server.get_app()
@@ -22,7 +22,10 @@ upload_model = api.model("upload_model", {
 @ns.route('/upload')
 class UploadResource(Resource):
 
+    @api.doc(security='apikey')
     @ns.expect(upload_model)
+    @token_required
+    @role_required("RESEARCH")
     def post(self):
 
         dbo = app.attachment_dbo
