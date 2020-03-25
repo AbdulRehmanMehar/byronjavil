@@ -53,6 +53,18 @@ class Customer(BaseModel):
 class Comment(BaseModel):
 
     text = TextField()
+    user = ForeignKeyField(User)
+
+
+class ResearchState(BaseModel):
+
+    state = TextField()
+
+
+class Research(BaseModel):
+
+    state = ForeignKeyField(ResearchState)
+    
 
 class Attachment(BaseModel):
 
