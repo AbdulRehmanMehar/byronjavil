@@ -2,6 +2,7 @@
 # app/server/instance.py
 
 from flask import Flask, Blueprint
+from flask_login import LoginManager
 from flask_restplus import Api, Namespace
 from flask_peewee.db import Database
 
@@ -78,12 +79,14 @@ class Server(object):
         self.app.config.from_object(__name__)
 
         self.database = SqliteDatabase(DATABASE["name"])
-
-        # from app.api import create_api
         
         self.api = create_api(self.app)
 
         self.app.user_dbo = UserDBO()
+
+        self.app.login_manager = LoginManager()
+        self.app.login_manager.init_app(self.app)
+        self.app.login_manager.login_view = "auth.login"
 
         @self.app.before_request
         def before_request():
