@@ -5,7 +5,7 @@
 # app/blueprints/auth.py
 
 from flask import Response, render_template, redirect, url_for, request, session, abort, current_app
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user 
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 from . import auth
 
@@ -17,7 +17,9 @@ app = server.get_app()
 class User(UserMixin):
 
     def __init__(self, id):
-        self.id = id      
+        
+        self.id = id
+
 
 @auth.route('/login', methods=["GET", "POST"])
 def login():
@@ -69,6 +71,13 @@ def logout():
     """
     Render the logout page
     """
+    from app.models import User
+
+    user = User.select().where(User.id==current_user.id).get()
+
+    dbo = current_app.user_dbo
+    dbo.logout(user.username)
+
     logout_user()
     return Response('<p>Logged out</p>')
 
@@ -85,4 +94,5 @@ def page_not_found(e):
 
 @app.login_manager.user_loader
 def load_user(userid):
+    
     return User(userid)
