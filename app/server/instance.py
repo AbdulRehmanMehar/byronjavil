@@ -18,6 +18,13 @@ DATABASE = {
 DEBUG = True
 SECRET_KEY = 'ssshhhh'
 
+authorizations = {
+    'apikey' : {
+        'type' : 'apiKey',
+        'in' : 'header',
+        'name' : 'X-API-KEY'
+    }
+}
 
 # database = SqliteDatabase(DATABASE["name"])
 
@@ -45,7 +52,8 @@ def create_api(app):
     api = API(blueprint, version='1.0', 
             title='Property Management System API',
             description='A Flask API for Property Management System', 
-            doc='/docs'
+            doc='/docs',
+            authorizations=authorizations
         )
 
     app.register_blueprint(blueprint)
@@ -78,11 +86,19 @@ class Server(object):
         self.app = Flask(__name__)
         self.app.config.from_object(__name__)
 
+        # Database
+        
         self.database = SqliteDatabase(DATABASE["name"])
         
+        # API
+
         self.api = create_api(self.app)
+        
+        # Database Objects
 
         self.app.user_dbo = UserDBO()
+
+        # Flask-Login
 
         self.app.login_manager = LoginManager()
         self.app.login_manager.init_app(self.app)

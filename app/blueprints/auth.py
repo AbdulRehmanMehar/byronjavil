@@ -34,8 +34,6 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        print(username, password)
-
         if dbo.verify_username(username):
             if dbo.login(username, password):
                 

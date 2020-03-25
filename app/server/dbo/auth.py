@@ -61,12 +61,10 @@ class UserDBO:
 
         return True
 
-    def _delete_key(self, username):
-
-        user = self.read(username)
+    def _delete_key(self, key):
 
         try:
-            auth = Authentication.select().where(Authentication.user_id==user.id).get()
+            auth = Authentication.select().where(Authentication.key==key).get()
             auth.delete_instance()
         except:
             pass
