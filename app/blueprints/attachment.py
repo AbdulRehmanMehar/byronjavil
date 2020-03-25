@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 # app/blueprints/attachment.py
 import io
+import base64
 
 from flask import Response, send_file, render_template, redirect, url_for, request, session, abort, current_app
 from flask_login import login_required, current_user
 
 from . import attachment
+from .utils import mime_types
 
-mime_types = {
-    "jpg": "image/jpeg",
-    "png": "image/png",
-    "pdf": "application/pdf",
-    ".doc": "application/msword",
-    ".docx": "application/msword"
-}
 
 @attachment.route('/attachment/<uuid>')
 def file(uuid):
@@ -26,9 +21,7 @@ def file(uuid):
     filetype = attachment.filetype
 
     filename += "." + attachment.filetype
-    image_binary = attachment.base64
-
-    print(image_binary)
+    image_binary = base64.b64decode(attachment.base64)
 
     return send_file(
         io.BytesIO(image_binary),
