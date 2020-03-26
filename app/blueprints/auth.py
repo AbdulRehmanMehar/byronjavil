@@ -5,6 +5,7 @@ from flask import Response, render_template, redirect, url_for, request, session
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 from . import auth
+from .utils import render_message
 
 from app.server import server
 
@@ -38,11 +39,10 @@ def login():
     
     if not dbo.login(username, password):
 
-        return Response('''
-        <b>
-            Invalid credentials...
-        </b>
-        ''')
+        message = "Login failed"
+        description = "Invalid credentials"
+
+        return render_message(message, description)
 
         
     user = dbo.read(username)
@@ -72,7 +72,11 @@ def logout():
     dbo.logout(user.username)
 
     logout_user()
-    return Response('<p>Logged out</p>')
+
+    message = "Logged out successfuly"
+    description = "You have been logout from Mangament System"
+
+    return render_message(message, description)
 
 
 @auth.route('/home')
@@ -82,13 +86,20 @@ def home():
     dbo = current_app.user_dbo
 
     user = dbo.read_by_id(current_user.id)
+    
+    message = "Hello {}!".format(user.username)
+    description = "You have successfuly logged in!"
 
-    return Response("Hello {}!".format(user.username))
+    return render_message(message, description)
 
 
 @app.errorhandler(401)
 def page_not_found(e):
-    return Response('<p>Login failed</p>')
+
+    message = "Login failed"
+    description = "Invalid credentials"
+
+    return render_message(message, description)
 
 
 @app.login_manager.user_loader

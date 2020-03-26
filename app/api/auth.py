@@ -78,9 +78,3 @@ class AuthHomeResource(Resource):
         user = dbo.read_by_key(key)
 
         return {"message": "Hello {}!".format(user.username)}
-
-
-
-
-        
-
