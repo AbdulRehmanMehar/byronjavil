@@ -28,7 +28,7 @@ def render_message(message, description):
     
     return render_template("message.html", message=message, description=description)
 
-def role_required(role):
+def role_required(roles):
     
     def inner_function(f):
         @wraps(f)
@@ -43,8 +43,11 @@ def role_required(role):
 
             user_role = UserRole.select().where(UserRole.id==user.role_id).get()
 
-            if not user_role.role == role:
-                return {'message' : 'You are not authorized.'}, 401
+            if not user_role.role in roles:
+                message = "Unauthorized"
+                description = "You do not have authorization to enter this page"
+                
+                return render_message(message, description)
 
             return f(*args, **kwargs)
         
