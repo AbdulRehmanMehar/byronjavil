@@ -4,6 +4,7 @@
 from functools import wraps
 
 from flask import request, render_template
+from flask_login import current_user
 
 from app.server import server
 from app.models import UserRole
@@ -37,9 +38,7 @@ def role_required(roles):
             app = server.get_app()
             dbo = app.user_dbo
 
-            token = request.headers['X-API-KEY']
-
-            user = dbo.read_by_key(token)
+            user = dbo.read_by_id(current_user.id)
 
             user_role = UserRole.select().where(UserRole.id==user.role_id).get()
 

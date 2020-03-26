@@ -124,10 +124,10 @@ def load_user(userid):
 @auth.route('/supervisor-manager')
 @login_required
 @role_required(["SUPERVISOR/MANAGER"])
-def supervisor_page():
+def supervisor_manager():
 
     dbo = current_app.user_dbo
 
     user = dbo.read_by_id(current_user.id)
     
-    render_template("supervisor_manager.html")
+    return render_template("supervisor_manager.html")

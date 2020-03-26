@@ -16,4 +16,4 @@ def research_page():
 
     user = dbo.read_by_id(current_user.id)
     
-    render_template("research.html")
+    return render_template("research.html")

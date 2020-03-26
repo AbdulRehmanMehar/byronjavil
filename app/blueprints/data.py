@@ -16,4 +16,4 @@ def data_page():
 
     user = dbo.read_by_id(current_user.id)
     
-    render_template("data.html")
+    return render_template("data.html")

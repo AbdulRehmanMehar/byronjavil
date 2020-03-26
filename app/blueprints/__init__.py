@@ -15,7 +15,15 @@ attachment = Blueprint('attachment', __name__)
 
 from .auth import *
 from .attachment import *
+from .supervisor import *
+from .research import *
+from .data import *
+from .manager import *
 
 app = server.get_app()
 app.register_blueprint(auth)
+app.register_blueprint(supervisor)
+app.register_blueprint(research)
+app.register_blueprint(data)
+app.register_blueprint(manager)
 app.register_blueprint(attachment)

@@ -9,11 +9,11 @@ from .utils import role_required
 
 @manager.route('/manager')
 @login_required
-@role_required(["manager"])
+@role_required(["SUPERVISOR/MANAGER", "MANAGER"])
 def manager_page():
 
     dbo = current_app.user_dbo
 
     user = dbo.read_by_id(current_user.id)
     
-    render_template("manager.html")
+    return render_template("manager.html")
