@@ -5,7 +5,7 @@ from flask import Response, render_template, redirect, url_for, request, session
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 from . import auth
-from .utils import render_message
+from .utils import render_message, role_required
 
 from app.server import server
 
@@ -52,6 +52,19 @@ def login():
     _next = request.args.get("next")
     
     if not _next:
+        role = dbo.get_role(username)
+
+        if role == "SUPERVISOR/MANAGER":
+            return redirect(url_for('auth.supervisor_manager'))
+        elif role == "SUPERVISOR":
+            return redirect(url_for('supervisor.supervisor_page'))
+        elif role == "MANAGER":
+            return redirect(url_for('manager.manager_page'))
+        elif role == "RESEARCH":
+            return redirect(url_for('research.research_page'))
+        elif role == "DATA":
+            return redirect(url_for('data.data_page'))
+        
         return redirect(url_for("auth.home"))
     
     return redirect(_next)
@@ -106,3 +119,15 @@ def page_not_found(e):
 def load_user(userid):
     
     return User(userid)
+
+
+@auth.route('/supervisor-manager')
+@login_required
+@role_required(["SUPERVISOR/MANAGER"])
+def supervisor_page():
+
+    dbo = current_app.user_dbo
+
+    user = dbo.read_by_id(current_user.id)
+    
+    render_template("supervisor_manager.html")

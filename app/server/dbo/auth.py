@@ -37,6 +37,14 @@ class UserDBO:
 
         return user
 
+    def get_role(self, username):
+
+        user = self.read(username)
+
+        role = UserRole.select().where(UserRole.id==user.role_id).get()
+
+        return role.role
+
     def update(self):
 
         pass
