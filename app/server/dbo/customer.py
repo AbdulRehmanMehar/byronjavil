@@ -4,7 +4,7 @@
 from app.models import Customer
 
 
-class CUstomerDBO:
+class CustomerDBO:
 
     def create(self, **kwargs):
         

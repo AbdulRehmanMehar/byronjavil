@@ -61,7 +61,7 @@ class Comment(BaseModel):
 
 class OrderType(BaseModel):
 
-    type = TextField()
+    order_type = TextField()
 
 
 class OrderState(BaseModel):
