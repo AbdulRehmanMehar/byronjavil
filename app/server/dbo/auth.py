@@ -23,6 +23,18 @@ class UserDBO:
 
         return user
 
+    def read_all(self):
+
+        result = list()
+
+        users = User.select()
+
+        for user in users:
+
+            result.append(user)
+
+        return result
+
     def read_by_id(self, _id):
 
         user = User.select().where(User.id==_id).get()
