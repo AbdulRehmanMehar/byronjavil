@@ -11,6 +11,14 @@ api = server.get_api()
 app = server.get_app()
 ns = server.get_namespace("supervisor")
 
+customer_model = api.model("customer_model", {
+    'company': fields.String(required=True, description='Customer company name'),
+    'client_code': fields.String(required=True, description='Customer client code'),
+    'website': fields.String(required=True, description='Customer website'),
+    'user': fields.String(required=True, description='Customer user'),
+    'password': fields.String(required=True, description='Customer password')
+})
+
 
 @ns.route('/customers')
 class SupervisorCustomerCollection(Resource):
@@ -28,6 +36,7 @@ class SupervisorCustomerCollection(Resource):
 
         return result
 
+    @ns.expect(customer_model)
     def post(self):
 
         payload = api.payload

@@ -49,7 +49,7 @@ class Customer(BaseModel):
     client_code = TextField()
     website = TextField()
     
-    user_id = TextField()
+    user = TextField()
     password = TextField()
 
 
