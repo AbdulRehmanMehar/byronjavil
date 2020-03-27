@@ -18,6 +18,18 @@ class CustomerDBO:
 
         return customer
 
+    def read_all(self):
+
+        result = list()
+
+        customers = Customer.select()
+
+        for customer in customers:
+
+            result.append(customer)
+
+        return result
+
     def update(self, _id, **kwargs):
 
         customer = self.read(_id)
