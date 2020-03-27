@@ -143,7 +143,7 @@ def reset():
 
     ROLES = ["SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"]
 
-    STATES = ["RESEARCH", "DATA_ENTRY", "MANAGEMENT"]
+    STATES = ["RESEARCH", "DATA_ENTRY", "MANAGEMENT", "ARCHIVE"]
 
     for ROLE in ROLES:
 
@@ -164,5 +164,5 @@ def reset():
     }
     parameters["password"] = hash_password(parameters["password"])
 
-    user = User.create(role_id=role.id, **parameters)
+    User.create(role_id=role.id, **parameters)
     
