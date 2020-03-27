@@ -18,6 +18,17 @@ class OrderTypeDBO:
 
         return order_type
 
+    def read_all(self):
+
+        result = list()
+
+        order_types = OrderType.select()
+
+        for order_type in order_types:
+            result.append(order_type)
+        
+        return result
+
     def update(self, _id, _type):
 
         order_type = self.read(_id)
