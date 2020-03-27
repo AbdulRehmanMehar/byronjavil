@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# app/server/dbo/__init__.py
+# app/server/dbo/auth.py
 
 from app.models import User, UserRole, Authentication
 from app.models import hash_password, verify_password, generate_key

@@ -42,13 +42,15 @@ class Authentication(BaseModel):
 
     expire = DateField(default=date.today)
 
+
 class Customer(BaseModel):
 
     company = TextField()
     client_code = TextField()
     website = TextField()
     
-    user = ForeignKeyField(User)
+    user_id = TextField()
+    password = TextField()
 
 
 class Comment(BaseModel):
@@ -57,17 +59,17 @@ class Comment(BaseModel):
     user = ForeignKeyField(User)
 
 
-class Order(BaseModel):
+class OrderType(BaseModel):
 
     type = TextField()
 
 
-class ResearchState(BaseModel):
+class OrderState(BaseModel):
 
     state = TextField()
 
 
-class Research(BaseModel):
+class Order(BaseModel):
 
     address = TextField()
     
@@ -77,8 +79,8 @@ class Research(BaseModel):
     company = ForeignKeyField(Customer)
     user = ForeignKeyField(User)
     
-    order = ForeignKeyField(Order)
-    state = ForeignKeyField(ResearchState)
+    kind = ForeignKeyField(OrderType)
+    state = ForeignKeyField(OrderState)
     
 
 class Attachment(BaseModel):
@@ -90,21 +92,21 @@ class Attachment(BaseModel):
     base64 = BlobField()
 
 
-class ResearchComment(BaseModel):
+class OrderComment(BaseModel):
 
-    research = ForeignKeyField(column_name='research_id', field='id', model=Research)
+    order = ForeignKeyField(column_name='research_id', field='id', model=Order)
     comment = ForeignKeyField(column_name='comment_id', field='id', model=Comment)
 
 
-class ResearchAttachment(BaseModel):
+class OrderAttachment(BaseModel):
 
-    research = ForeignKeyField(column_name='research_id', field='id', model=Research)
+    order = ForeignKeyField(column_name='research_id', field='id', model=Order)
     attachment = ForeignKeyField(column_name='attachment_id', field='id', model=Attachment)
 
 
-class ResearchPicture(BaseModel):
+class OrderPicture(BaseModel):
 
-    research = ForeignKeyField(column_name='research_id', field='id', model=Research)
+    order = ForeignKeyField(column_name='research_id', field='id', model=Order)
     attachment = ForeignKeyField(column_name='attachment_id', field='id', model=Attachment)
 
 
@@ -124,13 +126,13 @@ def reset():
         Authentication,
         Customer,
         Comment,
+        OrderType,
+        OrderState,
         Order,
-        ResearchState,
-        Research,
         Attachment,
-        ResearchComment,
-        ResearchAttachment,
-        ResearchPicture,
+        OrderComment,
+        OrderAttachment,
+        OrderPicture,
         EmailTemplate
     ]
 
