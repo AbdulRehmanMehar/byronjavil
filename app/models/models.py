@@ -118,6 +118,8 @@ class EmailTemplate(BaseModel):
 
 def reset():
 
+    from .utils import hash_password
+
     db.connect()
 
     models = [
@@ -141,8 +143,26 @@ def reset():
 
     ROLES = ["SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"]
 
+    STATES = ["RESEARCH", "DATA_ENTRY", "MANAGEMENT"]
+
     for ROLE in ROLES:
 
         role =  UserRole.create(role=ROLE)
         role.save()
+
+    for STATE in STATES:
+
+        state = OrderState.create(state=STATE)
+        state.save()
+
+    role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
+
+    parameters = {
+        "username": "admin",
+        "password": "prosperity2020",
+        "email": "admin@admin.com"
+    }
+    parameters["password"] = hash_password(parameters["password"])
+
+    user = User.create(role_id=role.id, **parameters)
     
