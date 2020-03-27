@@ -30,7 +30,7 @@ def token_required(f):
 
     return decorated
 
-def role_required(role):
+def role_required(roles):
     
     def inner_function(f):
         @wraps(f)
@@ -45,7 +45,7 @@ def role_required(role):
 
             user_role = UserRole.select().where(UserRole.id==user.role_id).get()
 
-            if not user_role.role == role:
+            if not user_role.role in roles:
                 return {'message' : 'You are not authorized.'}, 401
 
             return f(*args, **kwargs)

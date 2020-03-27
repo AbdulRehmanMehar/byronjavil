@@ -7,6 +7,8 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 
+from .utils import token_required, role_required
+
 api = server.get_api()
 app = server.get_app()
 ns = server.get_namespace("supervisor")
@@ -23,6 +25,9 @@ customer_model = api.model("customer_model", {
 @ns.route('/customers')
 class SupervisorCustomerCollection(Resource):
 
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def get(self):
 
         result = list()
@@ -37,6 +42,9 @@ class SupervisorCustomerCollection(Resource):
         return result
 
     @ns.expect(customer_model)
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def post(self):
 
         payload = api.payload
@@ -50,7 +58,10 @@ class SupervisorCustomerCollection(Resource):
 
 @ns.route('/customers/<int:_id>')
 class SupervisorCustomer(Resource):
-
+    
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def get(self, _id):
 
         dbo = app.customer_dbo
@@ -59,6 +70,9 @@ class SupervisorCustomer(Resource):
 
         return model_to_dict(customer)
 
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def put(self, _id):
 
         payload = api.payload
@@ -69,6 +83,9 @@ class SupervisorCustomer(Resource):
 
         return True
 
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def delete(self, _id):
 
         dbo = app.customer_dbo
