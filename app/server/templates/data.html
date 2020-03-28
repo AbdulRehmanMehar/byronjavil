@@ -30,6 +30,9 @@
 
 </head>
 <body>
+    <input type="hidden" id="api-key" name="api-key" value="{{ credentials['api-key'] }}" v-model="apiKey">
+    <input type="hidden" id="username" name="username" value="{{ credentials['username'] }}" v-model="username">
+    
     <header>
         <div class="bg-dark collapse" id="navbarHeader" style="">
             <div class="container">

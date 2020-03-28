@@ -5,15 +5,13 @@ from flask import render_template, current_app
 from flask_login import login_required, current_user
 
 from . import data
-from .utils import role_required
+from .utils import role_required, get_credentials
 
 @data.route('/data')
 @login_required
 @role_required(["DATA"])
 def data_page():
 
-    dbo = current_app.user_dbo
-
-    user = dbo.read_by_id(current_user.id)
+    credentials = get_credentials()
     
-    return render_template("data.html")
+    return render_template("data.html", credentials=credentials)

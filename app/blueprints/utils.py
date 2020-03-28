@@ -3,7 +3,7 @@
 
 from functools import wraps
 
-from flask import request, render_template
+from flask import request, render_template, current_app
 from flask_login import current_user
 
 from app.server import server
@@ -53,3 +53,18 @@ def role_required(roles):
         return decorated
 
     return inner_function
+
+def get_credentials():
+
+    dbo = current_app.user_dbo
+
+    user = dbo.read_by_id(current_user.id)
+
+    key = dbo._get_key(user.username)
+
+    credentials = {
+        "username": user.username,
+        "api-key": key
+    }
+
+    return credentials

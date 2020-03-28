@@ -5,22 +5,13 @@ from flask import render_template, current_app
 from flask_login import login_required, current_user
 
 from . import research
-from .utils import role_required
+from .utils import role_required, get_credentials
 
 @research.route('/research')
 @login_required
 @role_required(["RESEARCH"])
 def research_page():
 
-    dbo = current_app.user_dbo
-
-    user = dbo.read_by_id(current_user.id)
-
-    key = dbo._get_key(user.username)
-
-    credentials = {
-        "username": user.username,
-        "api-key": key
-    }
+    credentials = get_credentials()
     
     return render_template("research.html", credentials=credentials)
