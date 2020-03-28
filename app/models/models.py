@@ -58,6 +58,8 @@ class Comment(BaseModel):
     text = TextField()
     user = ForeignKeyField(User)
 
+    created_date = DateTimeField(default=datetime.now)
+
 
 class OrderType(BaseModel):
 
