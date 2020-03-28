@@ -7,5 +7,7 @@ from .models import UserRole, User, Authentication
 from .models import Customer
 from .models import OrderType
 from .models import Attachment
+from .models import Order, OrderState, OrderAttachment, OrderComment, OrderPicture
+from .models import Comment
 
 from .utils import generate_key, hash_password, verify_password
