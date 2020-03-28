@@ -100,6 +100,7 @@ class Server(object):
         self.app.attachment_dbo = AttachmentDBO()
         self.app.customer_dbo = CustomerDBO()
         self.app.order_type_dbo = OrderTypeDBO()
+        self.app.comment_dbo = CommentDBO()
 
         # Flask-Login
 
