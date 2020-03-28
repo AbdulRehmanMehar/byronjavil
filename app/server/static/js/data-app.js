@@ -1,4 +1,4 @@
-// research-app.js
+// data-app.js
 
 var vm = new Vue({
 
