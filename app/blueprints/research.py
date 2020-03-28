@@ -15,5 +15,12 @@ def research_page():
     dbo = current_app.user_dbo
 
     user = dbo.read_by_id(current_user.id)
+
+    key = dbo._get_key(user.username)
+
+    credentials = {
+        "username": user.username,
+        "api-key": key
+    }
     
-    return render_template("research.html")
+    return render_template("research.html", credentials=credentials)
