@@ -92,7 +92,10 @@ var vm = new Vue({
 
     ready: function(){
         order_type_vm.setKey(this.apiKey);
+        users_vm.setKey(this.apiKey);
+        
         order_type_vm.fetchOrderTypes();
+        users_vm.fetchUsers();
     },
 
     methods: {
