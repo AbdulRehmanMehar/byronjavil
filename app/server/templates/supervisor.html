@@ -75,9 +75,10 @@
             </a>
             {% endraw %}
             <a class="nav-link active" href="#" v-on:click="show('order-type')">Order Types</a>
-            <a class="nav-link" href="#">Users</a>
-            <a class="nav-link" href="#" v-on:click="show('order-type')">Orders</a>
-            <a class="nav-link" href="#">Attachements</a>
+            <a class="nav-link" href="#" v-on:click="show('users')">Users</a>
+            <a class="nav-link" href="#" v-on:click="show('customers')">Customers</a>
+            <a class="nav-link" href="#" v-on:click="show('orders')">Orders</a>
+            <a class="nav-link" href="#" v-on:click="show('attachments')">Attachments</a>
         </nav>
     </div>
 
@@ -135,8 +136,6 @@
             </div>
         </div>
 
-        <br>
-
         <div id="users-app" class="row" v-show="visible">
             <div class="col-md-10">
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -189,9 +188,7 @@
             </div>
         </div>
 
-        <br>
-
-        <div  class="row">
+        <div  id="customers-app" class="row" v-show="visible">
             <div class="col-md-10">
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Customers</h6>
@@ -261,9 +258,7 @@
             </div>
         </div>
 
-        <br>
-
-        <div class="row">
+        <div id="orders-app" class="row" v-show="visible">
             <div class="col-md-10">
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Orders</h6>
@@ -333,9 +328,7 @@
             </div>
         </div>
 
-        <br>
-
-        <div class="row">
+        <div id="attachments-app" class="row" v-show="visible">
             <div class="col-md-10">
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <h6 class="border-bottom border-gray pb-2 mb-0">Attachments</h6>
