@@ -147,15 +147,25 @@ def reset():
 
     STATES = ["RESEARCH", "DATA_ENTRY", "MANAGEMENT", "ARCHIVE"]
 
+    ORDER_TYPES = [
+        "Exterior",
+        "Exterior Inspection",
+        "Exterior inspection across the view ",
+        "Interior",
+        "Interior inspection across the view"
+    ]
+
     for ROLE in ROLES:
 
-        role =  UserRole.create(role=ROLE)
-        role.save()
+        UserRole.create(role=ROLE)
 
     for STATE in STATES:
 
-        state = OrderState.create(state=STATE)
-        state.save()
+        OrderState.create(state=STATE)
+
+    for ORDER_TYPE in ORDER_TYPES:
+
+        OrderType.create(order_type=ORDER_TYPE)
 
     role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
 
