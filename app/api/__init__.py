@@ -5,3 +5,4 @@ from .auth import *
 from .attachment import *
 from .order_type import *
 from .customer import *
+from .supervisor import *

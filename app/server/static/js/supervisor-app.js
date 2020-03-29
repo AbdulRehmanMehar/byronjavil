@@ -28,11 +28,49 @@ var order_type_vm = new Vue({
 
         fetchOrderTypes: function(){
             var apiKey = this.apiKey;
-            console.log(apiKey);
 
             this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.orderTypes = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        }
+    }
+})
+
+var users_vm = new Vue({
+    el: '#users-app',
+
+    data: {
+        visible: true,
+        users: [],
+        apiKey: null,
+    },
+
+    ready: function(){
+    },
+
+    methods: {
+
+        hide: function(){
+            this.visible = false;
+        },
+
+        show: function(){
+            this.visible = false;
+        },
+
+        setKey: function(key){
+            this.apiKey = key;
+        },
+
+        fetchUsers: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.users = res.data;
                 }, function(err){
                     console.log(err);
                 })

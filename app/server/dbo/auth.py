@@ -35,6 +35,19 @@ class UserDBO:
 
         return result
 
+    def read_all_json(self):
+
+        result = list()
+
+        users = self.read_all()
+
+        for user in users:
+
+            user.role = self.get_role(user.name)
+            result.append(user)
+
+        return result
+
     def read_by_id(self, _id):
 
         user = User.select().where(User.id==_id).get()
@@ -81,6 +94,11 @@ class UserDBO:
     def login(self, username, password):
 
         user = self.read(username)
+
+        try:
+            self.logout(username)
+        except:
+            pass
 
         if verify_password(user.password, password):
             
