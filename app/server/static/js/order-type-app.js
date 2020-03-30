@@ -34,17 +34,6 @@ var order_type_vm = new Vue({
             $('#order-type-create').modal('hide');
         },
 
-        fetchOrderTypes: function(){
-            var apiKey = this.apiKey;
-
-            this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
-                .then(function (res){
-                    this.orderTypes = res.data;
-                }, function(err){
-                    console.log(err);
-                })
-        },
-
         createOrderType: function(){
 
             var form = document.getElementById('order-type-form');
@@ -67,6 +56,17 @@ var order_type_vm = new Vue({
             }
             form.classList.add('was-validated');
 
+        },
+
+        fetchOrderTypes: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.orderTypes = res.data;
+                }, function(err){
+                    console.log(err);
+                })
         },
 
         postForm: function(){
