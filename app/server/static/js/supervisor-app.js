@@ -1,59 +1,5 @@
 // supervisor-app.js
 
-var order_type_vm = new Vue({
-    el: '#order-type-app',
-
-    data: {
-        visible: true,
-        orderTypes: [],
-        orderType: "",
-        apiKey: null,
-    },
-
-    ready: function(){
-    },
-
-    methods: {
-
-        hide: function(){
-            this.visible = false;
-        },
-
-        show: function(){
-            this.visible = true;
-        },
-
-        setKey: function(key){
-            this.apiKey = key;
-        },
-
-        fetchOrderTypes: function(){
-            var apiKey = this.apiKey;
-
-            this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
-                .then(function (res){
-                    this.orderTypes = res.data;
-                }, function(err){
-                    console.log(err);
-                })
-        },
-
-        createOrderType: function(){
-            var form = document.getElementById('order-type-form');
-
-            if (form.checkValidity() === true) {
-                this.postForm();
-            }
-            form.classList.add('was-validated');
-
-        },
-
-        postForm: function(){
-            
-        }
-    }
-})
-
 var users_vm = new Vue({
     el: '#users-app',
 

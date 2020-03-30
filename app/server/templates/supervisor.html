@@ -97,9 +97,9 @@
                             <div class="d-flex justify-content-between align-items-center w-100">
                                 <strong class="text-gray-dark">{{ order.order_type }}</strong>
                                 <div>
-                                    <a href="#">Edit</a>
+                                    <a href="#" data-toggle="modal" data-target="#order-type-create" v-on:click="editOrderType(index)">Edit</a>
                                     <span>-</span>
-                                    <a href="#">Delete</a>
+                                    <a href="#" v-on:click="deleteOrderType(index)">Delete</a>
                                 </div>
                                 
                             </div>
@@ -131,7 +131,7 @@
                     <form class="needs-validation" id="order-type-form" novalidate="">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Create Order Type</h5>
+                                <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Order Type</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -139,22 +139,23 @@
                             <div class="modal-body">
                                 <p>Fill in the following.</p>
                                 
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <label for="username">Order type</label>
-                                            <div class="input-group">
-                                                <input type="text" v-model="orderType" class="form-control" name="order-type" placeholder="Order type" required="">
-                                                <div class="invalid-feedback" style="width: 100%;">
-                                                    Order type is required.
-                                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label for="username">Order type</label>
+                                        <div class="input-group">
+                                            <input type="text" v-model="orderType" class="form-control" name="order-type" placeholder="Order type" required="">
+                                            <div class="invalid-feedback" style="width: 100%;">
+                                                Order type is required.
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                            </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" v-on:click="createOrderType">Create</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" v-on:click="updateOrderType" v-if="edit">Update</button>
+                                <button type="button" class="btn btn-primary" v-on:click="createOrderType" v-else>Create</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetOrderType">Close</button>
                             </div>
                         </div>
                     </form>
@@ -389,16 +390,6 @@
 
     </main>
 
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-            <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="https://getbootstrap.com/docs/4.4/getting-started/introduction/">getting started guide</a>.</p>
-        </div>
-    </footer>
-
     <!-- Users type modal -->
 
     <div class="modal" tabindex="-1" id="user-create" role="dialog">
@@ -496,6 +487,7 @@
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
+    <script src="{{ url_for('static', filename='js/order-type-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/supervisor-app.js') }}"></script>
 
 </body>

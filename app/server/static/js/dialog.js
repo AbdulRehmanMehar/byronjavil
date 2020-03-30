@@ -3,8 +3,8 @@ var waitingDialog = waitingDialog || (function ($) {
 
 	// Creating modal dialog's DOM
 	var $dialog = $(
-		'<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
-		'<div class="modal-dialog modal-m">' +
+		'<div class="modal" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+		'<div class="modal-dialog">' +
 		'<div class="modal-content">' +
 			'<div class="modal-header"><h3 style="margin:0; text-align: center;"></h3></div>' +
 			'<div class="modal-body">' +
@@ -30,20 +30,13 @@ var waitingDialog = waitingDialog || (function ($) {
 			}
 			var settings = $.extend({
 				dialogSize: 'm',
-				progressType: '',
-				onHide: null // This callback runs after the dialog was hidden
+				progressType: ''
 			}, options);
 
 			// Configuring dialog
 			$dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
 			
 			$dialog.find('h3').text(message);
-			// Adding callbacks
-			if (typeof settings.onHide === 'function') {
-				$dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
-					settings.onHide.call($dialog);
-				});
-			}
 			// Opening dialog
 			$dialog.modal();
 		},
