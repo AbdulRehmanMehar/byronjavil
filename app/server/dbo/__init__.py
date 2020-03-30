@@ -4,5 +4,6 @@
 from .auth import UserDBO
 from .customer import CustomerDBO
 from .order_type import OrderTypeDBO
+from .order import OrderDBO
 from .attachment import AttachmentDBO
 from .comment import CommentDBO
