@@ -83,7 +83,22 @@ var customers_vm = new Vue({
 
     data: {
         visible: true,
-        customers: [],
+        customers: [
+            {
+                company: "MCL Control",
+                client_code: "1214A",
+                website: "https://www.mclcontrol.com",
+                user: "great",
+                password: "*******"
+            },
+            {
+                company: "Intelcon",
+                client_code: "5676A",
+                website: "https://www.intelcon.com",
+                user: "great",
+                password: "*******"
+            }
+        ],
         apiKey: null,
     },
 
