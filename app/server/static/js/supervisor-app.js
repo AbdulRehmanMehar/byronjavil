@@ -6,6 +6,7 @@ var order_type_vm = new Vue({
     data: {
         visible: true,
         orderTypes: [],
+        orderType: "",
         apiKey: null,
     },
 
@@ -35,6 +36,20 @@ var order_type_vm = new Vue({
                 }, function(err){
                     console.log(err);
                 })
+        },
+
+        createOrderType: function(){
+            var form = document.getElementById('order-type-form');
+
+            if (form.checkValidity() === true) {
+                this.postForm();
+            }
+            form.classList.add('was-validated');
+
+        },
+
+        postForm: function(){
+            
         }
     }
 })
@@ -220,6 +235,11 @@ var vm = new Vue({
 
         users: [],
         types: [],
+
+        order_type: "",
+        user: {},
+        customer: {},
+        order: {},
     },
 
     ready: function(){
