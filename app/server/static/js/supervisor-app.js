@@ -19,22 +19,7 @@ var customers_vm = new Vue({
         edit: false,
         editID: null,
         
-        customers: [
-            {
-                company: "MCL Control",
-                client_code: "1214A",
-                website: "https://www.mclcontrol.com",
-                user: "great",
-                password: "*******"
-            },
-            {
-                company: "Intelcon",
-                client_code: "5676A",
-                website: "https://www.intelcon.com",
-                user: "great",
-                password: "*******"
-            }
-        ],
+        customers: [],
     },
 
     ready: function(){
@@ -302,6 +287,7 @@ var vm = new Vue({
         
         order_type_vm.fetchOrderTypes();
         users_vm.fetchUsers();
+        customers_vm.fetchCustomers();
         
         this.show('order-type');
     },
