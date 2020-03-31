@@ -11,9 +11,9 @@
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <strong class="text-gray-dark">@{{ user.username }}</strong>
                         <div>
-                            <a href="#">Edit</a>
+                            <a href="#" data-toggle="modal" data-target="#user-create" v-on:click="editUser(index)">Edit</a>
                             <span>-</span>
-                            <a href="#">Delete</a>
+                            <a href="#" v-on:click="deleteUser(index)">Delete</a>
                         </div>
                     </div>
                     <span class="d-block">{{ user.role.role }} - {{ user.email }}</span>
@@ -37,26 +37,71 @@
             </li>
         </ul>
     </div>
-</div>
 
-<!-- Users modal -->
+    <!-- Users modal -->
 
-<div class="modal" tabindex="-1" id="user-create" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Create User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Fill in the following.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Create</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+    <div class="modal" tabindex="-1" id="user-create" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form class="needs-validation" id="user-form" novalidate="">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="mb-3">User Information</h4>
+                        <p>Fill in the following.</p>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="" required="" v-model="user.username">
+                                <div class="invalid-feedback">
+                                    Username is required.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3" v-if="edit">
+
+                            </div>
+                            <div class="col-md-6 mb-3" v-else>
+                                <label for="firstName">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="" required="" v-model="user.password">
+                                <div class="invalid-feedback">
+                                    Password is required.
+                                </div>
+                            </div>
+                            <div class="col-md-6  mb-3">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="you@example.com" required="" v-model="user.email">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="role">Role</label>
+                                <select class="custom-select d-block w-100" id="role" required="" v-model="user.role">
+                                    <option>SUPERVISOR</option>
+                                    <option>RESEARCH</option>
+                                    <option>DATA</option>
+                                    <option>MANAGER</option>
+                                    <option>SUPERVISOR/MANAGER</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid role.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="updateUser" v-if="edit">Update</button>
+                        <button type="button" class="btn btn-primary" v-on:click="createUser" v-else>Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetUser">Close</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+
 </div>
+

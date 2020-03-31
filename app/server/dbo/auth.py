@@ -74,6 +74,10 @@ class UserDBO:
 
         user = self.read(username)
 
+        if "new_username" in kwargs:
+            kwargs["username"] = kwargs["new_username"]
+            del kwargs["new_username"]
+        
         for key, value in kwargs.items():
             setattr(user, key, value)
 
@@ -81,6 +85,8 @@ class UserDBO:
             role = UserRole.select().where(UserRole.role==role).get()
 
             user.role_id = role.id
+
+        user.save()
 
         return True
 

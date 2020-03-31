@@ -58,10 +58,12 @@ class SupervisorUsersCollection(Resource):
         dbo = app.user_dbo
 
         user = dbo.create(role, **payload)
+        
+        response = model_to_dict(user)
+        
+        del response["password"]
 
-        del user["password"]
-
-        return model_to_dict(user)
+        return response
 
 
 @ns.route('/users/<username>')
@@ -85,15 +87,20 @@ class SupervisorUser(Resource):
 
         dbo = app.user_dbo
 
+        payload["new_username"] = payload["username"]
+        del payload["username"]
+        del payload["password"]
+
         if role:
 
-            user = dbo.update(username, role, **payload)
+            dbo.update(username, role, **payload)
         
         else:
 
-            user = dbo.update(username, **payload)
+            dbo.update(username, **payload)
 
-        return model_to_dict(user)
+
+        return True
 
     @api.doc(security='apikey')
     @token_required
