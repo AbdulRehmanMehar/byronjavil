@@ -70,11 +70,26 @@ class UserDBO:
 
         return role.role
 
-    def update(self):
+    def update(self, username, role="", **kwargs):
 
-        pass
+        user = self.read(username)
+
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+
+        if role:
+            role = UserRole.select().where(UserRole.role==role).get()
+
+            user.role_id = role.id
+
+        return True
 
     def delete(self, username):
+
+        try:
+            self.logout(username)
+        except:
+            pass
 
         user = User.select().where(User.username==username).get()
 

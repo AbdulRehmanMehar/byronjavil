@@ -75,12 +75,23 @@ class SupervisorUser(Resource):
 
         payload = api.payload
 
-        role = payload["role"]
-        del payload["role"]
+        role = None
+        
+        try:
+            role = payload["role"]
+            del payload["role"]
+        except:
+            pass
 
         dbo = app.user_dbo
 
-        user = dbo.create(role, **payload)
+        if role:
+
+            user = dbo.update(username, role, **payload)
+        
+        else:
+
+            user = dbo.update(username, **payload)
 
         return model_to_dict(user)
 
