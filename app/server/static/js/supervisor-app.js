@@ -82,7 +82,7 @@ var customers_vm = new Vue({
             
             var apiKey = this.apiKey;
 
-            payload = this.$get("user");
+            payload = this.$get("customer");
 
             waitingDialog.show('Sending');
 
@@ -114,6 +114,12 @@ var customers_vm = new Vue({
             
         },
 
+        resetForm: function(){
+            
+            var form = document.getElementById('customer-form');
+            form.classList.remove("was-validated");
+        },
+
         editCustomer: function(index){
 
             var data = {
@@ -143,6 +149,8 @@ var customers_vm = new Vue({
 
             this.edit = false;
             this.editID = null;
+
+            this.resetForm();
         },
 
         deleteCustomer: function(index){

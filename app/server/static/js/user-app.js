@@ -111,6 +111,12 @@ var users_vm = new Vue({
             
         },
 
+        resetForm: function(){
+            
+            var form = document.getElementById('user-form');
+            form.classList.remove("was-validated");
+        },
+
         editUser: function(index){
 
             var data = {
@@ -134,6 +140,8 @@ var users_vm = new Vue({
             };
             this.edit = false;
             this.editUsername = null;
+
+            this.resetForm();
         },
 
         deleteUser: function(index){

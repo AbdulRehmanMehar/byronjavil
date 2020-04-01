@@ -107,6 +107,12 @@ var order_type_vm = new Vue({
             
         },
 
+        resetForm: function(){
+            
+            var form = document.getElementById('order-type-form');
+            form.classList.remove("was-validated");
+        },
+
         editOrderType: function(index){
             this.orderType = this.orderTypes[index].order_type;
             this.edit = true;
@@ -117,6 +123,8 @@ var order_type_vm = new Vue({
             this.orderType = "";
             this.edit = false;
             this.editID = null;
+
+            this.resetForm();
         },
 
         deleteOrderType: function(index){
