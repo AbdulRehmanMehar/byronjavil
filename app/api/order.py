@@ -37,7 +37,12 @@ class SupervisorOrderCollection(Resource):
         orders = dbo.read_all()
 
         for order in orders:
-            result.append(model_to_dict(order))
+            response = model_to_dict(order)
+
+            response["date_assigned"] = str(response["date_assigned"])
+            response["due_date"] = str(response["due_date"])
+            
+            result.append(response)
 
         return result
 
@@ -88,7 +93,12 @@ class SupervisorOrder(Resource):
 
         order = dbo.read(_id)
 
-        return model_to_dict(order)
+        response = model_to_dict(order)
+
+        response["date_assigned"] = str(response["date_assigned"])
+        response["due_date"] = str(response["due_date"])
+
+        return response
 
     @api.doc(security='apikey')
     @token_required
