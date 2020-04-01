@@ -8,9 +8,9 @@ from app.models import Order, Comment, Attachment
 
 class OrderDBO:
 
-    def create(self, **kwargs):
+    def create(self, user, customer, **kwargs):
 
-        order = Order.create(**kwargs)
+        order = Order.create(user=user, customer=customer, **kwargs)
 
         return order
 
@@ -47,6 +47,10 @@ class OrderDBO:
         pass
     
     def set_state(self, _id, state):
+
+        pass
+
+    def set_type(self, _id, _type):
 
         pass
 

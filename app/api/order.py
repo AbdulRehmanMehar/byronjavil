@@ -6,12 +6,21 @@ from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
 from app.server import server
+from app.models import OrderState, OrderType
 
 from .utils import token_required, role_required
 
 api = server.get_api()
 app = server.get_app()
 ns = server.get_namespace("supervisor")
+
+order_model = api.model("users_model", {
+    'address': fields.String(required=True, description='Property address'),
+    'username': fields.String(required=True, description='Assigned Username'),
+    'customer_id': fields.Integer(required=True, description='Assigned company'),
+    'type': fields.String(required=True, description='Order type'),
+    'state': fields.String(required=True, description='Order state')
+})
 
 
 @ns.route('/customers')
@@ -23,17 +32,16 @@ class SupervisorOrderCollection(Resource):
     def get(self):
 
         result = list()
+        
+        dbo = app.order_dbo
+        orders = dbo.read_all()
 
-        dbo = app.customer_dbo
-
-        customers = dbo.read_all()
-
-        for customer in customers:
-            result.append(model_to_dict(customer))
+        for order in orders:
+            result.append(model_to_dict(order))
 
         return result
 
-    # @ns.expect(customer_model)
+    @ns.expect(order_model)
     @api.doc(security='apikey')
     @token_required
     @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
@@ -41,11 +49,31 @@ class SupervisorOrderCollection(Resource):
 
         payload = api.payload
 
-        dbo = app.customer_dbo
+        dbo = app.order_dbo
+        user_dbo = app.user_dbo
+        customer_dbo = app.customer_dbo
 
-        customer = dbo.create(**payload)
+        username = payload["username"]
+        customer_id = payload["customer_id"]
 
-        return model_to_dict(customer)
+        data = {
+            "address": payload["address"]
+        }
+
+        user = user_dbo.read(username)
+        customer = customer_dbo.read(customer_id)
+
+        order = dbo.create(user, customer, **data)
+
+        order_state = OrderState.select().where(OrderState.state==payload["state"]).get()
+        order_type = OrderType.select().where(OrderType.order_type==payload["type"]).get()
+
+        order.kind = order_type
+        order.state = order_state
+
+        order.save()
+
+        return model_to_dict(order)
 
 
 @ns.route('/customers/<int:_id>')
@@ -56,31 +84,18 @@ class SupervisorOrder(Resource):
     @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def get(self, _id):
 
-        dbo = app.customer_dbo
+        dbo = app.order_dbo
 
-        customer = dbo.read(_id)
+        order = dbo.read(_id)
 
-        return model_to_dict(customer)
-
-    @api.doc(security='apikey')
-    @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
-    def put(self, _id):
-
-        payload = api.payload
-
-        dbo = app.customer_dbo
-
-        dbo.update(_id, **payload)
-
-        return True
+        return model_to_dict(order)
 
     @api.doc(security='apikey')
     @token_required
     @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def delete(self, _id):
 
-        dbo = app.customer_dbo
+        dbo = app.order_dbo
 
         dbo.delete(_id)
 

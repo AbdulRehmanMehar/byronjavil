@@ -78,11 +78,11 @@ class Order(BaseModel):
     date_assigned = DateField(default=date.today)
     due_date = DateField(default=date.today)
     
-    company = ForeignKeyField(Customer)
+    customer = ForeignKeyField(Customer)
     user = ForeignKeyField(User)
     
-    kind = ForeignKeyField(OrderType)
-    state = ForeignKeyField(OrderState)
+    kind = ForeignKeyField(OrderType, null=True)
+    state = ForeignKeyField(OrderState, null=True)
     
 
 class Attachment(BaseModel):
