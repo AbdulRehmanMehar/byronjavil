@@ -93,7 +93,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="role">Order Type</label>
+                                <label for="order_type">Order Type</label>
                                 <select class="custom-select d-block w-100" id="order_type" required="" v-model="order.type">
                                     
                                     {% raw %}
@@ -108,10 +108,18 @@
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="customer-password">Password</label>
-                                <input type="password" class="form-control" id="customer-user" placeholder="" required="" v-model="customer.password">
+                                <label for="order_state">Order State</label>
+                                <select class="custom-select d-block w-100" id="order_state" required="" v-model="order.state">
+                                    
+                                    {% raw %}
+                                    
+                                    <option v-for="(index, state) in states">{{ state }}</option>
+                                    
+                                    {% endraw %}
+                                    
+                                </select>
                                 <div class="invalid-feedback">
-                                    Please enter password.
+                                    Please select a customer.
                                 </div>
                             </div>
                         </div>

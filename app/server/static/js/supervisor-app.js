@@ -21,6 +21,7 @@ var orders_vm = new Vue({
         users: [],
         customers: [],
         order_types: [],
+        states: [],
 
         edit: false,
         editID: null
@@ -127,6 +128,17 @@ var orders_vm = new Vue({
             this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.order_types = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
+
+        fetchStates: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/states', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.states = res.data;
                 }, function(err){
                     console.log(err);
                 })
