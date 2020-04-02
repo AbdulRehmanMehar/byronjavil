@@ -63,40 +63,48 @@
                         </div>
                         <div class="mb-3">
                             <label for="user">Assign User</label>
-                                <select class="custom-select d-block w-100" id="username" required="" v-model="order.username">
-                                    
-                                    {% raw %}
-                                    
-                                    <option v-for="(index, user) in users" v-on:click="setUser(index)">{{ user.username }} - ({{ user.role.role }})</option>
-                                    
-                                    {% endraw %}
-                                    
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a username.
-                                </div>
+                            <select class="custom-select d-block w-100" id="username" required="" v-model="order.username">
+                                
+                                {% raw %}
+                                
+                                <option v-for="(index, user) in users" v-on:click="setUser(index)">{{ user.username }} - ({{ user.role.role }})</option>
+                                
+                                {% endraw %}
+                                
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a username.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="role">Assign Customer</label>
-                                <select class="custom-select d-block w-100" id="customer" required="" v-model="order.customer">
+                            <select class="custom-select d-block w-100" id="customer" required="" v-model="order.customer">
+                                
+                                {% raw %}
+                                
+                                <option v-for="(index, customer) in customers" v-on:click="setCustomer(index)">{{ customer.id }} - ({{ customer.company }})</option>
+                                
+                                {% endraw %}
+                                
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a customer.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="role">Order Type</label>
+                                <select class="custom-select d-block w-100" id="order_type" required="" v-model="order.type">
                                     
                                     {% raw %}
                                     
-                                    <option v-for="(index, customer) in customers" v-on:click="setCustomer(index)">{{ customer.id }} - ({{ customer.company }})</option>
+                                    <option v-for="(index, order_type) in order_types">{{ order_type }}</option>
                                     
                                     {% endraw %}
                                     
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select a customer.
-                                </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="customer-user">User</label>
-                                <input type="text" class="form-control" id="customer-user" placeholder="" required="" v-model="customer.user">
-                                <div class="invalid-feedback">
-                                    Please enter username.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
