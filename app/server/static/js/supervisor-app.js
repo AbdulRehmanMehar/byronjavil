@@ -18,6 +18,9 @@ var orders_vm = new Vue({
             state: ""
         },
 
+        users: [],
+        customers: [],
+
         edit: false,
         editID: null
     },
@@ -37,6 +40,16 @@ var orders_vm = new Vue({
 
         setKey: function(key){
             this.apiKey = key;
+        },
+
+        setUser: function(index){
+            var id = this.users[index].id;
+            this.order.user_id = id;
+        },
+
+        setCustomer: function(index){
+            var id = this.customers[index].id;
+            this.order.customer_id = id;
         },
 
         closeModal: function(){
@@ -67,12 +80,40 @@ var orders_vm = new Vue({
 
         },
 
+        fetchAll: function(){
+            this.fetchOrders();
+            this.fetchUsers();
+            this.fetchCustomers();
+        },
+
         fetchOrders: function(){
             var apiKey = this.apiKey;
 
             this.$http.get('api/supervisor/orders', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.orders = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
+
+        fetchUsers: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.users = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
+
+        fetchCustomers: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/customers', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.customers = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -262,6 +303,10 @@ var vm = new Vue({
         order_type_vm.fetchOrderTypes();
         users_vm.fetchUsers();
         customers_vm.fetchCustomers();
+
+        orders_vm.fetchOrders();
+        orders_vm.fetchUsers();
+        orders_vm.fetchCustomers();
         
         this.show('order-type');
     },
@@ -284,6 +329,7 @@ var vm = new Vue({
             }
 
             if (app == 'orders'){
+                orders_vm.fetchAll();
                 orders_vm.show();
             }
 

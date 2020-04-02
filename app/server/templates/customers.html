@@ -47,7 +47,7 @@
             <form class="needs-validation" id="customer-form" novalidate="">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Create Customer</h5>
+                        <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Customer</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetCustomer">
                             <span aria-hidden="true">&times;</span>
                         </button>

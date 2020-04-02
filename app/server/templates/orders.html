@@ -47,17 +47,71 @@
             <form class="needs-validation" id="customer-form" novalidate="">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Create Order</h5>
+                        <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Order</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <p>Fill in the following.</p>
+                        <div class="mb-3">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Property address..." required="" v-model="order.address">
+                            <div class="invalid-feedback">
+                                Please enter Property Address.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user">Assign User</label>
+                                <select class="custom-select d-block w-100" id="username" required="" v-model="order.username">
+                                    
+                                    {% raw %}
+                                    
+                                    <option v-for="(index, user) in users" v-on:click="setUser(index)">{{ user.username }} - ({{ user.role.role }})</option>
+                                    
+                                    {% endraw %}
+                                    
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a username.
+                                </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role">Assign Customer</label>
+                                <select class="custom-select d-block w-100" id="customer" required="" v-model="order.customer">
+                                    
+                                    {% raw %}
+                                    
+                                    <option v-for="(index, customer) in customers" v-on:click="setCustomer(index)">{{ customer.id }} - ({{ customer.company }})</option>
+                                    
+                                    {% endraw %}
+                                    
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a customer.
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="customer-user">User</label>
+                                <input type="text" class="form-control" id="customer-user" placeholder="" required="" v-model="customer.user">
+                                <div class="invalid-feedback">
+                                    Please enter username.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="customer-password">Password</label>
+                                <input type="password" class="form-control" id="customer-user" placeholder="" required="" v-model="customer.password">
+                                <div class="invalid-feedback">
+                                    Please enter password.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Create</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" v-on:click="updateOrder" v-if="edit">Update</button>
+                        <button type="button" class="btn btn-primary" v-on:click="createOrder" v-else>Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetOrder">Close</button>
                     </div>
                 </div>
             </form>
