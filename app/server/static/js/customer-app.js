@@ -5,7 +5,7 @@ var customers_vm = new Vue({
 
     data: {
         visible: true,
-        //users: [],
+        customers: [],
         apiKey: null,
 
         customer: {
@@ -17,9 +17,8 @@ var customers_vm = new Vue({
         },
 
         edit: false,
-        editID: null,
+        editID: null
         
-        customers: [],
     },
 
     ready: function(){

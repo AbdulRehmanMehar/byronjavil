@@ -23,7 +23,7 @@ order_model = api.model("users_model", {
 })
 
 
-@ns.route('/customers')
+@ns.route('/orders')
 class SupervisorOrderCollection(Resource):
 
     @api.doc(security='apikey')
@@ -81,7 +81,7 @@ class SupervisorOrderCollection(Resource):
         return model_to_dict(order)
 
 
-@ns.route('/customers/<int:_id>')
+@ns.route('/orders/<int:_id>')
 class SupervisorOrder(Resource):
     
     @api.doc(security='apikey')
