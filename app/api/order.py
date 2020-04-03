@@ -58,14 +58,14 @@ class SupervisorOrderCollection(Resource):
         user_dbo = app.user_dbo
         customer_dbo = app.customer_dbo
 
-        username = payload["username"]
+        user_id = payload["user_id"]
         customer_id = payload["customer_id"]
 
         data = {
             "address": payload["address"]
         }
 
-        user = user_dbo.read(username)
+        user = user_dbo.read_by_id(user_id)
         customer = customer_dbo.read(customer_id)
 
         order = dbo.create(user, customer, **data)

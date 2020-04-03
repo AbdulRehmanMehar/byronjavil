@@ -10,9 +10,7 @@ var orders_vm = new Vue({
 
         order: {
             address: "",
-            username: "",
             user_id: "",
-            customer: "",
             customer_id: "",
             type: "",
             state: ""
@@ -42,19 +40,6 @@ var orders_vm = new Vue({
 
         setKey: function(key){
             this.apiKey = key;
-        },
-
-        setUser: function(index){
-            var id = this.users[index].id;
-            var username = this.users[index].username;
-            
-            this.order.user_id = id;
-            this.order.username = username;
-        },
-
-        setCustomer: function(index){
-            var id = this.customers[index].id;
-            this.order.customer_id = id;
         },
 
         closeModal: function(){
