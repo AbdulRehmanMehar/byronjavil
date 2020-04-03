@@ -78,7 +78,12 @@ class SupervisorOrderCollection(Resource):
 
         order.save()
 
-        return model_to_dict(order)
+        response = model_to_dict(order)
+
+        response["date_assigned"] = str(response["date_assigned"])
+        response["due_date"] = str(response["due_date"])
+
+        return response
 
 
 @ns.route('/orders/<int:_id>')

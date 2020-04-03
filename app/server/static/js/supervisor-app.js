@@ -46,7 +46,10 @@ var orders_vm = new Vue({
 
         setUser: function(index){
             var id = this.users[index].id;
+            var username = this.users[index].username;
+            
             this.order.user_id = id;
+            this.order.username = username;
         },
 
         setCustomer: function(index){
@@ -87,6 +90,7 @@ var orders_vm = new Vue({
             this.fetchUsers();
             this.fetchCustomers();
             this.fetchOrderTypes();
+            this.fetchStates();
         },
 
         fetchOrders: function(){
@@ -189,13 +193,13 @@ var orders_vm = new Vue({
         editOrder: function(index){
             
             var data = {
-                company: this.orders[index].address,
-                username: this.orders[index].username,
-                user_id: this.orders[index].user_id,
-                customer: this.orders[index].customer,
-                customer_id: this.orders[index].customer_id,
-                type: this.orders[index].type,
-                state: this.orders[index].state
+                address: this.orders[index].address,
+                username: this.orders[index].user.username,
+                user_id: this.orders[index].user.id,
+                customer: this.orders[index].customer.company,
+                customer_id: this.orders[index].customer.id,
+                type: this.orders[index].kind.order_type,
+                state: this.orders[index].state.state
             };
             
             this.order = data;
@@ -329,9 +333,7 @@ var vm = new Vue({
         users_vm.fetchUsers();
         customers_vm.fetchCustomers();
 
-        orders_vm.fetchOrders();
-        orders_vm.fetchUsers();
-        orders_vm.fetchCustomers();
+        orders_vm.fetchAll();
         
         this.show('order-type');
     },

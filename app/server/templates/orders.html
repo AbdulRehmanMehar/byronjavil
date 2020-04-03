@@ -18,7 +18,7 @@
                             <a href="#" v-on:click="deleteOrder(index)">Delete</a>
                         </div>
                     </div>
-                    <span class="d-block">Assigned user: {{ order.username }}(role: {{ order.user_role }}) - type: {{ order.type }} - state: {{ order.state }}</span>
+                    <span class="d-block">Assigned user: {{ order.user.username }} (role: {{ order.user.role.role }}) - type: {{ order.kind.order_type }} - state: {{ order.state.state }}</span>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
 
     <div class="modal" tabindex="-1" id="order-create" role="dialog">
         <div class="modal-dialog" role="document">
-            <form class="needs-validation" id="customer-form" novalidate="">
+            <form class="needs-validation" id="order-form" novalidate="">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Order</h5>
@@ -63,30 +63,26 @@
                         </div>
                         <div class="mb-3">
                             <label for="user">Assign User</label>
-                            <select class="custom-select d-block w-100" id="username" required="" v-model="order.username">
+                            {% raw %}
+                            <select class="custom-select d-block w-100" id="username" required="" v-model="order.user_id">
                                 
-                                {% raw %}
-                                
-                                <option v-for="(index, user) in users" v-on:click="setUser(index)">{{ user.username }} - ({{ user.role.role }})</option>
-                                
-                                {% endraw %}
+                                <option v-for="(index, user) in users" v-bind:value="user.id" v-on:click="setUser(index)">{{ user.username }} - ({{ user.role.role }})</option>
                                 
                             </select>
+                            {% endraw %}
                             <div class="invalid-feedback">
                                 Please select a username.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="role">Assign Customer</label>
-                            <select class="custom-select d-block w-100" id="customer" required="" v-model="order.customer">
+                            {% raw %}
+                            <select class="custom-select d-block w-100" id="customer" required="" v-model="order.customer_id">
                                 
-                                {% raw %}
-                                
-                                <option v-for="(index, customer) in customers" v-on:click="setCustomer(index)">{{ customer.id }} - ({{ customer.company }})</option>
-                                
-                                {% endraw %}
+                                <option v-for="(index, customer) in customers" v-bind:value="customer.id" v-on:click="setCustomer(index)">{{ customer.id }} - ({{ customer.company }})</option>
                                 
                             </select>
+                            {% endraw %}
                             <div class="invalid-feedback">
                                 Please select a customer.
                             </div>
@@ -98,7 +94,7 @@
                                     
                                     {% raw %}
                                     
-                                    <option v-for="(index, order_type) in order_types">{{ order_type }}</option>
+                                    <option v-for="(index, order_type) in order_types">{{ order_type.order_type }}</option>
                                     
                                     {% endraw %}
                                     
