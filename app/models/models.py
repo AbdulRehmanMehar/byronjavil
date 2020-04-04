@@ -168,7 +168,7 @@ def reset():
 
         OrderType.create(order_type=ORDER_TYPE)
 
-    role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
+    supervisor_role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
 
     parameters = {
         "username": "admin",
@@ -177,5 +177,27 @@ def reset():
     }
     parameters["password"] = hash_password(parameters["password"])
 
-    User.create(role_id=role.id, **parameters)
+    User.create(role_id=supervisor_role.id, **parameters)
+
+    research_role = UserRole.select().where(UserRole.role=="RESEARCH").get()
+
+    parameters = {
+        "username": "research1",
+        "password": "prosperity2020",
+        "email": "research@pams.com"
+    }
+    parameters["password"] = hash_password(parameters["password"])
+
+    User.create(role_id=research_role.id, **parameters)
+
+    data_role = UserRole.select().where(UserRole.role=="DATA").get()
+
+    parameters = {
+        "username": "data1",
+        "password": "prosperity2020",
+        "email": "data@pams.com"
+    }
+    parameters["password"] = hash_password(parameters["password"])
+
+    User.create(role_id=data_role.id, **parameters)
     
