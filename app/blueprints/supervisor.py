@@ -17,7 +17,6 @@ def supervisor_page():
     
     return render_template("supervisor.html", credentials=credentials)
 
-
 @supervisor.route('/supervisor/orders/<int:order_id>')
 @login_required
 @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])

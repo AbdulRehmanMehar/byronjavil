@@ -15,3 +15,13 @@ def research_page():
     credentials = get_credentials()
     
     return render_template("research.html", credentials=credentials)
+
+@research.route('/research/orders/<int:order_id>')
+@login_required
+@role_required(["RESEARCH"])
+def research_order_page(order_id):
+
+    credentials = get_credentials()
+    
+    return render_template("research_order.html", order_id=order_id, credentials=credentials)
+    

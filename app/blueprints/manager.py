@@ -15,3 +15,12 @@ def manager_page():
     credentials = get_credentials()
     
     return render_template("manager.html", credentials=credentials)
+
+@manager.route('/manager/orders/<int:order_id>')
+@login_required
+@role_required(["MANAGER"])
+def manager_order_page(order_id):
+
+    credentials = get_credentials()
+    
+    return render_template("manager_order.html", order_id=order_id, credentials=credentials)
