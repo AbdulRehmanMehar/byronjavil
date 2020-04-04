@@ -94,6 +94,10 @@ class Attachment(BaseModel):
 
     base64 = BlobField()
 
+    user = ForeignKeyField(User)
+
+    created_date = DateTimeField(default=datetime.now)
+
 
 class OrderComment(BaseModel):
 

@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 # app/server/dbo/__init__.py
 
-from app.models import Attachment
+from app.models import Attachment, OrderAttachment
 from app.models import generate_key
 
 class AttachmentDBO:
 
-    def create(self, **kwargs):
+    def create(self, user, **kwargs):
 
         kwargs["uuid"] = generate_key()
 
-        attachment = Attachment.create(**kwargs)
+        attachment = Attachment.create(user=user, **kwargs)
 
         return attachment
+
+    def append_to_order(self, attachment, order):
+
+        order_attachment = OrderAttachment.create(attachment=attachment, order=order)
+
+        return order_attachment
 
     def read(self, _id):
 

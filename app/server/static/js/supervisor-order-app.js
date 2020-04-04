@@ -7,7 +7,7 @@ var order_vm = new Vue({
 
         apiKey: null,
         username: null,
-        
+
         orderId: null,
         order: {},
         comments: [],
@@ -88,36 +88,21 @@ var order_vm = new Vue({
         postAttachment: function(){
             
             var apiKey = this.apiKey;
+            var id = this.orderId;
 
             payload = this.$get("user");
 
             waitingDialog.show('Sending');
 
-            if (this.edit){
-
-                var username = this.editUsername;
-                this.$http.put('/api/supervisor/users/' + username, payload, {headers: {'X-API-KEY': apiKey}})
-                    .then(function (res) {
-                        this.fetchUsers();
-                        this.resetUser()
-                        waitingDialog.hide();
-                    },
-                    function (err) {
-                        console.log(err);
-                });
-            }
-            else {
-                this.$http.post('/api/supervisor/users', payload, {headers: {'X-API-KEY': apiKey}})
-                    .then(function (res) {
-                        this.fetchUsers();
-                        this.resetUser()
-                        waitingDialog.hide();
-                    },
-                    function (err) {
-                        console.log(err);
-                });
-
-            }
+            this.$http.put('/api/attachment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.fetchAttachments();
+                    this.resetAttachment();
+                    waitingDialog.hide();
+                },
+                function (err) {
+                    console.log(err);
+            });
             
         }
     }

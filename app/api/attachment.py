@@ -7,7 +7,7 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 
-from .utils import token_required, role_required
+from .utils import token_required, role_required, get_current_user
 
 api = server.get_api()
 app = server.get_app()
@@ -25,14 +25,44 @@ class UploadResource(Resource):
     @api.doc(security='apikey')
     @ns.expect(upload_model)
     @token_required
-    @role_required("RESEARCH")
+    @role_required(["SUPERVISOR", "RESEARCH"])
     def post(self):
 
+        
         dbo = app.attachment_dbo
 
         payload = api.payload
 
-        dbo.create(**payload)
+        user = get_current_user()
+
+        dbo.create(user, **payload)
+
+        response = {
+            "message": "File uploaded successfuly!"
+        }
+
+        return response
+
+
+@ns.route('/order/<int_id>')
+class OrderUploadResource(Resource):
+
+    @api.doc(security='apikey')
+    @ns.expect(upload_model)
+    @token_required
+    @role_required(["SUPERVISOR", "RESEARCH"])
+    def post(self, _id):
+
+        order_dbo = app.order_dbo
+        attachment_dbo = app.attachment_dbo
+
+        payload = api.payload
+
+        user = get_current_user()
+        order = order_dbo.read(_id)
+
+        attachment = attachment_dbo.create(user, **payload)
+        attachment_dbo.append_to_order(attachment, order)
 
         response = {
             "message": "File uploaded successfuly!"
