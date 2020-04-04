@@ -202,7 +202,6 @@ var orders_vm = new Vue({
             
             var data = {
                 address: this.orders[index].address,
-                username: this.orders[index].user.username,
                 research_id: this.orders[index].research_user.id,
                 data_id: this.orders[index].data_user.id,
                 customer: this.orders[index].customer.company,
@@ -214,6 +213,10 @@ var orders_vm = new Vue({
             this.order = data;
             this.edit = true;
             this.editID = this.orders[index].id;
+        },
+
+        viewOrder: function(id){
+            location.href = "/supervisor/orders/" + id;
         },
 
         resetOrder: function(){

@@ -69,7 +69,8 @@ class SupervisorOrderCollection(Resource):
         data = {
             "address": payload["address"],
             "research_user": research_user,
-            "data_user": data_user
+            "data_user": data_user,
+            "customer": customer
         }
 
         order = dbo.create(**data)

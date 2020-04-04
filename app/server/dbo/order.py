@@ -8,7 +8,7 @@ from app.models import Order, Comment, Attachment
 
 class OrderDBO:
 
-    def create(self, research_user, customer, **kwargs):
+    def create(self, **kwargs):
 
         order = Order.create(**kwargs)
 
