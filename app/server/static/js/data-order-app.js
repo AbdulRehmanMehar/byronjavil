@@ -1,4 +1,4 @@
-// manager-order-app.js
+// data-order-app.js
 
 var vm = new Vue({
 
@@ -35,10 +35,6 @@ var vm = new Vue({
 
         // Post methods
         pushComment: function(){
-
-        },
-
-        pushAttachment: function(){
 
         },
 

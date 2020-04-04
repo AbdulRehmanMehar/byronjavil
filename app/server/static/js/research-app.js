@@ -8,8 +8,7 @@ var vm = new Vue({
         apiKey: null,
         username: null,
 
-        users: [],
-        types: [],
+        orders: [],
     },
 
     ready: function(){
@@ -19,21 +18,15 @@ var vm = new Vue({
     methods: {
 
         // Fetch methods
-        fetchUsers: function(){
-
-        },
-
-        fetchTypes: function(){
-
-        },
-
         fetchOrders: function(){
 
-        }
+        },
 
         // Post methods
+        viewOrder: function(){
 
-
+        }
+        
         // Put methods
 
     }

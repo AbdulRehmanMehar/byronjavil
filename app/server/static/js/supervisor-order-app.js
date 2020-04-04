@@ -1,13 +1,17 @@
-// order-detail-app.js
+// supervisor-order-app.js
 
 var order_vm = new Vue({
     el: '#app',
 
     data: {
-        order: {},
-        apiKey: null,
 
-        comments: {},
+        apiKey: null,
+        username: null,
+        
+        orderId: null,
+        order: {},
+        comments: [],
+        attachments: [],
 
         edit: false
     },
