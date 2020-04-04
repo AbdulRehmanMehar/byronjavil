@@ -16,7 +16,8 @@ var orders_vm = new Vue({
             state: ""
         },
 
-        users: [],
+        research_users: [],
+        data_users: [],
         customers: [],
         order_types: [],
         states: [],
@@ -40,6 +41,26 @@ var orders_vm = new Vue({
 
         setKey: function(key){
             this.apiKey = key;
+        },
+
+        setUsers: function(users){
+            var research = [];
+            var data = [];
+
+            for (var i=0; i<users.length; i++){
+                var user = users[i];
+
+                if (user.role.role == "RESEARCH"){
+                    research.push(user);
+                }
+
+                if (user.role.role == "DATA"){
+                    data.push(user);
+                }
+            }
+
+            this.$set("research_users", research);
+            this.$set("data_users", data);
         },
 
         closeModal: function(){
@@ -94,7 +115,8 @@ var orders_vm = new Vue({
 
             this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    var users = res.data;
+                    this.setUsers(users);
                 }, function(err){
                     console.log(err);
                 })

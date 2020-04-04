@@ -62,11 +62,24 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="user">Assign User</label>
+                            <label for="research-user">Assign Research User</label>
                             {% raw %}
-                            <select class="custom-select d-block w-100" id="username" required="" v-model="order.user_id">
+                            <select class="custom-select d-block w-100" id="research-user" required="" v-model="order.user_id">
                                 
-                                <option v-for="(index, user) in users" v-bind:value="user.id">{{ user.username }} - ({{ user.role.role }})</option>
+                                <option v-for="(index, user) in research_users" v-bind:value="user.id">{{ user.username }} - ({{ user.role.role }})</option>
+                                
+                            </select>
+                            {% endraw %}
+                            <div class="invalid-feedback">
+                                Please select a username.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="data-user">Data Entry User</label>
+                            {% raw %}
+                            <select class="custom-select d-block w-100" id="data-user" required="" v-model="order.user_id">
+                                
+                                <option v-for="(index, user) in data_users" v-bind:value="user.id">{{ user.username }} - ({{ user.role.role }})</option>
                                 
                             </select>
                             {% endraw %}

@@ -79,7 +79,8 @@ class Order(BaseModel):
     due_date = DateField(default=date.today)
     
     customer = ForeignKeyField(Customer)
-    user = ForeignKeyField(User)
+    research_user = ForeignKeyField(User)
+    data_user = ForeignKeyField(User)
     
     kind = ForeignKeyField(OrderType, null=True)
     state = ForeignKeyField(OrderState, null=True)
