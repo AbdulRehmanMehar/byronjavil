@@ -10,7 +10,8 @@ var orders_vm = new Vue({
 
         order: {
             address: "",
-            user_id: "",
+            research_id: "",
+            data_id: "",
             customer_id: "",
             type: "",
             state: ""
@@ -202,7 +203,8 @@ var orders_vm = new Vue({
             var data = {
                 address: this.orders[index].address,
                 username: this.orders[index].user.username,
-                user_id: this.orders[index].user.id,
+                research_id: this.orders[index].research_user.id,
+                data_id: this.orders[index].data_user.id,
                 customer: this.orders[index].customer.company,
                 customer_id: this.orders[index].customer.id,
                 type: this.orders[index].kind.order_type,
@@ -219,7 +221,8 @@ var orders_vm = new Vue({
             var data = {
                 address: "",
                 username: "",
-                user_id: "",
+                research_id: "",
+                data_id: "",
                 customer: "",
                 customer_id: "",
                 type: "",

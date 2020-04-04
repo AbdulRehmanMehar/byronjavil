@@ -58,17 +58,21 @@ class SupervisorOrderCollection(Resource):
         user_dbo = app.user_dbo
         customer_dbo = app.customer_dbo
 
-        user_id = payload["user_id"]
+        research_id = payload["research_id"]
+        data_id = payload["data_id"]
         customer_id = payload["customer_id"]
 
-        data = {
-            "address": payload["address"]
-        }
-
-        user = user_dbo.read_by_id(user_id)
+        research_user = user_dbo.read_by_id(research_id)
+        data_user = user_dbo.read_by_id(data_id)
         customer = customer_dbo.read(customer_id)
 
-        order = dbo.create(user, customer, **data)
+        data = {
+            "address": payload["address"],
+            "research_user": research_user,
+            "data_user": data_user
+        }
+
+        order = dbo.create(**data)
 
         order_state = OrderState.select().where(OrderState.state==payload["state"]).get()
         order_type = OrderType.select().where(OrderType.order_type==payload["type"]).get()
