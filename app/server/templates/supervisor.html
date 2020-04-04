@@ -65,6 +65,13 @@
         </div>
     </header>
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('auth.login') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('supervisor.supervisor_page') }}">Supervisor</a></li>
+        </ol>
+    </nav>
+
     <div class="nav-scroller bg-white shadow-sm">
         <nav class="nav nav-underline">
             {% raw %}
