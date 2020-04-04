@@ -42,6 +42,24 @@ class OrderDBO:
 
         order.delete_instance()
 
+    def verify_authority(self, _id, user):
+
+        order = self.read(_id)
+
+        if user.role.role in ["SUPERVISOR", "SUPERVISOR/MANAGER", "MANAGER"]:
+            return True
+        
+        if (order.research_user == user) or (order.data_user == user):
+            return True
+
+        return False
+
+    def verify_data(self, _id, user):
+
+        order = self.read(_id)
+
+        return order.research_id == user.id
+
     def assign_user(self, user):
 
         pass

@@ -61,6 +61,9 @@ class OrderUploadResource(Resource):
         user = get_current_user()
         order = order_dbo.read(_id)
 
+        if not order_dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
+
         attachment = attachment_dbo.create(user, **payload)
         attachment_dbo.append_to_order(attachment, order)
 

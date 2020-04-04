@@ -25,6 +25,12 @@ class OrderCommentCollection(Resource):
     @token_required
     def get(self, _id):
 
+        dbo = app.order_dbo
+        user = get_current_user()
+
+        if not dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
+
         dbo = app.comment_dbo
         comments = dbo.read_by_order(_id)
 
@@ -52,6 +58,9 @@ class OrderCommentCollection(Resource):
 
         user = get_current_user()
         order = order_dbo.read(_id)
+
+        if not order_dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
 
         comment = comment_dbo.create(user, text)
         comment_dbo.append_to_order(comment, order)
