@@ -30,6 +30,17 @@ def token_required(f):
 
     return decorated
 
+def get_current_user():
+
+    app = server.get_app()
+    dbo = app.user_dbo
+
+    token = request.headers['X-API-KEY']
+
+    user = dbo.read_by_key(token)
+
+    return user
+
 def role_required(roles):
     
     def inner_function(f):

@@ -73,6 +73,9 @@ def create_api(app):
     ns_manager = Namespace('manager', description='Namespace for manager')
     api.add_namespace(ns_manager, path='/manager')
 
+    ns_comment = Namespace('comment', description='Namespace for comment')
+    api.add_namespace(ns_comment, path='/comment')
+
     ns_attachment = Namespace('attachment', description='Namespace for attachment')
     api.add_namespace(ns_attachment, path='/attachment')
 

@@ -13,7 +13,7 @@ var order_vm = new Vue({
         comments: [],
         attachments: [],
 
-        edit: false
+        comment_text: "",
     },
 
     ready: function(){
@@ -21,8 +21,8 @@ var order_vm = new Vue({
 
     methods: {
 
-        setKey: function(key){
-            this.apiKey = key;
+        resetComment: function(){
+            this.comment_text = "";
         },
 
         closeModal: function(){
@@ -31,8 +31,9 @@ var order_vm = new Vue({
 
         fetchOrder: function(){
             var apiKey = this.apiKey;
+            var id = this.orderId;
 
-            this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/supervisor/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.users = res.data;
                 }, function(err){
@@ -42,8 +43,9 @@ var order_vm = new Vue({
 
         fetchComments: function(){
             var apiKey = this.apiKey;
+            var id = this.orderId;
 
-            this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.users = res.data;
                 }, function(err){
@@ -51,10 +53,11 @@ var order_vm = new Vue({
                 })
         },
 
-        fetchAttachment: function(){
+        fetchAttachments: function(){
             var apiKey = this.apiKey;
+            var id = this.orderId;
 
-            this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.users = res.data;
                 }, function(err){
@@ -63,38 +66,22 @@ var order_vm = new Vue({
         },
 
         postComment: function(){
-            
             var apiKey = this.apiKey;
+            var id = this.orderId;
 
-            payload = this.$get("user");
+            payload = {text: this.comment_text};
 
             waitingDialog.show('Sending');
 
-            if (this.edit){
-
-                var username = this.editUsername;
-                this.$http.put('/api/supervisor/users/' + username, payload, {headers: {'X-API-KEY': apiKey}})
-                    .then(function (res) {
-                        this.fetchUsers();
-                        this.resetUser()
-                        waitingDialog.hide();
-                    },
-                    function (err) {
-                        console.log(err);
-                });
-            }
-            else {
-                this.$http.post('/api/supervisor/users', payload, {headers: {'X-API-KEY': apiKey}})
-                    .then(function (res) {
-                        this.fetchUsers();
-                        this.resetUser()
-                        waitingDialog.hide();
-                    },
-                    function (err) {
-                        console.log(err);
-                });
-
-            }
+            this.$http.put('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.fetchComments();
+                    this.resetComment();
+                    waitingDialog.hide();
+                },
+                function (err) {
+                    console.log(err);
+            });
             
         },
 

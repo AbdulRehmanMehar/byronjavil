@@ -8,3 +8,4 @@ from .customer import *
 from .supervisor import *
 from .state import *
 from .order import *
+from .comment import *
