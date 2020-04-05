@@ -9,6 +9,7 @@
     <title>Supervisor/Manager</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/gijgo.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
 
     <style>
@@ -105,6 +106,7 @@
 
     <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/gijgo.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
@@ -114,6 +116,12 @@
     <script src="{{ url_for('static', filename='js/customer-app.js') }}"></script>
     
     <script src="{{ url_for('static', filename='js/supervisor-app.js') }}"></script>
+    
+    <script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
 
 </body>
 </html>

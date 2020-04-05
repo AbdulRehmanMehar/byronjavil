@@ -290,6 +290,7 @@ var attachments_vm = new Vue({
     },
 
     ready: function(){
+        
     },
 
     methods: {

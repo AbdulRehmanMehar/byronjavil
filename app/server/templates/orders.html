@@ -118,21 +118,13 @@
                                     Please select a customer.
                                 </div>
                             </div>
-                            <!--<div class="col-md-6 mb-3">
-                                <label for="order_state">Order State</label>
-                                <select class="custom-select d-block w-100" id="order_state" required="" v-model="order.state">
-                                    
-                                    {% raw %}
-                                    
-                                    <option v-for="(index, state) in states">{{ state }}</option>
-                                    
-                                    {% endraw %}
-                                    
-                                </select>
+                            <div class="col-md-6 mb-3">
+                                <label for="due_date">Due Date</label>
+                                <input id="datepicker" required="" width="216" v-model="order.due_date"/>
                                 <div class="invalid-feedback">
-                                    Please select a customer.
+                                    Please select a due date.
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
