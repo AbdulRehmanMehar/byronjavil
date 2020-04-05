@@ -72,7 +72,8 @@ class OrderUploadResource(Resource):
                 "filetype": attachment.filetype,
                 "username": attachment.user.username,
                 "userrole": attachment.user.role.role,
-                "created_dated": str(attachment.created_date)
+                "created_dated": str(attachment.created_date),
+                "url": "/attachment/" + attachment.uuid
             }
 
             response.append(result)
