@@ -44,7 +44,7 @@ class UploadResource(Resource):
         return response
 
 
-@ns.route('/order/<int_id>')
+@ns.route('/order/<int:_id>')
 class OrderUploadResource(Resource):
 
     @api.doc(security='apikey')
@@ -66,8 +66,14 @@ class OrderUploadResource(Resource):
 
         for attachment in attachments:
 
-            result = model_to_dict(attachment)
-            del result["base64"]
+            result = {
+                "uuid": attachment.uuid,
+                "filename": attachment.filename,
+                "filetype": attachment.filetype,
+                "username": attachment.user.username,
+                "userrole": attachment.user.role.role,
+                "created_dated": str(attachment.created_date)
+            }
 
             response.append(result)
 

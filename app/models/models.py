@@ -101,19 +101,19 @@ class Attachment(BaseModel):
 
 class OrderComment(BaseModel):
 
-    order = ForeignKeyField(column_name='research_id', field='id', model=Order)
+    order = ForeignKeyField(column_name='order_id', field='id', model=Order)
     comment = ForeignKeyField(column_name='comment_id', field='id', model=Comment)
 
 
 class OrderAttachment(BaseModel):
 
-    order = ForeignKeyField(column_name='research_id', field='id', model=Order)
+    order = ForeignKeyField(column_name='order_id', field='id', model=Order)
     attachment = ForeignKeyField(column_name='attachment_id', field='id', model=Attachment)
 
 
 class OrderPicture(BaseModel):
 
-    order = ForeignKeyField(column_name='research_id', field='id', model=Order)
+    order = ForeignKeyField(column_name='order_id', field='id', model=Order)
     attachment = ForeignKeyField(column_name='attachment_id', field='id', model=Attachment)
 
 

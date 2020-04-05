@@ -351,6 +351,7 @@
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
     <script src="{{ url_for('static', filename='js/fileinput.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
@@ -364,8 +365,6 @@
             dropZoneEnabled: false,
             allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
         });
-
-        $("#input-b8").fileinput("reset");
 
         $(document).ready(function() {    
 

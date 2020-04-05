@@ -17,6 +17,8 @@ var order_vm = new Vue({
     },
 
     ready: function(){
+        this.resetAttachment();
+        this.fetchAttachments();
     },
 
     methods: {
@@ -33,7 +35,7 @@ var order_vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/supervisor/orders/' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/supervisor/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.users = res.data;
                 }, function(err){
@@ -45,9 +47,9 @@ var order_vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.comments = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -57,12 +59,16 @@ var order_vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/attachment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.attachments = res.data;
                 }, function(err){
                     console.log(err);
                 })
+        },
+
+        resetAttachment: function(){
+            $("#input-b8").fileinput("reset");
         },
 
         postComment: function(){
@@ -89,31 +95,42 @@ var order_vm = new Vue({
             
             var apiKey = this.apiKey;
             var id = this.orderId;
+            
+            var filename = file.name.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
+            self = this;
 
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
-                console.log(reader.result);
+                
+                var result = reader.result;
+                var chunks = result.split(";");
+                var filetype = chunks[0].split("/")[1].split(";")[0]
+                var base64 = chunks[1].replace("base64,", "");
+
+                var payload = {
+                    filename: filename,
+                    filetype: filetype,
+                    base64: base64
+                };
+
+                waitingDialog.show('Sending');
+
+                self.$http.post('/api/attachment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                    .then(function (res) {
+                        self.fetchAttachments();
+                        self.resetAttachment();
+                        waitingDialog.hide();
+                    },
+                    function (err) {
+                        console.log(err);
+                });
+
             };
             reader.onerror = function (error) {
                 console.log('Error: ', error);
             };
 
-            console.log(file);
-
-            payload = file;
-
-            waitingDialog.show('Sending');
-
-            this.$http.put('/api/attachment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
-                .then(function (res) {
-                    this.fetchAttachments();
-                    this.resetAttachment();
-                    waitingDialog.hide();
-                },
-                function (err) {
-                    console.log(err);
-            });
             
         }
     }
