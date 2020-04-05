@@ -60,13 +60,18 @@ class OrderDBO:
 
         return order.research_id == user.id
 
-    def assign_user(self, user):
-
-        pass
-    
     def set_state(self, _id, state):
 
-        pass
+        order = self.read(_id)
+
+        state = "RESEARCH"
+        order_state = OrderState.select().where(OrderState.state==state).get()
+
+        order.state = order_state
+
+        order.save()
+
+        return True
 
     def set_type(self, _id, _type):
 
