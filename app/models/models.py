@@ -11,7 +11,7 @@ import json
 from datetime import datetime, date
 
 from flask_restplus import fields
-from peewee import Model, SqliteDatabase, TextField, BlobField, FloatField, DateField, DateTimeField, ForeignKeyField
+from peewee import Model, SqliteDatabase, TextField, BooleanField, BlobField, FloatField, DateField, DateTimeField, ForeignKeyField
 
 db = SqliteDatabase("id.db")
 
@@ -84,6 +84,9 @@ class Order(BaseModel):
     
     kind = ForeignKeyField(OrderType, null=True)
     state = ForeignKeyField(OrderState, null=True)
+
+    research_completed = BooleanField(default=False)
+    data_completed = BooleanField(default=False)
     
 
 class Attachment(BaseModel):

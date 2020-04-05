@@ -37,7 +37,7 @@ class ResearchOrderCollectionResource(Resource):
 
                 result["date_assigned"] = str(result["date_assigned"])
                 result["due_date"] = str(result["due_date"])
-
+                
                 response.append(result)
 
         return response
