@@ -17,8 +17,10 @@ var order_vm = new Vue({
     },
 
     ready: function(){
+        this.fetchOrder();
         this.resetAttachment();
         this.fetchAttachments();
+        this.fetchComments();
     },
 
     methods: {
@@ -37,7 +39,7 @@ var order_vm = new Vue({
 
             this.$http.get('/api/supervisor/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.order = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -68,7 +70,11 @@ var order_vm = new Vue({
         },
 
         resetAttachment: function(){
-            $("#input-b8").fileinput("reset");
+            $("#input-b8").fileinput({
+                rtl: true,
+                dropZoneEnabled: false,
+                allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+            });
         },
 
         postComment: function(){
@@ -79,7 +85,7 @@ var order_vm = new Vue({
 
             waitingDialog.show('Sending');
 
-            this.$http.put('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+            this.$http.post('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res) {
                     this.fetchComments();
                     this.resetComment();
@@ -89,6 +95,12 @@ var order_vm = new Vue({
                     console.log(err);
             });
             
+        },
+
+        resetComment: function(){
+
+            this.comment_text = "";
+
         },
 
         postAttachment: function(file){
@@ -121,6 +133,7 @@ var order_vm = new Vue({
                         self.fetchAttachments();
                         self.resetAttachment();
                         waitingDialog.hide();
+                        bootbox.alert("File uploaded successfully!");
                     },
                     function (err) {
                         console.log(err);
