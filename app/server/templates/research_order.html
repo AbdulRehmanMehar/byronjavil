@@ -9,6 +9,8 @@
     <title>Supervisor/Manager</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fileinput-rtl.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
 
     <style>
@@ -227,7 +229,13 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url_for('auth.login') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('supervisor.supervisor_page') }}">Supervisor</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('research.research_page') }}">Supervisor</a></li>
+
+            {% raw %}
+            
+            <li class="breadcrumb-item"><a href="#">{{ order.address }}</a></li>
+            
+            {% endraw %}
         </ol>
     </nav>
 
@@ -235,30 +243,42 @@
 
         <br>
 
+        {% raw %}
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-primary">World</strong>
-                            <h3 class="mb-0">Featured post</h3>
-                            <div class="mb-1 text-muted">Nov 12</div>
-                            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="stretched-link">Continue reading</a>
+                            <div>
+                                <span>Company: </span><strong class="d-inline-block mb-2 text-primary">{{ order.customer.company }}</strong>
+                            </div>
+                            <h3 class="mb-0">{{ order.address }}</h3>
+                            <div class="mb-1 text-muted">{{ order.kind.order_type }}</div>
+                            <p class="card-text mb-auto">Due date: {{ order.due_date }}</p>
+                            <div>
+                                <span>Research User: </span><a href="#" class="stretched-link">{{ order.research_user.username }}</a>
+                                <span>Data Entry User: </span><a href="#" class="stretched-link">{{ order.data_user.username }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        {% endraw %}
+
         <div class="container">
             <div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload File</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
                     </li>
                 </ul>
             </div>
@@ -275,43 +295,79 @@
                                 <br>
                                 <div class="comment-box add-comment">
                                     <span class="commenter-name">
-                                        <input type="text" placeholder="Add a comment" name="Add Comment">
-                                        <button type="submit" class="btn btn-default">Comment</button>
-                                        <button type="cancel" class="btn btn-default">Cancel</button>
+                                        <input type="text" v-model="comment_text" placeholder="Add a comment" name="Add Comment">
+                                        <button type="submit" v-on:click="postComment" class="btn btn-default">Comment</button>
+                                        <button type="cancel" v-on:click="resetComment" class="btn btn-default">Cancel</button>
                                     </span>
                                 </div>
         
                                 <br>
         
-                                <div class="comment-box">
-                                    <span class="commenter-pic">
-                                    </span>
-                                    <span class="commenter-name">
-                                        <a href="#">Happy uiuxStream</a> <span class="comment-time">2 hours ago</span>
-                                    </span>       
-                                    <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci iaculis ac.</p>
-                                </div>
-        
-                                <div class="comment-box">
-                                    <span class="commenter-pic">
-                                    </span>
-                                    <span class="commenter-name">
-                                        <a href="#">Happy uiuxStream</a> <span class="comment-time">2 hours ago</span>
-                                    </span>       
-                                    <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci iaculis ac.</p>
-                                </div>
+                                {% raw %}
                                 
-        
+                                <div class="comment-box" v-for="(index, comment) in comments">
+                                    <span class="commenter-pic">
+                                    </span>
+                                    <span class="commenter-name">
+                                        <a href="#">{{ comment.user.username }}</a>({{ comment.user.role.role }}) <span class="comment-time"> {{ comment.created_date }}</span>
+                                    </span>       
+                                    <p class="comment-txt more">{{ comment.text }}</p>
+                                </div>
+
+                                {% endraw %}
+                                
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+            
+            <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container">
+                    <div class="row tab-container">
+                        <div class="col-12">
+                            <div dir=rtl class="file-loading">
+                                <input id="input-b8" name="input-b8[]" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     <div class="row tab-container">
-                        Attachments in here
+                        <div class="col-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Filename</th>
+                                        <th scope="col">Filetype</th>
+                                        <th scope="col">Uploaded by</th>
+                                        <th scope="col">Uploaded date</th>
+                                        <th scope="col">Download</th>
+                                     </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% raw %}
+                                    
+                                    <tr v-for="(index, attachment) in attachments">
+                                        <th scope="row">{{ index + 1 }}</th>
+                                        <td>{{ attachment.filename }}</td>
+                                        <td>{{ attachment.filetype }}</td>
+                                        <td>{{ attachment.username }} ({{ attachment.userrole }})</td>
+                                        <td>{{ attachment.created_date  }}</td>
+                                        <td><a v-bind:href="attachment.url">Download</a></td>
+                                    </tr>
+                                    
+                                    {% endraw %}
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,11 +388,32 @@
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/fileinput.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/research-order-app.js') }}"></script>
 
+    <script>
+        var fileInput = $("#input-b8").fileinput({
+            rtl: true,
+            dropZoneEnabled: false,
+            allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+        });
+
+        $(document).ready(function() {    
+
+            $('button.fileinput-upload').on('click', function(event){
+                console.log("click");
+
+                var file = $('#input-b8')[0].files[0];
+                order_vm.postAttachment(file);
+            })
+        });
+    </script>
+    
 </body>
 </html>
