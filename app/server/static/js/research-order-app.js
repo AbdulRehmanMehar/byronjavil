@@ -25,6 +25,12 @@ var vm = new Vue({
 
     methods: {
 
+        fetchAll: function(){
+            this.fetchOrder();
+            this.fetchAttachments();
+            this.fetchComments();
+        },
+
         fetchOrder: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
@@ -137,9 +143,38 @@ var vm = new Vue({
         },
 
         markCompleted: function(){
-            
+            var self = this;
+            bootbox.confirm({
+                message: "Do you want to mark this research as completed?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result){
+
+                        waitingDialog.show('Sending');
+
+                        self.$http.post('/api/research/orders/' + id + "/mark-completed", payload, {headers: {'X-API-KEY': apiKey}})
+                            .then(function (res) {
+                                self.fetchAll();
+                                self.resetAttachment();
+                                waitingDialog.hide();
+                                bootbox.alert("Research Marked as Completed!");
+                            },
+                            function (err) {
+                                console.log(err);
+                        });
+                    }
+                }
+            });
         }
-        // Put methods
 
     }
 })

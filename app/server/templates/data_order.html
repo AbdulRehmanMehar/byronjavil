@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="ncarrasquel">
-    <title>Supervisor/Manager</title>
+    <title>Data Entry</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
@@ -244,22 +244,19 @@
         {% raw %}
 
         <div class="container">
-            <div class="row">
+            <div class="row border rounded">
                 <div class="col-md-12">
-                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="row no-gutters overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
-                            <div>
-                                <span>Company: </span><strong class="d-inline-block mb-2 text-primary">{{ order.customer.company }}</strong>
-                            </div>
-                            <h3 class="mb-0">{{ order.address }}</h3>
-                            <div class="mb-1 text-muted">{{ order.kind.order_type }}</div>
+                            <h3 class="mb-0">{{ order.address }} ({{ order.id }})</h3>
                             <p class="card-text mb-auto">Due date: {{ order.due_date }}</p>
-                            <div>
-                                <span>Research User: </span><a href="#" class="stretched-link">{{ order.research_user.username }}</a>
-                                <span>Data Entry User: </span><a href="#" class="stretched-link">{{ order.data_user.username }}</a>
-                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-12 text-right mb-3" v-if="order.data_completed">
+                </div>
+                <div class="col-md-12 text-right mb-3" v-else>
+                    <button type="button" class="btn btn-success" v-on:click="markCompleted">Mark as Completed</button>
                 </div>
             </div>
         </div>
@@ -271,6 +268,9 @@
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="picture-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload Picture</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
@@ -317,6 +317,19 @@
                 </div>
 
             </div>
+
+            <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container">
+                    <div class="row tab-container">
+                        <div class="col-12">
+                            <div dir=rtl class="file-loading">
+                                <input id="input-b8" name="input-b8[]" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     <div class="row tab-container">
@@ -377,6 +390,24 @@
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/data-order-app.js') }}"></script>
+
+    <script>
+        var fileInput = $("#input-b8").fileinput({
+            rtl: true,
+            dropZoneEnabled: false,
+            allowedFileExtensions: ["bmp", "jpg", "png", "gif"]
+        });
+
+        $(document).ready(function() {    
+
+            $('button.fileinput-upload').on('click', function(event){
+                console.log("click");
+
+                var file = $('#input-b8')[0].files[0];
+                vm.postPicture(file);
+            })
+        });
+    </script>
 
 </body>
 </html>

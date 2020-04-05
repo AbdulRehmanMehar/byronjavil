@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="ncarrasquel">
-    <title>Supervisor/Manager</title>
+    <title>Research</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/fileinput.min.css') }}" rel="stylesheet">
@@ -246,14 +246,19 @@
         {% raw %}
 
         <div class="container">
-            <div class="row">
+            <div class="row border rounded">
                 <div class="col-md-12">
-                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="row no-gutters overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
                             <h3 class="mb-0">{{ order.address }} ({{ order.id }})</h3>
                             <p class="card-text mb-auto">Due date: {{ order.due_date }}</p>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-12 text-right mb-3" v-if="order.research_completed">
+                </div>
+                <div class="col-md-12 text-right mb-3" v-else>
+                    <button type="button" class="btn btn-success" v-on:click="markCompleted">Mark as Completed</button>
                 </div>
             </div>
         </div>
@@ -267,7 +272,7 @@
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload File</a>
+                        <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload File</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>

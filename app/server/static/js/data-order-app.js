@@ -85,10 +85,81 @@ var vm = new Vue({
 
         },
 
-        markCompleted: function(){
+        postPicture: function(file){
             
+            var apiKey = this.apiKey;
+            var id = this.orderId;
+            
+            var filename = file.name.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
+            self = this;
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                
+                var result = reader.result;
+                var chunks = result.split(";");
+                var filetype = chunks[0].split("/")[1].split(";")[0]
+                var base64 = chunks[1].replace("base64,", "");
+
+                var payload = {
+                    filename: filename,
+                    filetype: filetype,
+                    base64: base64
+                };
+
+                waitingDialog.show('Sending');
+
+                self.$http.post('/api/data/order/' + id + "/upload-picture", payload, {headers: {'X-API-KEY': apiKey}})
+                    .then(function (res) {
+                        self.fetchAttachments();
+                        self.resetAttachment();
+                        waitingDialog.hide();
+                        bootbox.alert("Picture uploaded successfully!");
+                    },
+                    function (err) {
+                        console.log(err);
+                });
+
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        },
+
+        markCompleted: function(){
+            var self = this;
+            bootbox.confirm({
+                message: "Do you want to mark this data entry as completed?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result){
+
+                        waitingDialog.show('Sending');
+
+                        self.$http.post('/api/data/orders/' + id + "/mark-completed", payload, {headers: {'X-API-KEY': apiKey}})
+                            .then(function (res) {
+                                self.fetchAll();
+                                self.resetAttachment();
+                                waitingDialog.hide();
+                                bootbox.alert("Data Marked as Completed!");
+                            },
+                            function (err) {
+                                console.log(err);
+                        });
+                    }
+                }
+            });
         }
-        // Put methods
 
     }
 })
