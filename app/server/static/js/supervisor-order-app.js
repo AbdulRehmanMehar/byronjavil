@@ -90,6 +90,15 @@ var order_vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                console.log(reader.result);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+
             console.log(file);
 
             payload = file;

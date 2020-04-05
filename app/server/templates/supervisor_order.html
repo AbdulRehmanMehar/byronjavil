@@ -371,7 +371,9 @@
 
             $('button.fileinput-upload').on('click', function(event){
                 console.log("click");
-                order_vm.postAttachment("Hola");
+
+                var file = $('#input-b8')[0].files[0];
+                order_vm.postAttachment(file);
             })
         });
     </script>
