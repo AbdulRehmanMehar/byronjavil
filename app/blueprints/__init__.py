@@ -19,6 +19,7 @@ from .supervisor import *
 from .research import *
 from .data import *
 from .manager import *
+from .home import *
 
 app = server.get_app()
 app.register_blueprint(auth)
@@ -27,3 +28,4 @@ app.register_blueprint(research)
 app.register_blueprint(data)
 app.register_blueprint(manager)
 app.register_blueprint(attachment)
+app.register_blueprint(home)

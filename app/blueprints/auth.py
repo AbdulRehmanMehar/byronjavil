@@ -45,7 +45,7 @@ def login():
                 return redirect(url_for('data.data_page'))
 
             return redirect(url_for("auth.home"))
-        
+
         return render_template('login.html')
 
     username = request.form['username']
@@ -105,20 +105,6 @@ def logout():
 
     message = "Logged out successfuly"
     description = "You have been logout from Mangament System"
-
-    return render_message(message, description)
-
-
-@auth.route('/home')
-@login_required
-def home():
-
-    dbo = current_app.user_dbo
-
-    user = dbo.read_by_id(current_user.id)
-    
-    message = "Hello {}!".format(user.username)
-    description = "You have successfuly logged in!"
 
     return render_message(message, description)
 

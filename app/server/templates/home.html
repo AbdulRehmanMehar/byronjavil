@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS - Login</title>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"> -->
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/form-validation.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/cover.css') }}" rel="stylesheet">
+
+</head>
+<body class="text-center">
+    
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">Property Addresses Management System</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="{{ url_for('home.home_page') }}">Home</a>
+                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">PAMS</h1>
+            <p class="lead">Management System for Property Addresses Researcy</p>
+            <p class="lead">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-secondary">Enter</a>
+            </p>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Developed by <a href="https://www.fiverr.com/ncarrasquel">ncarrasquel</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    
+  </body>
+</html>
