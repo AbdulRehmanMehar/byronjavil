@@ -54,6 +54,14 @@ def role_required(roles):
 
     return inner_function
 
+def get_current_role():
+
+    dbo = current_app.user_dbo
+
+    user = dbo.read_by_id(current_user.id)
+
+    return user.role.role
+    
 def get_credentials():
 
     dbo = current_app.user_dbo
