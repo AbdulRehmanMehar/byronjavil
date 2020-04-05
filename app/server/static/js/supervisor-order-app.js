@@ -85,12 +85,14 @@ var order_vm = new Vue({
             
         },
 
-        postAttachment: function(){
+        postAttachment: function(file){
             
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            payload = this.$get("user");
+            console.log(file);
+
+            payload = file;
 
             waitingDialog.show('Sending');
 

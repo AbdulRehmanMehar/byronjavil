@@ -9,6 +9,8 @@
     <title>Supervisor/Manager</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fileinput.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fileinput-rtl.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
 
     <style>
@@ -177,12 +179,13 @@
                 height: 40px;
             }
             .comments .commenter-name a{
-            display: block;
+                display: block;
             }
             .comments .commenter-name .comment-time{
-            display: block;
-            margin-left: 0px;
+                display: block;
+                margin-left: 0px;
             }
+            
         }
     </style>
 
@@ -255,10 +258,13 @@
             <div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload File</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
                     </li>
                 </ul>
             </div>
@@ -308,10 +314,23 @@
                 </div>
 
             </div>
+
+            <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container">
+                    <div class="row tab-container">
+                        <div class="col-12">
+                            <div dir=rtl class="file-loading">
+                                <input id="input-b8" name="input-b8[]" type="file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     <div class="row tab-container">
-                        Attachments in here
+                        
                     </div>
                 </div>
             </div>
@@ -332,11 +351,30 @@
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/fileinput.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/supervisor-order-app.js') }}"></script>
+
+    <script>
+        var fileInput = $("#input-b8").fileinput({
+            rtl: true,
+            dropZoneEnabled: false,
+            allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+        });
+
+        $("#input-b8").fileinput("reset");
+
+        $(document).ready(function() {    
+
+            $('button.fileinput-upload').on('click', function(event){
+                console.log("click");
+                order_vm.postAttachment("Hola");
+            })
+        });
+    </script>
 
 </body>
 </html>
