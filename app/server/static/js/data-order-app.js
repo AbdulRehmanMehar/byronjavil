@@ -18,7 +18,6 @@ var vm = new Vue({
 
     ready: function(){
         this.fetchOrder();
-        this.resetAttachment();
         this.fetchAttachments();
         this.fetchComments();
     },
