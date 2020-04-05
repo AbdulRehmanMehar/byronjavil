@@ -7,7 +7,7 @@ from flask import Response, send_file, render_template, redirect, url_for, reque
 from flask_login import login_required, current_user
 
 from . import attachment
-from .utils import mime_types, role_required
+from .utils import mime_types, file_types, role_required
 
 
 @attachment.route('/attachment/<uuid>')
@@ -21,9 +21,11 @@ def file(uuid):
     filename = attachment.filename
     filetype = attachment.filetype
 
-    filename += "." + attachment.filetype
-    image_binary = base64.b64decode(attachment.base64)
+    filetype = file_types[filetype]
 
+    filename += "." + filetype
+    image_binary = base64.b64decode(attachment.base64)
+    
     return send_file(
         io.BytesIO(image_binary),
         mimetype=mime_types[filetype],

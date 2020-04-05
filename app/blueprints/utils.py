@@ -25,6 +25,22 @@ mime_types = {
     
 }
 
+file_types = {
+    "jpg": "jpg",
+    "png": "png",
+    "pdf": "pdf",
+    ".doc": "application/msword",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "xls": "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+    "vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+    "ppt": "application/vnd.ms-powerpoint",
+    "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "mp4": "video/mp4",
+    "flv": "video/x-flv"
+    
+}
+
 def render_message(message, description):
     
     return render_template("message.html", message=message, description=description)

@@ -61,6 +61,14 @@ var vm = new Vue({
                 })
         },
 
+        resetAttachment: function(){
+            $("#input-b8").fileinput({
+                rtl: true,
+                dropZoneEnabled: false,
+                allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+            });
+        },
+
         postComment: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;

@@ -7,7 +7,7 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 
-from .utils import token_required, role_required, get_current_user
+from .utils import token_required, role_required, get_current_user, file_types
 
 api = server.get_api()
 app = server.get_app()
@@ -66,10 +66,12 @@ class OrderUploadResource(Resource):
 
         for attachment in attachments:
 
+            filetype = file_types[attachment.filetype]
+
             result = {
                 "uuid": attachment.uuid,
                 "filename": attachment.filename,
-                "filetype": attachment.filetype,
+                "filetype": filetype,
                 "username": attachment.user.username,
                 "userrole": attachment.user.role.role,
                 "created_date": str(attachment.created_date),
