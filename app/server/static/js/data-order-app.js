@@ -24,6 +24,11 @@ var vm = new Vue({
 
     methods: {
 
+        downloadAll: function(){
+            var id = this.order.id;
+            location.href = "/attachment/" + id + "/download-all";
+        },
+
         fetchOrder: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;

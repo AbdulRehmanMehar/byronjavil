@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # app/blueprints/utils.py
 
+import io
+
+from zipfile import ZipFile
 from functools import wraps
 
 from flask import request, render_template, current_app
@@ -92,3 +95,26 @@ def get_credentials():
     }
 
     return credentials
+
+from random import randint
+
+class InMemoryZipFile(object):
+    
+    def __init__(self):
+        
+        self.inMemoryOutputFile = io.BytesIO()
+
+    def write(self, inzipfilename, data):
+        
+        zip = ZipFile(self.inMemoryOutputFile, 'a')
+        zip.writestr(inzipfilename, data)
+        zip.close()
+
+    def get_zip(self):
+        self.inMemoryOutputFile.seek(0)
+        return self.inMemoryOutputFile
+    
+    def read(self):
+        
+        self.inMemoryOutputFile.seek(0)
+        return self.inMemoryOutputFile.getvalue()
