@@ -6,7 +6,7 @@ from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
 from app.server import server
-from app.models import OrderState, OrderType
+from app.models import OrderState, OrderType, OrderPicture
 
 from .utils import token_required, role_required, get_current_user
 
@@ -84,3 +84,34 @@ class DataCompleteActionResource(Resource):
         dbo.set_state(_id, "MANAGEMENT")
 
         return True
+
+
+@ns.route('/orders/<int:_id>/upload-picture')
+class DataUploadPictureResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["DATA"])
+    def post(self, _id):
+
+        order_dbo = app.order_dbo
+        attachment_dbo = app.attachment_dbo
+
+        payload = api.payload
+
+        user = get_current_user()
+        order = order_dbo.read(_id)
+
+        if not order_dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
+
+        attachment = attachment_dbo.create(user, **payload)
+        attachment_dbo.append_to_order(attachment, order)
+
+        OrderPicture.create(order=order, attachment=attachment)
+
+        response = {
+            "message": "Picture uploaded successfuly!"
+        }
+
+        return response

@@ -110,7 +110,7 @@ var vm = new Vue({
 
                 waitingDialog.show('Sending');
 
-                self.$http.post('/api/data/order/' + id + "/upload-picture", payload, {headers: {'X-API-KEY': apiKey}})
+                self.$http.post('/api/data/orders/' + id + "/upload-picture", payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         self.fetchAttachments();
                         self.resetAttachment();

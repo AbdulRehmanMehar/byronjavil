@@ -71,6 +71,19 @@ class OrderState(BaseModel):
     state = TextField()
 
 
+class Attachment(BaseModel):
+
+    uuid = TextField()
+    filename = TextField()
+    filetype = TextField()
+
+    base64 = BlobField()
+
+    user = ForeignKeyField(User)
+
+    created_date = DateTimeField(default=datetime.now)
+
+
 class Order(BaseModel):
 
     address = TextField()
@@ -88,18 +101,8 @@ class Order(BaseModel):
     research_completed = BooleanField(default=False)
     data_completed = BooleanField(default=False)
     
+    picture = ForeignKeyField(Attachment, null=True)
 
-class Attachment(BaseModel):
-
-    uuid = TextField()
-    filename = TextField()
-    filetype = TextField()
-
-    base64 = BlobField()
-
-    user = ForeignKeyField(User)
-
-    created_date = DateTimeField(default=datetime.now)
 
 
 class OrderComment(BaseModel):
