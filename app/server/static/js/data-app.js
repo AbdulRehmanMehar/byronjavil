@@ -8,8 +8,7 @@ var vm = new Vue({
         apiKey: null,
         username: null,
 
-        users: [],
-        types: [],
+        orders: [],
     },
 
     ready: function(){
@@ -19,21 +18,22 @@ var vm = new Vue({
     methods: {
 
         // Fetch methods
-        fetchUsers: function(){
-
-        },
-
-        fetchTypes: function(){
-
-        },
-
         fetchOrders: function(){
+            var apiKey = this.apiKey;
 
-        }
+            this.$http.get('api/data/orders', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.orders = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
 
         // Post methods
-
-
+        viewOrder: function(){
+            location.href = "/data/orders/" + id;
+        }
+        
         // Put methods
 
     }
