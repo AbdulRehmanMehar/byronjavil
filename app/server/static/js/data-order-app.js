@@ -12,22 +12,26 @@ var vm = new Vue({
         order: {},
         comments: [],
         attachments: [],
+
+        comment_text: "",
     },
 
     ready: function(){
-
+        this.fetchOrder();
+        this.resetAttachment();
+        this.fetchAttachments();
+        this.fetchComments();
     },
 
     methods: {
 
-        // Fetch methods
         fetchOrder: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/data/orders/' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/data/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.order = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -37,9 +41,9 @@ var vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.comments = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -49,15 +53,14 @@ var vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.attachments = res.data;
                 }, function(err){
                     console.log(err);
                 })
         },
 
-        // Post methods
         postComment: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
@@ -75,6 +78,12 @@ var vm = new Vue({
                 function (err) {
                     console.log(err);
             });
+        },
+
+        resetComment: function(){
+
+            this.comment_text = "";
+
         },
 
         markCompleted: function(){

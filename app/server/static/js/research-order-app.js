@@ -12,22 +12,26 @@ var vm = new Vue({
         order: {},
         comments: [],
         attachments: [],
+
+        comment_text: "",
     },
 
     ready: function(){
-
+        this.fetchOrder();
+        this.resetAttachment();
+        this.fetchAttachments();
+        this.fetchComments();
     },
 
     methods: {
 
-        // Fetch methods
         fetchOrder: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/research/orders/' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/research/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.order = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -37,9 +41,9 @@ var vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.comments = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -49,15 +53,22 @@ var vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.users = res.data;
+                    this.attachments = res.data;
                 }, function(err){
                     console.log(err);
                 })
         },
 
-        // Post methods
+        resetAttachment: function(){
+            $("#input-b8").fileinput({
+                rtl: true,
+                dropZoneEnabled: false,
+                allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+            });
+        },
+
         postComment: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
@@ -77,23 +88,52 @@ var vm = new Vue({
             });
         },
 
+        resetComment: function(){
+
+            this.comment_text = "";
+
+        },
+
         postAttachment: function(){
+            
             var apiKey = this.apiKey;
             var id = this.orderId;
+            
+            var filename = file.name.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
+            self = this;
 
-            payload = this.$get("user");
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                
+                var result = reader.result;
+                var chunks = result.split(";");
+                var filetype = chunks[0].split("/")[1].split(";")[0]
+                var base64 = chunks[1].replace("base64,", "");
 
-            waitingDialog.show('Sending');
+                var payload = {
+                    filename: filename,
+                    filetype: filetype,
+                    base64: base64
+                };
 
-            this.$http.put('/api/attachment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
-                .then(function (res) {
-                    this.fetchAttachments();
-                    this.resetAttachment();
-                    waitingDialog.hide();
-                },
-                function (err) {
-                    console.log(err);
-            });
+                waitingDialog.show('Sending');
+
+                self.$http.post('/api/attachment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                    .then(function (res) {
+                        self.fetchAttachments();
+                        self.resetAttachment();
+                        waitingDialog.hide();
+                        bootbox.alert("File uploaded successfully!");
+                    },
+                    function (err) {
+                        console.log(err);
+                });
+
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
         },
 
         markCompleted: function(){

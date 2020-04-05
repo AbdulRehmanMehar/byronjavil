@@ -25,14 +25,6 @@ var order_vm = new Vue({
 
     methods: {
 
-        resetComment: function(){
-            this.comment_text = "";
-        },
-
-        closeModal: function(){
-            $('#user-create').modal('hide');
-        },
-
         fetchOrder: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
@@ -143,7 +135,6 @@ var order_vm = new Vue({
             reader.onerror = function (error) {
                 console.log('Error: ', error);
             };
-
             
         }
     }
