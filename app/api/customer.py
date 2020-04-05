@@ -23,7 +23,7 @@ customer_model = api.model("customer_model", {
 
 
 @ns.route('/customers')
-class SupervisorCustomerCollection(Resource):
+class SupervisorCustomerCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
@@ -57,7 +57,7 @@ class SupervisorCustomerCollection(Resource):
 
 
 @ns.route('/customers/<int:_id>')
-class SupervisorCustomer(Resource):
+class SupervisorCustomerResource(Resource):
     
     @api.doc(security='apikey')
     @token_required

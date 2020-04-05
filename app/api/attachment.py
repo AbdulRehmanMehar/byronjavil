@@ -48,6 +48,32 @@ class UploadResource(Resource):
 class OrderUploadResource(Resource):
 
     @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"])
+    def get(self, _id):
+
+        order_dbo = app.order_dbo
+        attachment_dbo = app.attachment_dbo
+
+        user = get_current_user()
+
+        if not order_dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
+
+        response = list()
+
+        attachments = attachment_dbo.read_by_order(_id)
+
+        for attachment in attachments:
+
+            result = model_to_dict(attachment)
+            del result["base64"]
+
+            response.append(result)
+
+        return response
+    
+    @api.doc(security='apikey')
     @ns.expect(upload_model)
     @token_required
     @role_required(["SUPERVISOR", "RESEARCH"])

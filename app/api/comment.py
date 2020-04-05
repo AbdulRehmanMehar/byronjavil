@@ -19,7 +19,7 @@ comment_model = api.model("comment_model", {
 
 
 @ns.route('/order/<int:_id>')
-class OrderCommentCollection(Resource):
+class OrderCommentCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required

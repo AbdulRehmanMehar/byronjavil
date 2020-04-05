@@ -15,12 +15,40 @@ app = server.get_app()
 ns = server.get_namespace("research")
 
 
-@ns.route('/orders/<int:_id>')
-class ResearchOrder(Resource):
+@ns.route('/orders')
+class ResearchOrderCollectionResource(Resource):
     
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["RESEARCH"])
+    def get(self, _id):
+
+        dbo = app.order_dbo
+        user = get_current_user()
+
+        response = list()
+
+        orders = dbo.read_all()
+
+        for order in orders:
+            if dbo.verify_authority(_id, user):
+                
+                result = model_to_dict(order)
+
+                result["date_assigned"] = str(result["date_assigned"])
+                result["due_date"] = str(result["due_date"])
+
+                response.append(result)
+
+        return response
+
+
+@ns.route('/orders/<int:_id>')
+class ResearchOrderResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["RESEARCH"])
     def get(self, _id):
 
         dbo = app.order_dbo

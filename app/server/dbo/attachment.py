@@ -32,6 +32,20 @@ class AttachmentDBO:
 
         return attachment
 
+    def read_by_order(self, order_id):
+        
+        result = list()
+
+        order_attachments = OrderAttachment.select().where(OrderAttachment.order_id==order_id)
+
+        for order_attachment in order_attachments:
+
+            attachment = Attachment.select().where(Attachment.id==order_attachment.attachment_id).get()
+
+            result.append(attachment)
+
+        return result
+
     def delete(self, _id):
 
         attachment = Attachment.select().where(Attachment.id==_id).get()
