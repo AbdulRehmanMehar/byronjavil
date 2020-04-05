@@ -75,7 +75,8 @@ class SupervisorOrderCollection(Resource):
 
         order = dbo.create(**data)
 
-        order_state = OrderState.select().where(OrderState.state==payload["state"]).get()
+        state = "RESEARCH"
+        order_state = OrderState.select().where(OrderState.state==state).get()
         order_type = OrderType.select().where(OrderType.order_type==payload["type"]).get()
 
         order.kind = order_type

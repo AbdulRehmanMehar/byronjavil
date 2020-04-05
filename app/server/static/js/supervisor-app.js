@@ -13,8 +13,7 @@ var orders_vm = new Vue({
             research_id: "",
             data_id: "",
             customer_id: "",
-            type: "",
-            state: ""
+            type: ""
         },
 
         research_users: [],
