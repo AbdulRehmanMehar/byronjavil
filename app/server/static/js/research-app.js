@@ -12,29 +12,26 @@ var vm = new Vue({
     },
 
     ready: function(){
-
+        this.fetchOrders();
     },
 
     methods: {
 
-        // Fetch methods
         fetchOrders: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/research/orders', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/research/orders', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.orders = res.data;
                 }, function(err){
                     console.log(err);
                 })
         },
-
-        // Post methods
-        viewOrder: function(){
+        
+        viewOrder: function(index){
+            var id = this.orders[index].id;
             location.href = "/research/orders/" + id;
         }
-        
-        // Put methods
 
     }
 })

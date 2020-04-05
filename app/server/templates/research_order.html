@@ -229,7 +229,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url_for('auth.login') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('research.research_page') }}">Supervisor</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('research.research_page') }}">Research</a></li>
 
             {% raw %}
             
@@ -410,7 +410,7 @@
                 console.log("click");
 
                 var file = $('#input-b8')[0].files[0];
-                order_vm.postAttachment(file);
+                vm.postAttachment(file);
             })
         });
     </script>

@@ -7,10 +7,11 @@ from flask import Response, send_file, render_template, redirect, url_for, reque
 from flask_login import login_required, current_user
 
 from . import attachment
-from .utils import mime_types
+from .utils import mime_types, role_required
 
 
 @attachment.route('/attachment/<uuid>')
+@login_required
 def file(uuid):
     
     dbo = current_app.attachment_dbo

@@ -53,20 +53,12 @@ var vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('/api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/attachment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.attachments = res.data;
                 }, function(err){
                     console.log(err);
                 })
-        },
-
-        resetAttachment: function(){
-            $("#input-b8").fileinput({
-                rtl: true,
-                dropZoneEnabled: false,
-                allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
-            });
         },
 
         postComment: function(){
@@ -77,7 +69,7 @@ var vm = new Vue({
 
             waitingDialog.show('Sending');
 
-            this.$http.put('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+            this.$http.post('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res) {
                     this.fetchComments();
                     this.resetComment();
@@ -94,7 +86,7 @@ var vm = new Vue({
 
         },
 
-        postAttachment: function(){
+        postAttachment: function(file){
             
             var apiKey = this.apiKey;
             var id = this.orderId;

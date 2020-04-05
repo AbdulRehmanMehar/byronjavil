@@ -53,7 +53,7 @@ var vm = new Vue({
             var apiKey = this.apiKey;
             var id = this.orderId;
 
-            this.$http.get('/api/attachment/order' + id, {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/attachment/order/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.attachments = res.data;
                 }, function(err){

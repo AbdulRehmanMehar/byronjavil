@@ -21,7 +21,7 @@ class ResearchOrderCollectionResource(Resource):
     @api.doc(security='apikey')
     @token_required
     @role_required(["RESEARCH"])
-    def get(self, _id):
+    def get(self):
 
         dbo = app.order_dbo
         user = get_current_user()
@@ -31,7 +31,7 @@ class ResearchOrderCollectionResource(Resource):
         orders = dbo.read_all()
 
         for order in orders:
-            if dbo.verify_authority(_id, user):
+            if dbo.verify_authority(order.id, user):
                 
                 result = model_to_dict(order)
 
