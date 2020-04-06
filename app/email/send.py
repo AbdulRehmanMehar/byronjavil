@@ -35,12 +35,12 @@ def send_mail_template(template_code, order, **kwargs):
     if template_code == "ASSIGN_RESEARCH":
         
         url = "http://{}{}".format(request.host, url_for("research.research_page"))
-        message_content = message.message.format(order.id, order.due_date)
+        message_content = message.message.format(order.id)
     
     if template_code == "ASSIGN_DATA":
         
         url = "http://{}{}".format(request.host, url_for("data.data_page"))
-        message_content = message.message.format(order.id, order.due_date)
+        message_content = message.message.format(order.id)
     
     if template_code == "NOTIFY_MANAGER":
         

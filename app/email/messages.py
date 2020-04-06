@@ -35,13 +35,13 @@ def build_manager():
         {
             "code": "ASSIGN_RESEARCH",
             "subject": "You have been assigned a new order",
-            "message": "You have been assigned order ID {} in the Property Management Addresses System, with a due date {}. Start your research as soon as posible."
+            "message": "You have been assigned order ID {} in the Property Management Addresses System. Start your research as soon as posible."
         },
 
         {
             "code": "ASSIGN_DATA",
             "subject": "You have been assigned a new order",
-            "message": "You have been assigned order ID {} in the Property Management Addresses System, with a due date {}. Start your tasks as soon as posible."
+            "message": "You have been assigned order ID {} in the Property Management Addresses System. Start your tasks as soon as posible."
         },
 
         {
