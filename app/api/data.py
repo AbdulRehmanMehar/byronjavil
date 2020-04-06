@@ -85,33 +85,28 @@ class DataCompleteActionResource(Resource):
 
         return True
 
-
-@ns.route('/orders/<int:_id>/upload-picture')
-class DataUploadPictureResource(Resource):
+    
+@ns.route('/orders/<int:_id>/mark-picture')
+class DataCompleteActionResource(Resource):
     
     @api.doc(security='apikey')
     @token_required
     @role_required(["DATA"])
     def post(self, _id):
 
-        order_dbo = app.order_dbo
-        attachment_dbo = app.attachment_dbo
+        dbo = app.order_dbo
+        user = get_current_user()
 
         payload = api.payload
 
-        user = get_current_user()
-        order = order_dbo.read(_id)
+        picture = payload["picture"]
 
-        if not order_dbo.verify_authority(_id, user):
+        if not dbo.verify_authority(_id, user):
             return 401, "Not authorized in this order"
 
-        attachment = attachment_dbo.create(user, **payload)
-        attachment_dbo.append_to_order(attachment, order)
+        order = dbo.read(_id)
 
-        OrderPicture.create(order=order, attachment=attachment)
+        order.picture = picture
+        order.save()
 
-        response = {
-            "message": "Picture uploaded successfuly!"
-        }
-
-        return response
+        return True

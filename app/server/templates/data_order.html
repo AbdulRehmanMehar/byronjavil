@@ -254,7 +254,15 @@
                 </div>
                 <div class="col-md-12 text-right mb-3" v-if="order.data_completed">
                 </div>
-                <div class="col-md-12 text-right mb-3" v-else>
+                <div class="col-md-6 text-right mb-3" v-else>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" v-model="order.picture" v-on:click="markPicture" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Picture
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6 text-right mb-3" v-else>
                     <button type="button" class="btn btn-success" v-on:click="markCompleted">Mark as Completed</button>
                 </div>
             </div>

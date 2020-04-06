@@ -78,15 +78,16 @@ class Order(BaseModel):
     date_assigned = DateField(default=date.today)
     due_date = DateField(default=date.today)
     
+    research_completed = BooleanField(default=False)
+    data_completed = BooleanField(default=False)
+    picture = BooleanField(default=False)
+
     customer = ForeignKeyField(Customer)
     research_user = ForeignKeyField(User)
     data_user = ForeignKeyField(User)
-    
-    kind = ForeignKeyField(OrderType, null=True)
-    state = ForeignKeyField(OrderState, null=True)
 
-    research_completed = BooleanField(default=False)
-    data_completed = BooleanField(default=False)
+    kind = ForeignKeyField(OrderType, null=True)
+    state = ForeignKeyField(OrderState, null=True)    
     
 
 class Attachment(BaseModel):
