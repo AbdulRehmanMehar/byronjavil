@@ -104,8 +104,8 @@ def logout():
     logout_user()
 
     message = "Logged out successfuly"
-    description = "You have been logout from Mangament System"
-
+    description = "You have been logout from Property Addresses Managament System"
+    
     return render_message(message, description)
 
 

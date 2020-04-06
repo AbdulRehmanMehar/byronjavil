@@ -7,17 +7,56 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+from flask import render_template, request, url_for, current_app
+
 from . import SENDGRID_API_KEY
+from .messages import build_manager
+
+
+def parse_template(username, message, url):
+
+    return render_template("email.html", username=username, message=message, url=url)
 
 def send_mail(from_email, to_emails, subject, content):
 
     message = Mail(from_email=from_email, to_emails=to_emails, subject=subject, html_content=content)
     
     try:
-        sg = SendGridAPIClient('SENDGRID_API_KEY')
+        api_key = current_app.config["SENDGRID_API_KEY"]
+        sg = SendGridAPIClient(api_key)
         response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
     except Exception as e:
         print(e)
+
+def send_mail_template(template_code, order, **kwargs):
+
+    manager = build_manager()
+
+    message = manager.get(template_code)
+
+    if template_code == "ASSIGN_RESEARCH":
+        
+        url = "http://{}{}".format(request.host, url_for("supervisor.supervisor_page"))
+        message_content = message.message.format(order.id, order.due_date)
+    
+    if template_code == "ASSIGN_DATA":
+        
+        url = "http://{}{}".format(request.host, url_for("data.data_page"))
+        message_content = message.message.format(order.id, order.due_date)
+    
+    if template_code == "NOTIFY_MANAGER":
+        
+        url = "http://{}{}".format(request.host, url_for("manager.manager_page"))
+        message_content = message.message.format(order.id)
+
+    username = kwargs["username"]
+
+    from_email = kwargs["from_email"]
+    to_emails = kwargs["to_emails"]
+    subject = message.subject
+
+    content = parse_template(username, message_content, url)
+
+    send_mail(from_email, to_emails, subject, content)
+
+    

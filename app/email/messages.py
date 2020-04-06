@@ -28,7 +28,7 @@ class MessageManager:
                 return message
 
 
-def build_message():
+def build_manager():
 
     result = [
         {
@@ -49,3 +49,13 @@ def build_message():
             "message": "Order ID {} have been finished go to the Property Management Addresses System, to search and create reports."
         }
     ]
+
+    manager = MessageManager()
+
+    for message in result:
+
+        message = Message(message["code"], message["subject"], message["message"])
+
+        manager.append(message)
+
+    return manager

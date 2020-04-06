@@ -7,6 +7,7 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 from app.models import OrderState, OrderType
+from app.email import send_mail_template
 
 from .utils import token_required, role_required
 
@@ -88,6 +89,8 @@ class SupervisorOrderCollection(Resource):
 
         response["date_assigned"] = str(response["date_assigned"])
         response["due_date"] = str(response["due_date"])
+
+        send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username, from_email="admin@pams.com", to_emails=[research_user.email])
 
         return response
 
