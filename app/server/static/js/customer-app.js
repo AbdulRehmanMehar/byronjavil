@@ -69,7 +69,7 @@ var customers_vm = new Vue({
         fetchCustomers: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/supervisor/customers', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/admin/customers', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.customers = res.data;
                 }, function(err){
@@ -88,7 +88,7 @@ var customers_vm = new Vue({
             if (this.edit){
 
                 var id = this.editID;
-                this.$http.put('/api/supervisor/customers/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.put('/api/admin/customers/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchCustomers();
                         this.resetCustomer()
@@ -99,7 +99,7 @@ var customers_vm = new Vue({
                 });
             }
             else {
-                this.$http.post('/api/supervisor/customers', payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.post('/api/admin/customers', payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchCustomers();
                         this.resetCustomer()

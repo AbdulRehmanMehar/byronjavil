@@ -176,7 +176,7 @@ def reset():
 
         OrderType.create(order_type=ORDER_TYPE)
 
-    supervisor_role = UserRole.select().where(UserRole.role=="ADMIN").get()
+    admin_role = UserRole.select().where(UserRole.role=="ADMIN").get()
 
     parameters = {
         "username": "admin",
@@ -185,7 +185,7 @@ def reset():
     }
     parameters["password"] = hash_password(parameters["password"])
 
-    User.create(role_id=supervisor_role.id, **parameters)
+    User.create(role_id=admin_role.id, **parameters)
 
     supervisor_role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
 

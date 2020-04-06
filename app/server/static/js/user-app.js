@@ -67,7 +67,7 @@ var users_vm = new Vue({
         fetchUsers: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/supervisor/users', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/admin/users', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.users = res.data;
                 }, function(err){
@@ -86,7 +86,7 @@ var users_vm = new Vue({
             if (this.edit){
 
                 var username = this.editUsername;
-                this.$http.put('/api/supervisor/users/' + username, payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.put('/api/admin/users/' + username, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchUsers();
                         this.resetUser()
@@ -97,7 +97,7 @@ var users_vm = new Vue({
                 });
             }
             else {
-                this.$http.post('/api/supervisor/users', payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.post('/api/admin/users', payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchUsers();
                         this.resetUser()

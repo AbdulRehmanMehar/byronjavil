@@ -61,7 +61,7 @@ var order_type_vm = new Vue({
         fetchOrderTypes: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/admin/order-type', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.orderTypes = res.data;
                 }, function(err){
@@ -82,7 +82,7 @@ var order_type_vm = new Vue({
             if (this.edit){
 
                 var id = this.editID;
-                this.$http.put('/api/supervisor/order-type/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.put('/api/admin/order-type/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchOrderTypes();
                         this.resetOrderType()
@@ -93,7 +93,7 @@ var order_type_vm = new Vue({
                 });
             }
             else {
-                this.$http.post('/api/supervisor/order-type', payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.post('/api/admin/order-type', payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchOrderTypes();
                         this.resetOrderType()
