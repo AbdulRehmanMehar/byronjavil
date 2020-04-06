@@ -89,10 +89,6 @@
                                 </div>
                                 <div>
                                     <a href="#" v-on:click="viewOrder(index)">View</a>
-                                    <span>-</span>
-                                    <a href="#" data-toggle="modal" data-target="#order-create" v-on:click="editOrder(index)">Edit</a>
-                                    <span>-</span>
-                                    <a href="#" v-on:click="deleteOrder(index)">Delete</a>
                                 </div>
                             </div>
                             <span class="d-block">type: {{ order.kind.order_type }} - state: {{ order.state.state }}</span>

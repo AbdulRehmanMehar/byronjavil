@@ -74,6 +74,7 @@ file_types = {
     "xls": "application/vnd.ms-excel",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
     "vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+    "vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
     "ppt": "application/vnd.ms-powerpoint",
     "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     "mp4": "video/mp4",

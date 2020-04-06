@@ -53,8 +53,6 @@ def all_files(order_id):
 
         filename += "." + filetype
         image_binary = base64.b64decode(attachment.base64)
-
-        print(filename)
         zip_file.write(filename, image_binary)
     
     return send_file(
