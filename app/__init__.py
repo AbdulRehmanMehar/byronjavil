@@ -3,3 +3,4 @@
 
 from .blueprints import *
 from .api import *
+from .email import *
