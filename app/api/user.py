@@ -11,7 +11,7 @@ from .utils import token_required, role_required
 
 api = server.get_api()
 app = server.get_app()
-ns = server.get_namespace("supervisor")
+ns = server.get_namespace("admin")
 
 users_model = api.model("users_model", {
     'username': fields.String(required=True, description='Username'),
@@ -22,11 +22,11 @@ users_model = api.model("users_model", {
 
 
 @ns.route('/users')
-class SupervisorUsersCollection(Resource):
+class AdminUsersCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def get(self):
 
         result = list()
@@ -47,7 +47,7 @@ class SupervisorUsersCollection(Resource):
     @ns.expect(users_model)
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def post(self):
 
         payload = api.payload
@@ -67,12 +67,12 @@ class SupervisorUsersCollection(Resource):
 
 
 @ns.route('/users/<username>')
-class SupervisorUser(Resource):
+class AdminUserResource(Resource):
     
     @ns.expect(users_model)
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def put(self, username):
 
         payload = api.payload
@@ -104,7 +104,7 @@ class SupervisorUser(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def delete(self, username):
 
         dbo = app.user_dbo

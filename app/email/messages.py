@@ -1,4 +1,5 @@
-# app/email/messages.py
+# -*- coding: utf-8 -*-
+# # app/email/messages.py
 
 class Message:
 

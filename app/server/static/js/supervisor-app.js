@@ -336,73 +336,29 @@ var vm = new Vue({
     },
 
     ready: function(){
-        order_type_vm.setKey(this.apiKey);
-        users_vm.setKey(this.apiKey);
-        customers_vm.setKey(this.apiKey);
         orders_vm.setKey(this.apiKey);
-        attachments_vm.setKey(this.apiKey);
-        
-        order_type_vm.fetchOrderTypes();
-        users_vm.fetchUsers();
-        customers_vm.fetchCustomers();
 
         orders_vm.fetchAll();
         
-        this.show('order-type');
+        this.show('orders');
     },
 
     methods: {
 
         show: function(app){
             this.hide();
-            
-            if (app == 'order-type'){
-                order_type_vm.show();
-            }
-
-            if (app == 'users'){
-                users_vm.show();
-            }
-
-            if (app == 'customers'){
-                customers_vm.show();
-            }
 
             if (app == 'orders'){
                 orders_vm.fetchAll();
                 orders_vm.show();
             }
 
-            if (app == 'attachments'){
-                attachments_vm.show();
-            }
-
         },
 
         hide: function(){
-            order_type_vm.hide();
-            users_vm.hide();
-            customers_vm.hide();
             orders_vm.hide();
             attachments_vm.hide();
-        },
-
-        fetchUsers: function(){
-
-        },
-
-        fetchTypes: function(){
-
-        },
-
-        fetchOrders: function(){
-
         }
-
-        // Post methods
-
-
-        // Put methods
 
     }
 })

@@ -11,7 +11,7 @@ from .utils import token_required, role_required
 
 api = server.get_api()
 app = server.get_app()
-ns = server.get_namespace("supervisor")
+ns = server.get_namespace("admin")
 
 order_type_model = api.model("order_type_model", {
     'type': fields.String(required=True, description='Order type')
@@ -19,11 +19,11 @@ order_type_model = api.model("order_type_model", {
 
 
 @ns.route('/order-type')
-class SupervisorOrderTypeCollection(Resource):
+class AdminOrderTypeCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def get(self):
 
         result = list()
@@ -40,7 +40,7 @@ class SupervisorOrderTypeCollection(Resource):
     @ns.expect(order_type_model)
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def post(self):
 
         payload = api.payload
@@ -55,11 +55,11 @@ class SupervisorOrderTypeCollection(Resource):
 
 
 @ns.route('/order-type/<int:_id>')
-class SupervisorOrderType(Resource):
+class AdminOrderTypeResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def get(self, _id):
 
         dbo = app.order_type_dbo
@@ -71,7 +71,7 @@ class SupervisorOrderType(Resource):
     @ns.expect(order_type_model)
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def put(self, _id):
 
         payload = api.payload
@@ -86,7 +86,7 @@ class SupervisorOrderType(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def delete(self, _id):
 
         dbo = app.order_type_dbo

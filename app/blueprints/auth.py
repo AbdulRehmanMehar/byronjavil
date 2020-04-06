@@ -33,7 +33,9 @@ def login():
 
             role = get_current_role()
 
-            if role == "SUPERVISOR/MANAGER":
+            if role == "ADMIN":
+                return redirect(url_for('admin.admin_page'))
+            elif role == "SUPERVISOR/MANAGER":
                 return redirect(url_for('auth.supervisor_manager'))
             elif role == "SUPERVISOR":
                 return redirect(url_for('supervisor.supervisor_page'))
@@ -71,7 +73,9 @@ def login():
     if not _next:
         role = dbo.get_role(username)
 
-        if role == "SUPERVISOR/MANAGER":
+        if role == "ADMIN":
+            return redirect(url_for('admin.admin_page'))
+        elif role == "SUPERVISOR/MANAGER":
             return redirect(url_for('auth.supervisor_manager'))
         elif role == "SUPERVISOR":
             return redirect(url_for('supervisor.supervisor_page'))

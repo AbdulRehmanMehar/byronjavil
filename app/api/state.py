@@ -12,11 +12,11 @@ from .utils import token_required
 
 api = server.get_api()
 app = server.get_app()
-ns = server.get_namespace("supervisor")
+ns = server.get_namespace("admin")
 
 
 @ns.route('/states')
-class SupervisorStateCollection(Resource):
+class AdminStateCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required

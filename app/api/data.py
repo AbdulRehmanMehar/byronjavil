@@ -87,7 +87,7 @@ class DataCompleteActionResource(Resource):
 
     
 @ns.route('/orders/<int:_id>/mark-picture')
-class DataCompleteActionResource(Resource):
+class DataMarkPictureResource(Resource):
     
     @api.doc(security='apikey')
     @token_required

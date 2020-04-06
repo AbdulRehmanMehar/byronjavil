@@ -11,7 +11,7 @@ from .utils import token_required, role_required
 
 api = server.get_api()
 app = server.get_app()
-ns = server.get_namespace("supervisor")
+ns = server.get_namespace("admin")
 
 customer_model = api.model("customer_model", {
     'company': fields.String(required=True, description='Customer company name'),
@@ -23,11 +23,11 @@ customer_model = api.model("customer_model", {
 
 
 @ns.route('/customers')
-class SupervisorCustomerCollectionResource(Resource):
+class AdminCustomerCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def get(self):
 
         result = list()
@@ -44,7 +44,7 @@ class SupervisorCustomerCollectionResource(Resource):
     @ns.expect(customer_model)
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def post(self):
 
         payload = api.payload
@@ -57,11 +57,11 @@ class SupervisorCustomerCollectionResource(Resource):
 
 
 @ns.route('/customers/<int:_id>')
-class SupervisorCustomerResource(Resource):
+class AdminCustomerResource(Resource):
     
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def get(self, _id):
 
         dbo = app.customer_dbo
@@ -72,7 +72,7 @@ class SupervisorCustomerResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def put(self, _id):
 
         payload = api.payload
@@ -85,7 +85,7 @@ class SupervisorCustomerResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    @role_required(["ADMIN"])
     def delete(self, _id):
 
         dbo = app.customer_dbo
