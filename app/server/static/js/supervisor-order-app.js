@@ -73,11 +73,7 @@ var order_vm = new Vue({
         },
 
         resetAttachment: function(){
-            $("#input-b8").fileinput({
-                rtl: true,
-                dropZoneEnabled: false,
-                allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
-            });
+            var fileInput = $("#input-b8").fileinput("reset");
         },
 
         postComment: function(){

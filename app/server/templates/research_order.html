@@ -326,7 +326,7 @@
                     <div class="row tab-container">
                         <div class="col-12">
                             <div dir=rtl class="file-loading">
-                                <input id="input-b8" name="input-b8[]" type="file">
+                                <input id="input-b8" name="input-b8[]" type="file" multiple webkitdirectory>
                             </div>
                         </div>
                     </div>
@@ -404,7 +404,7 @@
 
     <script>
         var fileInput = $("#input-b8").fileinput({
-            rtl: true,
+            browseLabel: 'Select Folder...',
             dropZoneEnabled: false,
             allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
         });
@@ -415,7 +415,10 @@
                 console.log("click");
 
                 var file = $('#input-b8')[0].files[0];
-                vm.postAttachment(file);
+                var files = $('#input-b8')[0].files;
+                var fileArray = Array.from(files);
+                console.log(files);
+                vm.postListAttachment(fileArray);
             })
         });
     </script>
