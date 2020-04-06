@@ -252,16 +252,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 text-right mb-3" v-if="order.data_completed">
-                </div>
-                <div class="col-md-6 text-right mb-3" v-else>
+                <div class="col-md-6 text-right mb-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" v-model="order.picture" value="" id="defaultCheck1" disabled v-if="order.picture">
-                        <input class="form-check-input" type="checkbox" v-model="order.picture" value="" id="defaultCheck1" v-on:click="markPicture" v-else>
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" disabled checked="" v-if="order.picture">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-on:click="markPicture" v-else>
                         <label class="form-check-label" for="defaultCheck1">
                             Picture
                         </label>
                     </div>
+                </div>
+                <div class="col-md-12 text-right mb-3" v-if="order.data_completed">
                 </div>
                 <div class="col-md-6 text-right mb-3" v-else>
                     <button type="button" class="btn btn-success" v-on:click="markCompleted">Mark as Completed</button>

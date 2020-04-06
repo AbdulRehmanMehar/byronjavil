@@ -68,8 +68,6 @@ class DataOrderResource(Resource):
         response["date_assigned"] = str(response["date_assigned"])
         response["due_date"] = str(response["due_date"])
 
-        print(response)
-
         return response
 
 
@@ -89,6 +87,10 @@ class DataCompleteActionResource(Resource):
 
         dbo.set_state(_id, "MANAGEMENT")
 
+        order = dbo.read(_id)
+        order.data_completed = True
+        order.save()
+
         return True
 
     
@@ -107,11 +109,6 @@ class DataMarkPictureResource(Resource):
         if not dbo.verify_authority(_id, user):
             return 401, "Not authorized in this order"
 
-        order = dbo.read(_id)
-
-        order.picture = True
-        order.save()
-
-        print("")
-        print(order.picture)
-        return order.picture
+        dbo.mark_picture(_id)
+        
+        return True

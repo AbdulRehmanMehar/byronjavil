@@ -187,7 +187,7 @@ var vm = new Vue({
             this.$http.post('/api/data/orders/' + id + "/mark-completed", payload, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res) {
                     this.order.picture = res.data;
-                    this.fetchAll();
+                    //this.fetchAll();
                     waitingDialog.hide();
                     bootbox.alert("Order Picture Marked!");
                 },

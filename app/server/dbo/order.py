@@ -63,11 +63,18 @@ class OrderDBO:
     def set_state(self, _id, state):
 
         order = self.read(_id)
-
-        state = "RESEARCH"
         order_state = OrderState.select().where(OrderState.state==state).get()
 
         order.state = order_state
+
+        order.save()
+
+        return True
+
+    def mark_picture(self, _id):
+
+        order = self.read(_id)
+        order.picture = True
 
         order.save()
 

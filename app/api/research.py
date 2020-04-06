@@ -83,8 +83,10 @@ class ResearchCompleteActionResource(Resource):
             return 401, "Not authorized in this order"
 
         dbo.set_state(_id, "DATA_ENTRY")
-
+        
         order = dbo.read(_id)
+        order.research_completed = True
+        order.save()
 
         data_user = order.data_user
 
