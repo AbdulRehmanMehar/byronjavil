@@ -21,6 +21,7 @@ var order_vm = new Vue({
         this.resetAttachment();
         this.fetchAttachments();
         this.fetchComments();
+        this.resetAttachment();
     },
 
     methods: {

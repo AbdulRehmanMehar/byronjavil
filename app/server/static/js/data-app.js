@@ -12,7 +12,7 @@ var vm = new Vue({
     },
 
     ready: function(){
-
+        this.fetchOrders();
     },
 
     methods: {

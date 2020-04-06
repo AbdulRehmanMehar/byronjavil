@@ -14,6 +14,10 @@ api = server.get_api()
 app = server.get_app()
 ns = server.get_namespace("data")
 
+picture_model = api.model("picture_model", {
+    'picture': fields.Boolean(required=True, description='Picture value')
+})
+
 
 @ns.route('/orders')
 class DataOrderCollectionResource(Resource):
@@ -64,6 +68,8 @@ class DataOrderResource(Resource):
         response["date_assigned"] = str(response["date_assigned"])
         response["due_date"] = str(response["due_date"])
 
+        print(response)
+
         return response
 
 
@@ -89,6 +95,7 @@ class DataCompleteActionResource(Resource):
 @ns.route('/orders/<int:_id>/mark-picture')
 class DataMarkPictureResource(Resource):
     
+    @ns.expect(picture_model)
     @api.doc(security='apikey')
     @token_required
     @role_required(["DATA"])
@@ -97,16 +104,14 @@ class DataMarkPictureResource(Resource):
         dbo = app.order_dbo
         user = get_current_user()
 
-        payload = api.payload
-
-        picture = payload["picture"]
-
         if not dbo.verify_authority(_id, user):
             return 401, "Not authorized in this order"
 
         order = dbo.read(_id)
 
-        order.picture = picture
+        order.picture = True
         order.save()
 
-        return True
+        print("")
+        print(order.picture)
+        return order.picture

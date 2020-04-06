@@ -17,12 +17,16 @@ var vm = new Vue({
     },
 
     ready: function(){
-        this.fetchOrder();
-        this.fetchAttachments();
-        this.fetchComments();
+        this.fetchAll();
     },
 
     methods: {
+
+        fetchAll: function(){
+            this.fetchOrder();
+            this.fetchAttachments();
+            this.fetchComments();  
+        },
 
         downloadAll: function(){
             var id = this.order.id;
@@ -73,7 +77,7 @@ var vm = new Vue({
 
             waitingDialog.show('Sending');
 
-            this.$http.put('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+            this.$http.post('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res) {
                     this.fetchComments();
                     this.resetComment();
@@ -133,6 +137,12 @@ var vm = new Vue({
         },
 
         markCompleted: function(){
+
+            var apiKey = this.apiKey;
+            var id = this.order.id;
+
+            var payload = {};
+
             var self = this;
             bootbox.confirm({
                 message: "Do you want to mark this data entry as completed?",
@@ -154,7 +164,6 @@ var vm = new Vue({
                         self.$http.post('/api/data/orders/' + id + "/mark-completed", payload, {headers: {'X-API-KEY': apiKey}})
                             .then(function (res) {
                                 self.fetchAll();
-                                self.resetAttachment();
                                 waitingDialog.hide();
                                 bootbox.alert("Data Marked as Completed!");
                             },
@@ -164,7 +173,30 @@ var vm = new Vue({
                     }
                 }
             });
+        },
+
+        markPicture: function(){
+
+            var apiKey = this.apiKey;
+            var id = this.order.id;
+            
+            var payload = {picture: true};
+
+            waitingDialog.show('Sending');
+
+            this.$http.post('/api/data/orders/' + id + "/mark-completed", payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.order.picture = res.data;
+                    this.fetchAll();
+                    waitingDialog.hide();
+                    bootbox.alert("Order Picture Marked!");
+                },
+                function (err) {
+                    console.log(err);
+            });
+
         }
 
     }
 })
+

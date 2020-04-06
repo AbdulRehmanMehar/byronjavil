@@ -21,6 +21,7 @@ var vm = new Vue({
         this.resetAttachment();
         this.fetchAttachments();
         this.fetchComments();
+        this.resetAttachment();
     },
 
     methods: {
@@ -199,6 +200,12 @@ var vm = new Vue({
         },
 
         markCompleted: function(){
+
+            var apiKey = this.apiKey;
+            var id = this.order.id;
+
+            var payload = {};
+            
             var self = this;
             bootbox.confirm({
                 message: "Do you want to mark this research as completed?",

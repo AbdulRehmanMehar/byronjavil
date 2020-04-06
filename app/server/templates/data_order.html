@@ -256,7 +256,8 @@
                 </div>
                 <div class="col-md-6 text-right mb-3" v-else>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" v-model="order.picture" v-on:click="markPicture" value="" id="defaultCheck1">
+                        <input class="form-check-input" type="checkbox" v-model="order.picture" value="" id="defaultCheck1" disabled v-if="order.picture">
+                        <input class="form-check-input" type="checkbox" v-model="order.picture" value="" id="defaultCheck1" v-on:click="markPicture" v-else>
                         <label class="form-check-label" for="defaultCheck1">
                             Picture
                         </label>
@@ -270,14 +271,13 @@
 
         {% endraw %}
 
+        <br>
+
         <div class="container">
             <div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="picture-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload Picture</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
@@ -404,24 +404,6 @@
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/data-order-app.js') }}"></script>
-
-    <script>
-        var fileInput = $("#input-b8").fileinput({
-            rtl: true,
-            dropZoneEnabled: false,
-            allowedFileExtensions: ["bmp", "jpg", "png", "gif"]
-        });
-
-        $(document).ready(function() {    
-
-            $('button.fileinput-upload').on('click', function(event){
-                console.log("click");
-
-                var file = $('#input-b8')[0].files[0];
-                vm.postPicture(file);
-            })
-        });
-    </script>
 
 </body>
 </html>
