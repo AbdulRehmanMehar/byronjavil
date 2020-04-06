@@ -97,7 +97,6 @@ class DataCompleteActionResource(Resource):
 @ns.route('/orders/<int:_id>/mark-picture')
 class DataMarkPictureResource(Resource):
     
-    @ns.expect(picture_model)
     @api.doc(security='apikey')
     @token_required
     @role_required(["DATA"])
