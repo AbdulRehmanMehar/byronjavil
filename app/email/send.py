@@ -36,7 +36,7 @@ def send_mail_template(template_code, order, **kwargs):
 
     if template_code == "ASSIGN_RESEARCH":
         
-        url = "http://{}{}".format(request.host, url_for("supervisor.supervisor_page"))
+        url = "http://{}{}".format(request.host, url_for("research.research_page"))
         message_content = message.message.format(order.id, order.due_date)
     
     if template_code == "ASSIGN_DATA":

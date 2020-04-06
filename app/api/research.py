@@ -7,6 +7,7 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 from app.models import OrderState, OrderType
+from app.email import send_mail_template
 
 from .utils import token_required, role_required, get_current_user
 
@@ -82,5 +83,11 @@ class ResearchCompleteActionResource(Resource):
             return 401, "Not authorized in this order"
 
         dbo.set_state(_id, "DATA_ENTRY")
+
+        order = dbo.read(_id)
+
+        data_user = order.data_user
+
+        send_mail_template("ASSIGN_DATA", order, username=data_user.username, from_email="admin@pams.com", to_emails=[data_user.email])
 
         return True

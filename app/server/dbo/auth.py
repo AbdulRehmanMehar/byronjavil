@@ -23,6 +23,20 @@ class UserDBO:
 
         return user
 
+    def read_by_role(self, role):
+
+        role = UserRole.select().where(UserRole.role==role).get()
+
+        users = User.select().where(User.role_id==role.id)
+
+        result = list()
+
+        for user in users:
+
+            result.append(user)
+        
+        return result
+
     def read_all(self):
 
         result = list()
