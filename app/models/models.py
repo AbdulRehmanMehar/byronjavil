@@ -152,7 +152,7 @@ def reset():
     db.drop_tables(models)
     db.create_tables(models)
 
-    ROLES = ["SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"]
+    ROLES = ["ADMIN", "SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"]
 
     STATES = ["RESEARCH", "DATA_ENTRY", "MANAGEMENT", "ARCHIVE"]
 
@@ -176,12 +176,23 @@ def reset():
 
         OrderType.create(order_type=ORDER_TYPE)
 
-    supervisor_role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
+    supervisor_role = UserRole.select().where(UserRole.role=="ADMIN").get()
 
     parameters = {
         "username": "admin",
         "password": "prosperity2020",
         "email": "admin@admin.com"
+    }
+    parameters["password"] = hash_password(parameters["password"])
+
+    User.create(role_id=supervisor_role.id, **parameters)
+
+    supervisor_role = UserRole.select().where(UserRole.role=="SUPERVISOR").get()
+
+    parameters = {
+        "username": "supervisor",
+        "password": "prosperity2020",
+        "email": "research@pams.com"
     }
     parameters["password"] = hash_password(parameters["password"])
 
