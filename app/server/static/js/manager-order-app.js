@@ -13,7 +13,7 @@ var vm = new Vue({
         comments: [],
         attachments: [],
 
-        comment_text = "",
+        comment_text: "",
     },
 
     ready: function(){
@@ -43,6 +43,12 @@ var vm = new Vue({
                 }, function(err){
                     console.log(err);
                 })
+        },
+
+        resetComment: function(){
+
+            this.comment_text = "";
+
         },
 
         fetchComments: function(){
