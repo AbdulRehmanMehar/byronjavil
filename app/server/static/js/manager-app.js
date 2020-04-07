@@ -39,7 +39,11 @@ var vm = new Vue({
                     console.log(orders)
 
                     $('#orders-table').DataTable({
-                        data: orders
+                        data: orders,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
                     } );
                 }, function(err){
                     console.log(err);
