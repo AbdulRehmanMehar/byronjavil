@@ -36,14 +36,18 @@ class DataOrderCollectionResource(Resource):
         orders = dbo.read_all()
 
         for order in orders:
-            if dbo.verify_authority(order.id, user):
+            if not dbo.verify_authority(order.id, user):
+                continue
+
+            if not order.research_completed:
+                continue
                 
-                result = model_to_dict(order)
+            result = model_to_dict(order)
 
-                result["date_assigned"] = str(result["date_assigned"])
-                result["due_date"] = str(result["due_date"])
+            result["date_assigned"] = str(result["date_assigned"])
+            result["due_date"] = str(result["due_date"])
 
-                response.append(result)
+            response.append(result)
 
         return response
 
