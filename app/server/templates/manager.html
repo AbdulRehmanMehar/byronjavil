@@ -9,6 +9,7 @@
     <title>Supervisor/Manager</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/datatables.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
 
     <style>
@@ -65,36 +66,66 @@
         </div>
     </header>
 
-    <main role="main">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('auth.login') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('manager.manager_page') }}">Manager</a></li>
+        </ol>
+    </nav>
 
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1>Manager Page</h1>
-            <p class="lead text-muted">
-            Something short and leading about the 
-            collection below—its contents, the creator, etc. Make it short and 
-            sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            <p>
-                <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-            </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="my-3 p-3 bg-white rounded shadow-sm">
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Orders</h6>
+                    
+                    {% raw %}
+        
+                    <table id="orders-table" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+        
+                    {% endraw %}
+        
+                </div>
+            </div>
+
         </div>
-    </section>
-
-    </main>
-
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-            <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="https://getbootstrap.com/docs/4.4/getting-started/introduction/">getting started guide</a>.</p>
-        </div>
-    </footer>
+    </div>
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='js/manager-app.js') }}"></script>
 
 </body>
 </html>
