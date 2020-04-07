@@ -96,6 +96,8 @@ class DataCompleteActionResource(Resource):
         order.data_completed = True
         order.save()
 
+        dbo = app.user_dbo
+
         users = dbo.read_all()
 
         for user in users:
