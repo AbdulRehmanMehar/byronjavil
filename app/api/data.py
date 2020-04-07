@@ -7,6 +7,7 @@ from playhouse.shortcuts import model_to_dict
 
 from app.server import server
 from app.models import OrderState, OrderType, OrderPicture
+from app.email import send_mail_template
 
 from .utils import token_required, role_required, get_current_user
 
@@ -91,6 +92,16 @@ class DataCompleteActionResource(Resource):
         order.data_completed = True
         order.save()
 
+        emails = list()
+
+        users = dbo.read_all()
+
+        for user in users:
+
+            if user.role.role == "MANAGER" or user.role.role == "SUPERVISOR/MANAGER":
+
+                send_mail_template("NOTIFY_MANAGER", order, username=user.username, from_email="admin@pams.com", to_emails=[user.email])
+        
         return True
 
     
