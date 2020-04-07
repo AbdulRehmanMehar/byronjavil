@@ -12,40 +12,80 @@ var vm = new Vue({
         order: {},
         comments: [],
         attachments: [],
+
+        comment_text = "",
     },
 
     ready: function(){
-
+        this.fetchAll();
     },
 
     methods: {
 
-        // Fetch methods
-        fetchOrder: function(){
+        downloadAll: function(){
+            var id = this.order.id;
+            location.href = "/attachment/" + id + "/download-all";
+        },
 
+        fetchAll: function(){
+            this.fetchOrder();
+            this.fetchAttachments();
+            this.fetchComments();
+        },
+
+        fetchOrder: function(){
+            var apiKey = this.apiKey;
+            var id = this.orderId;
+
+            this.$http.get('/api/manager/orders/' + id, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.order = res.data;
+                }, function(err){
+                    console.log(err);
+                })
         },
 
         fetchComments: function(){
+            var apiKey = this.apiKey;
+            var id = this.orderId;
 
+            this.$http.get('/api/comment/order/' + id, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.comments = res.data;
+                }, function(err){
+                    console.log(err);
+                })
         },
 
         fetchAttachments: function(){
+            var apiKey = this.apiKey;
+            var id = this.orderId;
 
+            this.$http.get('/api/attachment/order/' + id, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.attachments = res.data;
+                }, function(err){
+                    console.log(err);
+                })
         },
 
-        // Post methods
-        pushComment: function(){
+        postComment: function(){
+            var apiKey = this.apiKey;
+            var id = this.orderId;
 
-        },
+            payload = {text: this.comment_text};
 
-        pushAttachment: function(){
+            waitingDialog.show('Sending');
 
-        },
-
-        markCompleted: function(){
-            
+            this.$http.post('/api/comment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.fetchComments();
+                    this.resetComment();
+                    waitingDialog.hide();
+                },
+                function (err) {
+                    console.log(err);
+            });
         }
-        // Put methods
-
     }
 })
