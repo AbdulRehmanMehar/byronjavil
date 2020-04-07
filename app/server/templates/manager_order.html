@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="ncarrasquel">
-    <title>Supervisor/Manager</title>
+    <title>Manager</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
@@ -227,7 +227,13 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url_for('auth.login') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('supervisor.supervisor_page') }}">Supervisor</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('manager.manager_page') }}">Manager</a></li>
+
+            {% raw %}
+            
+            <li class="breadcrumb-item"><a href="#">{{ order.address }}</a></li>
+            
+            {% endraw %}
         </ol>
     </nav>
 
@@ -235,21 +241,29 @@
 
         <br>
 
+        {% raw %}
+
         <div class="container">
-            <div class="row">
+            <div class="row border rounded">
                 <div class="col-md-12">
-                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="row no-gutters overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-primary">World</strong>
-                            <h3 class="mb-0">Featured post</h3>
-                            <div class="mb-1 text-muted">Nov 12</div>
-                            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="stretched-link">Continue reading</a>
+                            <h3 class="mb-0">{{ order.address }} ({{ order.id }})</h3>
+                            <p class="card-text mb-auto">Due date: {{ order.due_date }}</p>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 text-right mb-3" v-if="order.research_completed">
+                </div>
+                <div class="col-md-12 text-right mb-3" v-else>
+                    <button type="button" class="btn btn-success" v-on:click="markCompleted">Mark as Completed</button>
+                </div>
             </div>
         </div>
+
+        {% endraw %}
+
+        <br>
 
         <div class="container">
             <div>
@@ -275,33 +289,27 @@
                                 <br>
                                 <div class="comment-box add-comment">
                                     <span class="commenter-name">
-                                        <input type="text" placeholder="Add a comment" name="Add Comment">
-                                        <button type="submit" class="btn btn-default">Comment</button>
-                                        <button type="cancel" class="btn btn-default">Cancel</button>
+                                        <textarea type="text" v-model="comment_text" style="height: 115px;" placeholder="Add a comment" name="Add Comment"></textarea>
+                                        <button type="submit" v-on:click="postComment" class="btn btn-default">Comment</button>
+                                        <button type="cancel" v-on:click="resetComment" class="btn btn-default">Cancel</button>
                                     </span>
                                 </div>
         
                                 <br>
         
-                                <div class="comment-box">
-                                    <span class="commenter-pic">
-                                    </span>
-                                    <span class="commenter-name">
-                                        <a href="#">Happy uiuxStream</a> <span class="comment-time">2 hours ago</span>
-                                    </span>       
-                                    <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci iaculis ac.</p>
-                                </div>
-        
-                                <div class="comment-box">
-                                    <span class="commenter-pic">
-                                    </span>
-                                    <span class="commenter-name">
-                                        <a href="#">Happy uiuxStream</a> <span class="comment-time">2 hours ago</span>
-                                    </span>       
-                                    <p class="comment-txt more">Suspendisse massa enim, condimentum sit amet maximus quis, pulvinar sit amet ante. Fusce eleifend dui mi, blandit vehicula orci iaculis ac.</p>
-                                </div>
+                                {% raw %}
                                 
-        
+                                <div class="comment-box" v-for="(index, comment) in comments">
+                                    <span class="commenter-pic">
+                                    </span>
+                                    <span class="commenter-name">
+                                        <a href="#">{{ comment.user.username }}</a>({{ comment.user.role.role }}) <span class="comment-time"> {{ comment.created_date }}</span>
+                                    </span>       
+                                    <p class="comment-txt more">{{ comment.text }}</p>
+                                </div>
+
+                                {% endraw %}
+
                             </div>
                         </div>
                     </div>
@@ -311,7 +319,43 @@
             <div class="tab-pane fade" id="attachments" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     <div class="row tab-container">
-                        Attachments in here
+                        <div class="col-md-12 text-right mb-3">
+                            {% raw %}
+
+                            <a v-on:click="downloadAll" style="color: white;" href="#" class="btn btn-info" role="button" aria-pressed="true">Download All</a>
+
+                            {% endraw %}
+                        </div>
+                        <div class="col-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Filename</th>
+                                        <th scope="col">Filetype</th>
+                                        <th scope="col">Uploaded by</th>
+                                        <th scope="col">Uploaded date</th>
+                                        <th scope="col">Download</th>
+                                     </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% raw %}
+                                    
+                                    <tr v-for="(index, attachment) in attachments">
+                                        <th scope="row">{{ index + 1 }}</th>
+                                        <td>{{ attachment.filename }}</td>
+                                        <td>{{ attachment.filetype }}</td>
+                                        <td>{{ attachment.username }} ({{ attachment.userrole }})</td>
+                                        <td>{{ attachment.created_date  }}</td>
+                                        <td><a v-bind:href="attachment.url">Download</a></td>
+                                    </tr>
+                                    
+                                    {% endraw %}
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,7 +376,9 @@
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
+    
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
