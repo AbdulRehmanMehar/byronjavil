@@ -13,7 +13,7 @@ var vm = new Vue({
     },
 
     ready: function(){
-
+        this.fetchOrders();
     },
 
     methods: {
@@ -28,6 +28,24 @@ var vm = new Vue({
         },
 
         fetchOrders: function(){
+
+            var apiKey = this.apiKey;
+            var url = "/api/manager/orders";
+
+            this.$http.get(url, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    var orders = res.data.data;
+
+                    console.log(orders)
+
+                    $('#orders-table').DataTable({
+                        data: orders
+                    } );
+                }, function(err){
+                    console.log(err);
+                })
+
+            
 
         }
 

@@ -21,24 +21,40 @@ class ManagerOrderCollectionResource(Resource):
     @api.doc(security='apikey')
     @token_required
     @role_required(["MANAGER", "SUPERVISOR/MANAGER"])
-    def get(self, _id):
+    def get(self):
 
         dbo = app.order_dbo
         user = get_current_user()
 
-        response = list()
+        response = dict()
 
         orders = dbo.read_all()
 
+        order_list = list()
+
         for order in orders:
-            if dbo.verify_authority(_id, user):
-                
-                result = model_to_dict(order)
 
-                result["date_assigned"] = str(result["date_assigned"])
-                result["due_date"] = str(result["due_date"])
+            order_id = order.id
+            address = order.address
+            due_date = str(order.due_date)
+            company = order.customer.company
+            research = order.research_user.username
+            data = order.data_user.username
+            state = order.state.state
 
-                response.append(result)
+            url = '<a href="/manager/orders/{}">View</a>'.format(order_id)
+
+            result = [order_id, address, due_date, company, research, data, state, url]
+            # result = model_to_dict(order)
+
+            # result["date_assigned"] = str(result["date_assigned"])
+            # result["due_date"] = str(result["due_date"])
+
+            # response.append(result)
+
+            order_list.append(result)
+
+        response["data"] = order_list
 
         return response
 

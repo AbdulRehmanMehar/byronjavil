@@ -12,3 +12,4 @@ from .order import *
 from .comment import *
 from .research import *
 from .data import *
+from .manager import *
