@@ -1,24 +1,24 @@
-<div  id="customers-app" class="row" v-show="visible">
+<div  id="companies-app" class="row" v-show="visible">
     <div class="col-md-10">
         <div class="my-3 p-3 bg-white rounded shadow-sm">
-            <h6 class="border-bottom border-gray pb-2 mb-0">Customers</h6>
+            <h6 class="border-bottom border-gray pb-2 mb-0">Companies</h6>
             
             {% raw %}
 
-            <div class="media text-muted pt-3" v-for="(index, customer) in customers">
+            <div class="media text-muted pt-3" v-for="(index, company) in companies">
                 <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <div>
-                            <strong class="text-gray-dark">{{ customer.company }}</strong> (<a v-bind:href="customer.website">{{ customer.website }}</a>)
+                            <strong class="text-gray-dark">{{ company.company }}</strong> (<a v-bind:href="company.website">{{ company.website }}</a>)
                         </div>
                         <div>
-                            <a href="#" data-toggle="modal" data-target="#customer-create" v-on:click="editCustomer(index)">Edit</a>
+                            <a href="#" data-toggle="modal" data-target="#company-create" v-on:click="editCompany(index)">Edit</a>
                             <span>-</span>
-                            <a href="#" v-on:click="deleteCustomer(index)">Delete</a>
+                            <a href="#" v-on:click="deleteCompany(index)">Delete</a>
                         </div>
                     </div>
-                    <span class="d-block">code: {{ customer.client_code }} - user: {{ customer.user }}</span>
+                    <span class="d-block">code: {{ company.client_code.code }} - user: {{ company.user }}</span>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
         <br>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#customer-create">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#company-create">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                 Create
                 </a>
@@ -40,53 +40,61 @@
         </ul>
     </div>
 
-    <!-- Customers modal -->
+    <!-- Companies modal -->
 
-    <div class="modal" tabindex="-1" id="customer-create" role="dialog">
+    <div class="modal" tabindex="-1" id="company-create" role="dialog">
         <div class="modal-dialog" role="document">
-            <form class="needs-validation" id="customer-form" novalidate="">
+            <form class="needs-validation" id="company-form" novalidate="">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Customer</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetCustomer">
+                        <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Company</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetCompany">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h4 class="mb-3">Customer Information</h4>
+                        <h4 class="mb-3">Company Information</h4>
                         <p>Fill in the following.</p>
                         <div class="mb-3">
                             <label for="company">Company</label>
-                            <input type="text" class="form-control" id="company" placeholder="Company name..." required="" v-model="customer.company">
+                            <input type="text" class="form-control" id="company" placeholder="Company name..." required="" v-model="company.company">
                             <div class="invalid-feedback">
                                 Please enter company name.
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="company">Client Code</label>
-                            <input type="text" class="form-control" id="client-code" placeholder="Client code..." required="" v-model="customer.client_code">
-                            <div class="invalid-feedback">
-                                Please enter client code.
-                            </div>
+                            <label for="client_code">Client code</label>
+                                <select class="custom-select d-block w-100" id="client_code" required="" v-model="company.code">
+                                    
+                                    {% raw %}
+                                    
+                                    <option v-for="(index, client_code) in client_codes">{{ client_code.code }}</option>
+                                    
+                                    {% endraw %}
+                                    
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a customer.
+                                </div>
                         </div>
                         <div class="mb-3">
                             <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" placeholder="http://..." required="" v-model="customer.website">
+                            <input type="text" class="form-control" id="website" placeholder="http://..." required="" v-model="company.website">
                             <div class="invalid-feedback">
                                 Please enter company website.
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="customer-user">User</label>
-                                <input type="text" class="form-control" id="customer-user" placeholder="" required="" v-model="customer.user">
+                                <label for="company-user">User</label>
+                                <input type="text" class="form-control" id="company-user" placeholder="" required="" v-model="company.user">
                                 <div class="invalid-feedback">
                                     Please enter username.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="customer-password">Password</label>
-                                <input type="password" class="form-control" id="customer-user" placeholder="" required="" v-model="customer.password">
+                                <label for="company-password">Password</label>
+                                <input type="password" class="form-control" id="company-user" placeholder="" required="" v-model="company.password">
                                 <div class="invalid-feedback">
                                     Please enter password.
                                 </div>
@@ -94,9 +102,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" v-on:click="updateCustomer" v-if="edit">Update</button>
-                        <button type="button" class="btn btn-primary" v-on:click="createCustomer" v-else>Create</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetCustomer">Close</button>
+                        <button type="button" class="btn btn-primary" v-on:click="updateCompany" v-if="edit">Update</button>
+                        <button type="button" class="btn btn-primary" v-on:click="createCompany" v-else>Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetCompany">Close</button>
                     </div>
                 </div>
             </form>

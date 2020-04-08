@@ -19,12 +19,12 @@ var vm = new Vue({
         order_type_vm.setKey(this.apiKey);
         users_vm.setKey(this.apiKey);
         client_code_vm.setKey(this.apiKey);
-        customers_vm.setKey(this.apiKey);
+        companies_vm.setKey(this.apiKey);
         
         order_type_vm.fetchOrderTypes();
         users_vm.fetchUsers();
         client_code_vm.fetchClientCodes();
-        customers_vm.fetchCustomers();
+        companies_vm.fetchCompanies();
         
         this.show('order-type');
     },
@@ -46,7 +46,7 @@ var vm = new Vue({
                 client_code_vm.show();
             }
 
-            if (app == 'customers'){
+            if (app == 'companies'){
                 customers_vm.show();
             }
 

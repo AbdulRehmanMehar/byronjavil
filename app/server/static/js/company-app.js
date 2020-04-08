@@ -1,20 +1,22 @@
-// customer-app.js
+// company-app.js
 
-var customers_vm = new Vue({
-    el: '#customers-app',
+var companies_vm = new Vue({
+    el: '#companies-app',
 
     data: {
         visible: true,
-        customers: [],
+        companies: [],
         apiKey: null,
 
-        customer: {
+        company: {
             company: "",
             client_code: "",
             website: "",
             user: "",
             password: ""
         },
+
+        client_codes: [],
 
         edit: false,
         editID: null
@@ -32,6 +34,7 @@ var customers_vm = new Vue({
 
         show: function(){
             this.visible = true;
+            this.fetchClientCodes();
         },
 
         setKey: function(key){
@@ -39,12 +42,12 @@ var customers_vm = new Vue({
         },
 
         closeModal: function(){
-            $('#customer-create').modal('hide');
+            $('#company-create').modal('hide');
         },
 
-        createCustomer: function(){
+        createCompany: function(){
 
-            var form = document.getElementById('customer-form');
+            var form = document.getElementById('company-form');
 
             if (form.checkValidity() === true) {
                 this.closeModal();
@@ -54,9 +57,9 @@ var customers_vm = new Vue({
 
         },
 
-        updateCustomer: function(){
+        updateCompany: function(){
 
-            var form = document.getElementById('customer-form');
+            var form = document.getElementById('company-form');
 
             if (form.checkValidity() === true) {
                 this.closeModal();
@@ -66,12 +69,23 @@ var customers_vm = new Vue({
 
         },
 
-        fetchCustomers: function(){
+        fetchCompanies: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/admin/customers', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/admin/companies', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.customers = res.data;
+                    this.companies = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
+
+        fetchClientCodes: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/admin/client-code', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.client_codes = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -81,17 +95,17 @@ var customers_vm = new Vue({
             
             var apiKey = this.apiKey;
 
-            payload = this.$get("customer");
+            payload = this.$get("company");
 
             waitingDialog.show('Sending');
 
             if (this.edit){
 
                 var id = this.editID;
-                this.$http.put('/api/admin/customers/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.put('/api/admin/companies/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
-                        this.fetchCustomers();
-                        this.resetCustomer()
+                        this.fetchCompanies();
+                        this.resetCompanies();
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -99,10 +113,10 @@ var customers_vm = new Vue({
                 });
             }
             else {
-                this.$http.post('/api/admin/customers', payload, {headers: {'X-API-KEY': apiKey}})
+                this.$http.post('/api/admin/companies', payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
-                        this.fetchCustomers();
-                        this.resetCustomer()
+                        this.fetchCompanies();
+                        this.resetCompany()
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -115,26 +129,26 @@ var customers_vm = new Vue({
 
         resetForm: function(){
             
-            var form = document.getElementById('customer-form');
+            var form = document.getElementById('company-form');
             form.classList.remove("was-validated");
         },
 
-        editCustomer: function(index){
+        editCompany: function(index){
 
             var data = {
-                company: this.customers[index].company,
-                client_code: this.customers[index].client_code,
-                website: this.customers[index].website,
-                user: this.customers[index].user,
-                password: this.customers[index].password
+                company: this.companies[index].company,
+                client_code: this.companies[index].client_code.code,
+                website: this.companies[index].website,
+                user: this.companies[index].user,
+                password: this.companies[index].password
             };
             
-            this.customer = data;
+            this.company = data;
             this.edit = true;
-            this.editID = this.customers[index].id;
+            this.editID = this.companies[index].id;
         },
 
-        resetCustomer: function(){
+        resetCompany: function(){
             
             var data = {
                 company: "",
@@ -144,7 +158,7 @@ var customers_vm = new Vue({
                 password: ""
             };
 
-            this.customer = data;
+            this.companies = data;
 
             this.edit = false;
             this.editID = null;
@@ -152,14 +166,14 @@ var customers_vm = new Vue({
             this.resetForm();
         },
 
-        deleteCustomer: function(index){
+        deleteCompany: function(index){
            
-            var id = this.customers[index].id;
+            var id = this.companies[index].id;
             var apiKey = this.apiKey;
             var self = this;
             
             bootbox.confirm({
-                message: "Do you want to delete this customer?",
+                message: "Do you want to delete this company?",
                 buttons: {
                     confirm: {
                         label: 'Yes',
@@ -175,9 +189,9 @@ var customers_vm = new Vue({
 
                         waitingDialog.show('Sending');
 
-                        self.$http.delete('/api/supervisor/customers/' + id, {headers: {'X-API-KEY': apiKey}})
+                        self.$http.delete('/api/admin/companies/' + id, {headers: {'X-API-KEY': apiKey}})
                             .then(function (res) {
-                                self.fetchCustomers();
+                                self.fetchCompanies();
                                 waitingDialog.hide();
                             },
                             function (err) {
