@@ -57,14 +57,14 @@
                         <p>Fill in the following.</p>
                         <div class="mb-3">
                             <label for="company">Company</label>
-                            <input type="text" class="form-control" id="company" placeholder="Company name..." required="" v-model="company.company">
+                            <input type="text" class="form-control" id="company" placeholder="Company name..." required="" v-model="company.name">
                             <div class="invalid-feedback">
                                 Please enter company name.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="client_code">Client code</label>
-                                <select class="custom-select d-block w-100" id="client_code" required="" v-model="company.code">
+                                <select class="custom-select d-block w-100" id="client_code" required="" v-model="company.client_code">
                                     
                                     {% raw %}
                                     

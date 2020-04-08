@@ -47,7 +47,7 @@ var vm = new Vue({
             }
 
             if (app == 'companies'){
-                customers_vm.show();
+                companies_vm.show();
             }
 
         },
@@ -56,7 +56,7 @@ var vm = new Vue({
             order_type_vm.hide();
             users_vm.hide();
             client_code_vm.hide();
-            customers_vm.hide();
+            companies_vm.hide();
         }
 
     }

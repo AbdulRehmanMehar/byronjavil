@@ -150,7 +150,7 @@ var client_code_vm = new Vue({
 
                         waitingDialog.show('Sending');
 
-                        self.$http.delete('/api/supervisor/client-code/' + id, {headers: {'X-API-KEY': apiKey}})
+                        self.$http.delete('/api/admin/client-code/' + id, {headers: {'X-API-KEY': apiKey}})
                             .then(function (res) {
                                 self.fetchClientCodes();
                                 waitingDialog.hide();

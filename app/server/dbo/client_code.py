@@ -8,7 +8,7 @@ class ClientCodeDBO:
 
     def create(self, code):
 
-        client_code = ClientCode.create(client_code=code)
+        client_code = ClientCode.create(code=code)
 
         return client_code
 
