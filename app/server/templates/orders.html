@@ -92,9 +92,9 @@
                         <div class="mb-3">
                             <label for="role">Assign Company</label>
                             {% raw %}
-                            <select class="custom-select d-block w-100" id="customer" required="" v-model="order.customer_id">
+                            <select class="custom-select d-block w-100" id="company" required="" v-model="order.company_id">
                                 
-                                <option v-for="(index, customer) in customers" v-bind:value="customer.id">{{ customer.id }} - ({{ customer.company }})</option>
+                                <option v-for="(index, company) in companies" v-bind:value="company.id">{{ company.id }} - ({{ company.name }})</option>
                                 
                             </select>
                             {% endraw %}
@@ -115,7 +115,14 @@
                                     
                                 </select>
                                 <div class="invalid-feedback">
-                                    Please select a customer.
+                                    Please select an order type.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="due_date">Due Date</label>
+                                <input id="datepicker" required="" width="216" v-model="order.assigned_date"/>
+                                <div class="invalid-feedback">
+                                    Please select a due date.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">

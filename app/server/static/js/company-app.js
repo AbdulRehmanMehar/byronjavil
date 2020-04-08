@@ -9,7 +9,7 @@ var companies_vm = new Vue({
         apiKey: null,
 
         company: {
-            company: "",
+            name: "",
             client_code: "",
             website: "",
             user: "",
@@ -105,7 +105,7 @@ var companies_vm = new Vue({
                 this.$http.put('/api/admin/companies/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchCompanies();
-                        this.resetCompanies();
+                        this.resetCompany();
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -136,7 +136,7 @@ var companies_vm = new Vue({
         editCompany: function(index){
 
             var data = {
-                company: this.companies[index].company,
+                name: this.companies[index].name,
                 client_code: this.companies[index].client_code.code,
                 website: this.companies[index].website,
                 user: this.companies[index].user,
@@ -158,7 +158,7 @@ var companies_vm = new Vue({
                 password: ""
             };
 
-            this.companies = data;
+            this.company = data;
 
             this.edit = false;
             this.editID = null;

@@ -6,7 +6,7 @@ main and admin
 *) How the password of admin can be changed
 (Corrected) *) Once anyone click on logout it will redirect again to login page
 (Corrected) *) Change the wording of customer tab to company tab and remove client code in it.
-*) Create one more tab of client like order type and client code will come in it.
+(Corrected) *) Create one more tab of client like order type and client code will come in it.
 *) Report section is not created for User and client. It should be under admin login.
 
 supervisor
@@ -17,7 +17,7 @@ supervisor
 *) I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
 
 research
-*) File are not uploading under Research person
+(Corrected) *) File are not uploading under Research person
 
 data entry
 *) Company information is not available under data entry person.
