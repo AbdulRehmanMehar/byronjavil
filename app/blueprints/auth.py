@@ -110,7 +110,8 @@ def logout():
     message = "Logged out successfuly"
     description = "You have been logout from Property Addresses Managament System"
     
-    return render_message(message, description)
+    # return render_message(message, description)
+    return redirect(url_for('auth.login'))
 
 
 @app.errorhandler(401)

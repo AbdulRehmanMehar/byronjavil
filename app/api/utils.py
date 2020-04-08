@@ -67,6 +67,7 @@ def role_required(roles):
 
 file_types = {
     "jpg": "jpg",
+    "jpeg": "jpeg",
     "png": "png",
     "pdf": "application/pdf",
     ".doc": "application/msword",

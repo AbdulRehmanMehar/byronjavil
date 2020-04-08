@@ -15,6 +15,7 @@ from app.models import UserRole
 
 mime_types = {
     "jpg": "image/jpeg",
+    "jpeg": "image/jpeg",
     "png": "image/png",
     "pdf": "application/pdf",
     "doc": "application/msword",
@@ -30,6 +31,7 @@ mime_types = {
 
 file_types = {
     "jpg": "jpg",
+    "jpeg": "jpeg",
     "png": "png",
     "pdf": "pdf",
     ".doc": "application/msword",
