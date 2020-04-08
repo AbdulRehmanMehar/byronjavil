@@ -43,10 +43,15 @@ class Authentication(BaseModel):
     expire = DateField(default=date.today)
 
 
-class Customer(BaseModel):
+class ClientCode(BaseModel):
 
-    company = TextField()
-    client_code = TextField()
+    code = TextField()
+
+
+class Company(BaseModel):
+
+    name = TextField()
+    client_code = ForeignKeyField(ClientCode)
     website = TextField()
     
     user = TextField()
@@ -75,14 +80,14 @@ class Order(BaseModel):
 
     address = TextField()
     
-    date_assigned = DateField(default=date.today)
+    assigned_date = DateField(default=date.today)
     due_date = DateField(default=date.today)
     
     research_completed = BooleanField(default=False)
     data_completed = BooleanField(default=False)
     picture = BooleanField(default=False)
 
-    customer = ForeignKeyField(Customer)
+    company = ForeignKeyField(Company)
     research_user = ForeignKeyField(User)
     data_user = ForeignKeyField(User)
 
@@ -137,7 +142,8 @@ def reset():
         UserRole,
         User,
         Authentication,
-        Customer,
+        ClientCode,
+        Company,
         Comment,
         OrderType,
         OrderState,

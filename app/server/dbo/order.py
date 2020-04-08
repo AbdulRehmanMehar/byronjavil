@@ -32,9 +32,17 @@ class OrderDBO:
 
         return result
 
-    def update(self, _id):
+    def update(self,  _id, **kwargs):
 
-        pass
+        order = self.read(_id)
+
+        for key, value in kwargs.items():
+
+            setattr(order, key, value)
+
+        order.save()
+        
+        return True
 
     def delete(self, _id):
 

@@ -18,10 +18,12 @@ var vm = new Vue({
     ready: function(){
         order_type_vm.setKey(this.apiKey);
         users_vm.setKey(this.apiKey);
+        client_code_vm.setKey(this.apiKey);
         customers_vm.setKey(this.apiKey);
         
         order_type_vm.fetchOrderTypes();
         users_vm.fetchUsers();
+        client_code_vm.fetchClientCodes();
         customers_vm.fetchCustomers();
         
         this.show('order-type');
@@ -40,6 +42,10 @@ var vm = new Vue({
                 users_vm.show();
             }
 
+            if (app == 'client-code'){
+                client_code_vm.show();
+            }
+
             if (app == 'customers'){
                 customers_vm.show();
             }
@@ -49,6 +55,7 @@ var vm = new Vue({
         hide: function(){
             order_type_vm.hide();
             users_vm.hide();
+            client_code_vm.hide();
             customers_vm.hide();
         }
 

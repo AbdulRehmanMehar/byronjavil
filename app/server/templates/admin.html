@@ -84,6 +84,7 @@
             {% endraw %}
             <a class="nav-link active" href="#" v-on:click="show('order-type')">Order Types</a>
             <a class="nav-link" href="#" v-on:click="show('users')">Users</a>
+            <a class="nav-link active" href="#" v-on:click="show('client-code')">Client Codes</a>
             <a class="nav-link" href="#" v-on:click="show('customers')">Companies</a>
         </nav>
     </div>
@@ -93,6 +94,8 @@
         {% include 'order-type.html' %}
 
         {% include 'users.html' %}
+
+        {% include 'client-code.html' %}
 
         {% include 'customers.html' %}
 
@@ -110,6 +113,7 @@
 
     <script src="{{ url_for('static', filename='js/order-type-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/user-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/client-code-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/customer-app.js') }}"></script>
     
     <script src="{{ url_for('static', filename='js/admin-app.js') }}"></script>

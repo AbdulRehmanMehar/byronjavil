@@ -105,7 +105,8 @@ class Server(object):
 
         self.app.user_dbo = UserDBO()
         self.app.attachment_dbo = AttachmentDBO()
-        self.app.customer_dbo = CustomerDBO()
+        self.app.client_code_dbo = ClientCodeDBO()
+        self.app.company_dbo = CompanyDBO()
         self.app.order_type_dbo = OrderTypeDBO()
         self.app.order_dbo = OrderDBO()
         self.app.comment_dbo = CommentDBO()

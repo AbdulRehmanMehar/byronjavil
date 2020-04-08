@@ -2,7 +2,8 @@
 # app/server/dbo/__init__.py
 
 from .auth import UserDBO
-from .customer import CustomerDBO
+from .client_code import ClientCodeDBO
+from .company import CompanyDBO
 from .order_type import OrderTypeDBO
 from .order import OrderDBO
 from .attachment import AttachmentDBO

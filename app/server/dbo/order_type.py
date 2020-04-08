@@ -18,6 +18,12 @@ class OrderTypeDBO:
 
         return order_type
 
+    def read_by_type(self, _type):
+
+        order_type = OrderType.select().where(OrderType.order_type==_type).get()
+
+        return order_type
+
     def read_all(self):
 
         result = list()

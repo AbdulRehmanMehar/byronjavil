@@ -4,7 +4,8 @@
 from .models import reset
 
 from .models import UserRole, User, Authentication
-from .models import Customer
+from .models import ClientCode
+from .models import Company
 from .models import OrderType
 from .models import Attachment
 from .models import Order, OrderState, OrderAttachment, OrderComment, OrderPicture

@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-# app/server/dbo/customer.py
+# app/server/dbo/company.py
 
-from app.models import Customer
+from app.models import Company
 
 
-class CustomerDBO:
+class CompanyDBO:
 
     def create(self, **kwargs):
         
-        customer = Customer.create(**kwargs)
+        customer = Company.create(**kwargs)
 
         return customer
 
     def read(self, _id):
 
-        customer = Customer.select().where(Customer.id==_id).get()
+        customer = Company.select().where(Company.id==_id).get()
 
         return customer
 
@@ -22,7 +22,7 @@ class CustomerDBO:
 
         result = list()
 
-        customers = Customer.select()
+        customers = Company.select()
 
         for customer in customers:
 
@@ -32,20 +32,20 @@ class CustomerDBO:
 
     def update(self, _id, **kwargs):
 
-        customer = self.read(_id)
+        company = self.read(_id)
 
         for key, value in kwargs.items():
 
-            setattr(customer, key, value)
+            setattr(company, key, value)
 
-        customer.save()
+        company.save()
         
         return True
 
     def delete(self, _id):
 
-        customer = self.read(_id)
+        company = self.read(_id)
 
-        customer.delete_instance()
+        company.delete_instance()
 
         return True
