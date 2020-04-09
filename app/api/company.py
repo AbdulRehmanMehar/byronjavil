@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# app/api/customer.py
+# app/api/company.py
 
 from flask import request
 from flask_restplus import Resource, fields

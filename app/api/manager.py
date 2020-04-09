@@ -37,7 +37,7 @@ class ManagerOrderCollectionResource(Resource):
             order_id = order.id
             address = order.address
             due_date = str(order.due_date)
-            company = order.customer.company
+            company = order.company.name
             research = order.research_user.username
             data = order.data_user.username
             state = order.state.state

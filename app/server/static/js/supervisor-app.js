@@ -20,7 +20,7 @@ var orders_vm = new Vue({
 
         research_users: [],
         data_users: [],
-        customers: [],
+        companies: [],
         order_types: [],
         states: [],
 
@@ -96,7 +96,7 @@ var orders_vm = new Vue({
         fetchAll: function(){
             this.fetchOrders();
             this.fetchUsers();
-            this.fetchCustomers();
+            this.fetchCompanies();
             this.fetchOrderTypes();
             this.fetchStates();
         },
@@ -124,12 +124,12 @@ var orders_vm = new Vue({
                 })
         },
 
-        fetchCustomers: function(){
+        fetchCompanies: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/supervisor/customers', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('api/supervisor/companies', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
-                    this.customers = res.data;
+                    this.companies = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -335,7 +335,7 @@ var vm = new Vue({
         types: [],
 
         order_type: "",
-        customer: {},
+        company: {},
         order: {},
     },
 

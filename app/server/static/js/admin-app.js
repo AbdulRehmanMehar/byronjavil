@@ -11,7 +11,7 @@ var vm = new Vue({
         types: [],
 
         order_type: "",
-        customer: {},
+        company: {},
         order: {},
     },
 

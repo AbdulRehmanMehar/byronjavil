@@ -8,25 +8,25 @@ class CompanyDBO:
 
     def create(self, **kwargs):
         
-        customer = Company.create(**kwargs)
+        company = Company.create(**kwargs)
 
-        return customer
+        return company
 
     def read(self, _id):
 
-        customer = Company.select().where(Company.id==_id).get()
+        company = Company.select().where(Company.id==_id).get()
 
-        return customer
+        return company
 
     def read_all(self):
 
         result = list()
 
-        customers = Company.select()
+        companies = Company.select()
 
-        for customer in customers:
+        for company in companies:
 
-            result.append(customer)
+            result.append(company)
 
         return result
 
