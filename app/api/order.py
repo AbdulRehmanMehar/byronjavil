@@ -79,7 +79,7 @@ class SupervisorOrderCollection(Resource):
             "data_user": data_user,
             "company": company,
             "due_date": payload["due_date"],
-            "assign_date": payload["assign_date"],
+            "assign_date": payload["assigned_date"],
             "kind": order_type,
             "state": order_state
         }

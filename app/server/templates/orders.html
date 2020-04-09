@@ -89,20 +89,20 @@
                                 Please select a username.
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="role">Assign Company</label>
-                            {% raw %}
-                            <select class="custom-select d-block w-100" id="company" required="" v-model="order.company_id">
-                                
-                                <option v-for="(index, company) in companies" v-bind:value="company.id">{{ company.id }} - ({{ company.name }})</option>
-                                
-                            </select>
-                            {% endraw %}
-                            <div class="invalid-feedback">
-                                Please select a company.
-                            </div>
-                        </div>
                         <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="role">Assign Company</label>
+                                {% raw %}
+                                <select class="custom-select d-block w-100" id="company" required="" v-model="order.company_id">
+                                    
+                                    <option v-for="(index, company) in companies" v-bind:value="company.id">{{ company.id }} - ({{ company.name }})</option>
+                                    
+                                </select>
+                                {% endraw %}
+                                <div class="invalid-feedback">
+                                    Please select a company.
+                                </div>
+                            </div>
                             <div class="col-md-6 mb-3">
                                 <label for="order_type">Order Type</label>
                                 <select class="custom-select d-block w-100" id="order_type" required="" v-model="order.type">
@@ -118,16 +118,18 @@
                                     Please select an order type.
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="due_date">Due Date</label>
-                                <input id="datepicker" required="" width="216" v-model="order.assigned_date"/>
+                                <label for="due_date">Assigned Date</label>
+                                <input id="datepicker1" required="" width="216" v-model="order.assigned_date"/>
                                 <div class="invalid-feedback">
-                                    Please select a due date.
+                                    Please select an assigned date.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="due_date">Due Date</label>
-                                <input id="datepicker" required="" width="216" v-model="order.due_date"/>
+                                <input id="datepicker2" required="" width="216" v-model="order.due_date"/>
                                 <div class="invalid-feedback">
                                     Please select a due date.
                                 </div>

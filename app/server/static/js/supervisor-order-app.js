@@ -155,7 +155,7 @@ var order_vm = new Vue({
 
             waitingDialog.show('Sending');
 
-            this.$http.post('/api/data/supervisor/' + id + "/mark-picture", payload, {headers: {'X-API-KEY': apiKey}})
+            this.$http.post('/api/supervisor/orders/' + id + "/mark-picture", payload, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res) {
                     this.order.picture = res.data;
                     this.fetchAll();

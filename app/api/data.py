@@ -44,7 +44,7 @@ class DataOrderCollectionResource(Resource):
                 
             result = model_to_dict(order)
 
-            result["date_assigned"] = str(result["date_assigned"])
+            result["assigned_date"] = str(result["assigned_date"])
             result["due_date"] = str(result["due_date"])
 
             response.append(result)
@@ -70,7 +70,7 @@ class DataOrderResource(Resource):
 
         response = model_to_dict(order)
 
-        response["date_assigned"] = str(response["date_assigned"])
+        response["assigned_date"] = str(response["assigned_date"])
         response["due_date"] = str(response["due_date"])
 
         return response
