@@ -15,7 +15,6 @@ ns = server.get_namespace("admin")
 
 company_model = api.model("company_model", {
     'company': fields.String(required=True, description='Company name'),
-    'client_code': fields.String(required=True, description='Company client code'),
     'website': fields.String(required=True, description='Company website'),
     'user': fields.String(required=True, description='Company user'),
     'password': fields.String(required=True, description='Company password')
@@ -50,10 +49,6 @@ class AdminCompanyCollectionResource(Resource):
         payload = api.payload
 
         dbo = app.company_dbo
-        client_dbo = app.client_code_dbo
-
-        client_code = client_dbo.read_by_code(payload["client_code"])
-        payload["client_code"] = client_code
 
         company = dbo.create(**payload)
 

@@ -19,6 +19,7 @@ order_model = api.model("users_model", {
     'address': fields.String(required=True, description='Property address'),
     'username': fields.String(required=True, description='Assigned Username'),
     'company_id': fields.Integer(required=True, description='Assigned company'),
+    'client_code': fields.String(required=True, description='Company client code'),
     'type': fields.String(required=True, description='Order type'),
     'state': fields.String(required=True, description='Order state'),
     'assigned_date': fields.String(required=True, description='Due date'),
@@ -61,6 +62,7 @@ class SupervisorOrderCollection(Resource):
         user_dbo = app.user_dbo
         type_dbo = app.order_type_dbo
         company_dbo = app.company_dbo
+        client_dbo = app.client_code_dbo
 
         research_id = payload["research_id"]
         data_id = payload["data_id"]
@@ -70,6 +72,7 @@ class SupervisorOrderCollection(Resource):
         data_user = user_dbo.read_by_id(data_id)
         company = company_dbo.read(company_id)
         order_type = type_dbo.read_by_type(payload["type"])
+        client_code = client_dbo.read_by_code(payload["client_code"])
         state = "RESEARCH"
         order_state = OrderState.select().where(OrderState.state==state).get()
 
@@ -80,6 +83,7 @@ class SupervisorOrderCollection(Resource):
             "company": company,
             "due_date": payload["due_date"],
             "assign_date": payload["assigned_date"],
+            "client_code": client_code,
             "kind": order_type,
             "state": order_state
         }
@@ -129,6 +133,7 @@ class SupervisorOrder(Resource):
         user_dbo = app.user_dbo
         type_dbo = app.order_type_dbo
         company_dbo = app.company_dbo
+        client_dbo = app.client_code_dbo
 
         research_id = payload["research_id"]
         data_id = payload["data_id"]
@@ -138,6 +143,7 @@ class SupervisorOrder(Resource):
         data_user = user_dbo.read_by_id(data_id)
         company = company_dbo.read(company_id)
         order_type = type_dbo.read_by_type(payload["type"])
+        client_code = client_dbo.read_by_code(payload["client_code"])
         state = "RESEARCH"
         order_state = OrderState.select().where(OrderState.state==state).get()
 
@@ -148,6 +154,7 @@ class SupervisorOrder(Resource):
             "company": company,
             "due_date": payload["due_date"],
             "assign_date": payload["assign_date"],
+            "client_code": client_code,
             "kind": order_type,
             "state": order_state
         }

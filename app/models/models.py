@@ -51,7 +51,6 @@ class ClientCode(BaseModel):
 class Company(BaseModel):
 
     name = TextField()
-    client_code = ForeignKeyField(ClientCode)
     website = TextField()
     
     user = TextField()
@@ -92,6 +91,8 @@ class Order(BaseModel):
     company = ForeignKeyField(Company)
     research_user = ForeignKeyField(User)
     data_user = ForeignKeyField(User)
+
+    client_code = ForeignKeyField(ClientCode)
 
     kind = ForeignKeyField(OrderType, null=True)
     state = ForeignKeyField(OrderState, null=True)    
