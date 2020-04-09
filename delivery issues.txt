@@ -21,7 +21,7 @@ research
 
 data entry
 *) Company information is not available under data entry person.
-*) Files are not downloading under data entry person
+(Corrected) *) Files are not downloading under data entry person
 
 manager
 *) Under Manager Role, Search option is not available by Address, Order Type, Client Code, Order Status, Assign date and due date
