@@ -5,6 +5,7 @@ import base64
 
 from flask import Response, send_file, render_template, redirect, url_for, request, session, abort, current_app
 from flask_login import login_required, current_user
+from werkzeug.wsgi import FileWrapper
 
 from . import attachment
 from .utils import mime_types, file_types, role_required, InMemoryZipFile
@@ -24,14 +25,28 @@ def file(uuid):
     filetype = file_types[filetype]
 
     filename += "." + filetype
-    image_binary = base64.b64decode(attachment.base64)
+    file_binary = base64.b64decode(attachment.base64)
+
+    file_data = io.BytesIO(file_binary)
+
+    file_wrapper = FileWrapper(file_data)
     
-    return send_file(
-        io.BytesIO(image_binary),
-        mimetype=mime_types[filetype],
-        as_attachment=True,
-        attachment_filename=filename
-    )
+    headers = {
+        'Content-Disposition': 'attachment; filename="{}"'.format(filename)
+    }
+    response = Response(file_wrapper,
+                        mimetype=mime_types[filetype],
+                        direct_passthrough=True,
+                        headers=headers)
+
+    return response
+    
+    #return send_file(
+    #    io.BytesIO(image_binary),
+    #    mimetype=mime_types[filetype],
+    #    as_attachment=True,
+    #    attachment_filename=filename
+    #)
 
 
 @attachment.route('/attachment/<int:order_id>/download-all')
@@ -54,10 +69,24 @@ def all_files(order_id):
         filename += "." + filetype
         image_binary = base64.b64decode(attachment.base64)
         zip_file.write(filename, image_binary)
+
+    file_data = zip_file.get_zip()
+
+    file_wrapper = FileWrapper(file_data)
     
-    return send_file(
-        zip_file.get_zip(),
-        mimetype="application/zip",
-        as_attachment=True,
-        attachment_filename="bundle.zip"
-    )
+    headers = {
+        'Content-Disposition': 'attachment; filename="{}"'.format("bundle.zip")
+    }
+    response = Response(file_wrapper,
+                        mimetype="application/zip",
+                        direct_passthrough=True,
+                        headers=headers)
+
+    return response
+    
+    #return send_file(
+    #    zip_file.get_zip(),
+    #    mimetype="application/zip",
+    #    as_attachment=True,
+    #    attachment_filename="bundle.zip"
+    #)
