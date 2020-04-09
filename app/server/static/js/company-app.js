@@ -19,7 +19,8 @@ var companies_vm = new Vue({
         client_codes: [],
 
         edit: false,
-        editID: null
+        editID: null,
+        view_password: false
         
     },
 
@@ -39,6 +40,10 @@ var companies_vm = new Vue({
 
         setKey: function(key){
             this.apiKey = key;
+        },
+        
+        togglePassword: function(){
+            this.view_password = !this.view_password;
         },
 
         closeModal: function(){
