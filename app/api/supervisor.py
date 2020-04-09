@@ -32,6 +32,26 @@ class SupervisorStateCollectionResource(Resource):
         return result
 
 
+@ns.route('/client-code')
+class SupervisorClientCodeCollectionResource(Resource):
+
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    def get(self):
+
+        result = list()
+
+        dbo = app.client_code_dbo
+
+        client_codes = dbo.read_all()
+
+        for client_code in client_codes:
+            result.append(model_to_dict(client_code))
+
+        return result
+
+
 @ns.route('/order-type')
 class SupervisorOrderTypeCollectionResource(Resource):
 

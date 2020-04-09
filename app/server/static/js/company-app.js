@@ -16,8 +16,6 @@ var companies_vm = new Vue({
             password: ""
         },
 
-        client_codes: [],
-
         edit: false,
         editID: null,
         view_password: false
@@ -85,17 +83,6 @@ var companies_vm = new Vue({
                 })
         },
 
-        fetchClientCodes: function(){
-            var apiKey = this.apiKey;
-
-            this.$http.get('api/admin/client-code', {headers: {'X-API-KEY': apiKey}})
-                .then(function (res){
-                    this.client_codes = res.data;
-                }, function(err){
-                    console.log(err);
-                })
-        },
-
         postForm: function(){
             
             var apiKey = this.apiKey;
@@ -142,7 +129,6 @@ var companies_vm = new Vue({
 
             var data = {
                 name: this.companies[index].name,
-                client_code: this.companies[index].client_code.code,
                 website: this.companies[index].website,
                 user: this.companies[index].user,
                 password: this.companies[index].password
@@ -157,7 +143,6 @@ var companies_vm = new Vue({
             
             var data = {
                 company: "",
-                client_code: "",
                 website: "",
                 user: "",
                 password: ""

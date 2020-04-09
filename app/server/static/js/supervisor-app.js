@@ -13,6 +13,7 @@ var orders_vm = new Vue({
             research_id: "",
             data_id: "",
             company_id: "",
+            client_code: "",
             type: "",
             assigned_date: "",
             due_date: ""
@@ -22,6 +23,7 @@ var orders_vm = new Vue({
         data_users: [],
         companies: [],
         order_types: [],
+        client_codes: [],
         states: [],
 
         edit: false,
@@ -97,6 +99,7 @@ var orders_vm = new Vue({
             this.fetchOrders();
             this.fetchUsers();
             this.fetchCompanies();
+            this.fetchClientCodes();
             this.fetchOrderTypes();
             this.fetchStates();
         },
@@ -141,6 +144,17 @@ var orders_vm = new Vue({
             this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.order_types = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
+
+        fetchClientCodes: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/client-code', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.client_codes = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -207,6 +221,7 @@ var orders_vm = new Vue({
                 data_id: this.orders[index].data_user.id,
                 company: this.orders[index].company.name,
                 company_id: this.orders[index].company.id,
+                client_code: this.orders[index].client_code.code,
                 type: this.orders[index].kind.order_type,
                 state: this.orders[index].state.state,
                 assigned_date: this.orders[index].assigned_date,
@@ -231,6 +246,7 @@ var orders_vm = new Vue({
                 data_id: "",
                 company: "",
                 company_id: "",
+                client_code: "",
                 type: "",
                 state: ""
             };

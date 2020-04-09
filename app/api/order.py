@@ -82,7 +82,7 @@ class SupervisorOrderCollection(Resource):
             "data_user": data_user,
             "company": company,
             "due_date": payload["due_date"],
-            "assign_date": payload["assigned_date"],
+            "assigned_date": payload["assigned_date"],
             "client_code": client_code,
             "kind": order_type,
             "state": order_state
@@ -153,7 +153,7 @@ class SupervisorOrder(Resource):
             "data_user": data_user,
             "company": company,
             "due_date": payload["due_date"],
-            "assign_date": payload["assign_date"],
+            "assigned_date": payload["assigned_date"],
             "client_code": client_code,
             "kind": order_type,
             "state": order_state

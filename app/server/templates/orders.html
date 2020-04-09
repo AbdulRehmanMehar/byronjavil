@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-6">
                                 <label for="role">Assign Company</label>
                                 {% raw %}
                                 <select class="custom-select d-block w-100" id="company" required="" v-model="order.company_id">
@@ -147,6 +147,23 @@
                                 <div class="invalid-feedback">
                                     Please select a company.
                                 </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+
+                                {% raw %}
+
+                                <label for="client_code">Client code</label>
+                                <select class="custom-select d-block w-100" id="client_code" required="" v-model="order.client_code">
+                                        
+                                    <option v-for="(index, client_code) in client_codes">{{ client_code.code }}</option>
+                                    
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a client code.
+                                </div>
+                                
+                                {% endraw %}
+
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="order_type">Order Type</label>

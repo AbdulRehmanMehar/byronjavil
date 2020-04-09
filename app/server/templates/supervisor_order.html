@@ -252,14 +252,14 @@
                     <div class="row no-gutters overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
                             <div>
-                                <span>Company: </span><strong class="d-inline-block mb-2 text-primary">{{ order.company.name }}</strong>
+                                <span>Company: </span><strong class="d-inline-block mb-2 text-primary">{{ order.company.name }}</strong> ({{ order.client_code.code }})
                             </div>
                             <h3 class="mb-0">{{ order.address }}</h3>
                             <div class="mb-1 text-muted">{{ order.kind.order_type }}</div>
                             <p class="card-text mb-auto">Assigned date: {{ order.assigned_date }} - Due date: {{ order.due_date }}</p>
                             <div>
                                 <span>Research User: </span><a href="#" class="stretched-link">{{ order.research_user.username }}</a>
-                                <span>Data Entry User: </span><a href="#" class="stretched-link">{{ order.data_user.username }}</a>
+                                <span> - Data Entry User: </span><a href="#" class="stretched-link">{{ order.data_user.username }}</a>
                             </div>
                         </div>
                     </div>

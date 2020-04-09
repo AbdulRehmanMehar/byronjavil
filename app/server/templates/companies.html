@@ -63,21 +63,6 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="client_code">Client code</label>
-                                <select class="custom-select d-block w-100" id="client_code" required="" v-model="company.client_code">
-                                    
-                                    {% raw %}
-                                    
-                                    <option v-for="(index, client_code) in client_codes">{{ client_code.code }}</option>
-                                    
-                                    {% endraw %}
-                                    
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a client code.
-                                </div>
-                        </div>
-                        <div class="mb-3">
                             <label for="website">Website</label>
                             <input type="text" class="form-control" id="website" placeholder="http://..." required="" v-model="company.website">
                             <div class="invalid-feedback">
