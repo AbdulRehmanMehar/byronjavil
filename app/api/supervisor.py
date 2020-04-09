@@ -76,8 +76,8 @@ class SupervisorUsersCollectionResource(Resource):
         return result
 
 
-@ns.route('/customers')
-class SupervisorCustomerCollectionResource(Resource):
+@ns.route('/companies')
+class SupervisorCompaniesCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
@@ -86,11 +86,30 @@ class SupervisorCustomerCollectionResource(Resource):
 
         result = list()
 
-        dbo = app.customer_dbo
+        dbo = app.company_dbo
 
-        customers = dbo.read_all()
+        companies = dbo.read_all()
 
-        for customer in customers:
-            result.append(model_to_dict(customer))
+        for company in companies:
+            result.append(model_to_dict(company))
 
         return result
+
+
+@ns.route('/orders/<int:_id>/mark-picture')
+class SupervisorMarkPictureResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR"])
+    def post(self, _id):
+
+        dbo = app.order_dbo
+        user = get_current_user()
+
+        if not dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
+
+        dbo.mark_supervisor_picture(_id)
+        
+        return True

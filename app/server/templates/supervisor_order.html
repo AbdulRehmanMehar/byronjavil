@@ -247,6 +247,7 @@
 
         <div class="container">
             <div class="row">
+                
                 <div class="col-md-12">
                     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
@@ -263,6 +264,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6 text-right mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" disabled checked="" v-if="order.supervisor_picture">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-on:click="markPicture" v-else>
+                        <label class="form-check-label" for="defaultCheck1">
+                            Picture
+                        </label>
+                    </div>
+                </div>
+
             </div>
         </div>
 

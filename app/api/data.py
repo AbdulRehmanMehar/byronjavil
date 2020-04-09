@@ -123,6 +123,6 @@ class DataMarkPictureResource(Resource):
         if not dbo.verify_authority(_id, user):
             return 401, "Not authorized in this order"
 
-        dbo.mark_picture(_id)
+        dbo.mark_data_picture(_id)
         
         return True

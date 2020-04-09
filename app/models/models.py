@@ -85,7 +85,9 @@ class Order(BaseModel):
     
     research_completed = BooleanField(default=False)
     data_completed = BooleanField(default=False)
-    picture = BooleanField(default=False)
+    
+    supervisor_picture = BooleanField(default=False)
+    data_picture = BooleanField(default=False)
 
     company = ForeignKeyField(Company)
     research_user = ForeignKeyField(User)

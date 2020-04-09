@@ -79,10 +79,19 @@ class OrderDBO:
 
         return True
 
-    def mark_picture(self, _id):
+    def mark_supervisor_picture(self, _id):
 
         order = self.read(_id)
-        order.picture = True
+        order.supervisor_picture = True
+
+        order.save()
+
+        return True
+
+    def mark_data_picture(self, _id):
+
+        order = self.read(_id)
+        order.data_picture = True
 
         order.save()
 

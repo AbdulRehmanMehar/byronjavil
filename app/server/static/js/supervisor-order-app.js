@@ -144,6 +144,28 @@ var order_vm = new Vue({
                 console.log('Error: ', error);
             };
             
+        },
+
+        markPicture: function(){
+
+            var apiKey = this.apiKey;
+            var id = this.order.id;
+            
+            var payload = {picture: true};
+
+            waitingDialog.show('Sending');
+
+            this.$http.post('/api/data/supervisor/' + id + "/mark-picture", payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.order.picture = res.data;
+                    this.fetchAll();
+                    waitingDialog.hide();
+                    bootbox.alert("Order Picture Marked!");
+                },
+                function (err) {
+                    console.log(err);
+            });
+
         }
     }
 })
