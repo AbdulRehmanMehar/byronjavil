@@ -9,6 +9,7 @@ home = Blueprint('home', __name__)
 auth = Blueprint('auth', __name__)
 admin = Blueprint('admin', __name__)
 supervisor = Blueprint('supervisor', __name__)
+company = Blueprint('company', __name__)
 research = Blueprint('research', __name__)
 data = Blueprint('data', __name__)
 manager = Blueprint('manager', __name__)
@@ -18,6 +19,7 @@ from .auth import *
 from .admin import *
 from .attachment import *
 from .supervisor import *
+from .company import *
 from .research import *
 from .data import *
 from .manager import *
@@ -27,6 +29,7 @@ app = server.get_app()
 app.register_blueprint(auth)
 app.register_blueprint(admin)
 app.register_blueprint(supervisor)
+app.register_blueprint(company)
 app.register_blueprint(research)
 app.register_blueprint(data)
 app.register_blueprint(manager)

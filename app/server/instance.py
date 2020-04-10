@@ -68,6 +68,9 @@ def create_api(app):
     ns_supervisor = Namespace('supervisor', description='Namespace for supervisor')
     api.add_namespace(ns_supervisor, path='/supervisor')
 
+    ns_company = Namespace('company', description='Namespace for company')
+    api.add_namespace(ns_company, path='/company')
+
     ns_research = Namespace('research', description='Namespace for research')
     api.add_namespace(ns_research, path='/research')
 

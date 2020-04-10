@@ -10,10 +10,10 @@ main and admin
 *) Report section is not created for User and client. It should be under admin login.
 
 supervisor
-*) I have created orders but due date are not coming up properly - check it out
-*) Assigned date is not mentioned under create order. Assign date should be today date but it should be changeable.
-*) Picture order checkbox is not created under supervisor. It will be like Mark as completed in research tab. Once click on it, the address will move to pictures orders tab
-*) company details should be hyperlink in it
+(Corrected) *) I have created orders but due date are not coming up properly - check it out
+(Corrected) *) Assigned date is not mentioned under create order. Assign date should be today date but it should be changeable.
+(Corrected) *) Picture order checkbox is not created under supervisor. It will be like Mark as completed in research tab. Once click on it, the address will move to pictures orders tab
+(Corrected) *) company details should be hyperlink in it
 *) I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
 
 research

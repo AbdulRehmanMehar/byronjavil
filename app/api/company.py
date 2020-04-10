@@ -96,3 +96,20 @@ class AdminCompanyResource(Resource):
         dbo.delete(_id)
 
         return True
+
+ns = server.get_namespace("company")
+
+
+@ns.route('/companies/<int:_id>')
+class CompanyDetailsResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER", "DATA"])
+    def get(self, _id):
+
+        dbo = app.company_dbo
+
+        company = dbo.read(_id)
+
+        return model_to_dict(company)

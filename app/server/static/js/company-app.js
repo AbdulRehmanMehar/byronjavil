@@ -75,7 +75,7 @@ var companies_vm = new Vue({
         fetchCompanies: function(){
             var apiKey = this.apiKey;
 
-            this.$http.get('api/admin/companies', {headers: {'X-API-KEY': apiKey}})
+            this.$http.get('/api/admin/companies', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.companies = res.data;
                 }, function(err){

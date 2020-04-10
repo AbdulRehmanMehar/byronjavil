@@ -22,6 +22,11 @@ var vm = new Vue({
 
     methods: {
 
+        viewCompanyDetails: function(){
+            var id = this.order.company.id;
+            location.href = "/data/companies/" + id;
+        },
+
         fetchAll: function(){
             this.fetchOrder();
             this.fetchAttachments();

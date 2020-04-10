@@ -22,6 +22,11 @@ var vm = new Vue({
 
     methods: {
 
+        viewCompanyDetails: function(){
+            var id = this.order.company.id;
+            location.href = "/supervisor/companies/" + id;
+        },
+
         downloadAll: function(){
             var id = this.order.id;
             location.href = "/attachment/" + id + "/download-all";
