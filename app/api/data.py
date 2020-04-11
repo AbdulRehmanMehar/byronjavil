@@ -46,9 +46,10 @@ class DataOrderCollectionResource(Resource):
 
             response["assigned_date"] = str(response["assigned_date"])
             response["due_date"] = str(response["due_date"])
+            
             response["state"]["state"] = order_states[response["state"]["state"]]
 
-            result.append(result)
+            result.append(response)
 
         return result
 
