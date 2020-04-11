@@ -9,7 +9,7 @@ from app.server import server
 from app.models import OrderState, OrderType
 from app.email import send_mail_template
 
-from .utils import token_required, role_required
+from .utils import token_required, role_required, order_states
 
 api = server.get_api()
 app = server.get_app()
@@ -45,6 +45,7 @@ class SupervisorOrderCollection(Resource):
 
             response["assigned_date"] = str(response["assigned_date"])
             response["due_date"] = str(response["due_date"])
+            response["state"]["state"] = order_states[response["state"]["state"]]
             
             result.append(response)
 
@@ -96,6 +97,7 @@ class SupervisorOrderCollection(Resource):
 
         response["assigned_date"] = str(response["assigned_date"])
         response["due_date"] = str(response["due_date"])
+        response["state"]["state"] = order_states[response["state"]["state"]]
 
         send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username, from_email="admin@pams.com", to_emails=[research_user.email])
 
@@ -118,6 +120,7 @@ class SupervisorOrder(Resource):
 
         response["assigned_date"] = str(response["assigned_date"])
         response["due_date"] = str(response["due_date"])
+        response["state"]["state"] = order_states[response["state"]["state"]]
 
         return response
 

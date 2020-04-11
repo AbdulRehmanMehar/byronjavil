@@ -9,7 +9,7 @@ from app.server import server
 from app.models import OrderState, OrderType
 from app.email import send_mail_template
 
-from .utils import token_required, role_required, get_current_user
+from .utils import token_required, role_required, get_current_user, order_states
 
 api = server.get_api()
 app = server.get_app()
@@ -27,21 +27,22 @@ class ResearchOrderCollectionResource(Resource):
         dbo = app.order_dbo
         user = get_current_user()
 
-        response = list()
+        result = list()
 
         orders = dbo.read_all()
 
         for order in orders:
             if dbo.verify_authority(order.id, user):
                 
-                result = model_to_dict(order)
+                response = model_to_dict(order)
 
-                result["assigned_date"] = str(result["assigned_date"])
-                result["due_date"] = str(result["due_date"])
-                
-                response.append(result)
+                response["assigned_date"] = str(response["assigned_date"])
+                response["due_date"] = str(response["due_date"])
+                response["state"]["state"] = order_states[response["state"]["state"]]
 
-        return response
+                result.append(response)
+
+        return result
 
 
 @ns.route('/orders/<int:_id>')
@@ -64,7 +65,8 @@ class ResearchOrderResource(Resource):
 
         response["assigned_date"] = str(response["assigned_date"])
         response["due_date"] = str(response["due_date"])
-
+        response["state"]["state"] = order_states[response["state"]["state"]]
+        
         return response
 
 

@@ -8,7 +8,7 @@ from playhouse.shortcuts import model_to_dict
 from app.server import server
 from app.models import OrderState, OrderType
 
-from .utils import token_required, role_required, get_current_user
+from .utils import token_required, role_required, get_current_user, order_states
 
 api = server.get_api()
 app = server.get_app()
@@ -41,6 +41,7 @@ class ManagerOrderCollectionResource(Resource):
             research = order.research_user.username
             data = order.data_user.username
             state = order.state.state
+            state = order_states[state]
 
             url = '<a href="/manager/orders/{}">View</a>'.format(order_id)
 
@@ -79,6 +80,7 @@ class ManagerOrderResource(Resource):
 
         response["date_assigned"] = str(response["date_assigned"])
         response["due_date"] = str(response["due_date"])
+        response["state"]["state"] = order_states[response["state"]["state"]]
 
         return response
 

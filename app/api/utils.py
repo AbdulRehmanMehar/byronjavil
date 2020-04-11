@@ -82,3 +82,11 @@ file_types = {
     "flv": "video/x-flv"
     
 }
+
+order_states = {
+    "RESEARCH": "Under research",
+    "DATA_ENTRY": "Pics not uploaded",
+    "MANAGEMENT": "Ready to submit",
+    "FINISH": "Submitted",
+    "ARCHIVE": "Archived"
+}
