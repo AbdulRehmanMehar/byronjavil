@@ -94,6 +94,7 @@ def get_credentials():
 
     credentials = {
         "username": user.username,
+        "role": user.role.role,
         "api-key": key
     }
 
