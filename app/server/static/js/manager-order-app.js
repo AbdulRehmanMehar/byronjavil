@@ -24,7 +24,7 @@ var vm = new Vue({
 
         viewCompanyDetails: function(){
             var id = this.order.company.id;
-            location.href = "/supervisor/companies/" + id;
+            location.href = "/manager/companies/" + id;
         },
 
         downloadAll: function(){
@@ -97,6 +97,28 @@ var vm = new Vue({
                 function (err) {
                     console.log(err);
             });
+        },
+
+        submitOrder: function(){
+
+            var apiKey = this.apiKey;
+            var id = this.order.id;
+            
+            var payload = {picture: true};
+
+            waitingDialog.show('Sending');
+
+            this.$http.post('/api/manager/orders/' + id + "/submit", payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.order.picture = res.data;
+                    this.fetchAll();
+                    waitingDialog.hide();
+                    bootbox.alert("Order Submitted!");
+                },
+                function (err) {
+                    console.log(err);
+            });
+
         }
     }
 })

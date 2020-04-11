@@ -87,6 +87,7 @@ class Order(BaseModel):
     
     supervisor_picture = BooleanField(default=False)
     data_picture = BooleanField(default=False)
+    manager_submit = BooleanField(default=False)
 
     company = ForeignKeyField(Company)
     research_user = ForeignKeyField(User)

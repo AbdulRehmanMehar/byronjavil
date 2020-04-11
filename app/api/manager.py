@@ -81,3 +81,22 @@ class ManagerOrderResource(Resource):
         response["due_date"] = str(response["due_date"])
 
         return response
+
+
+@ns.route('/orders/<int:_id>/submit')
+class ManagerSubmitResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["MANAGER", "SUPERVISOR/MANAGER"])
+    def post(self, _id):
+
+        dbo = app.order_dbo
+        user = get_current_user()
+
+        if not dbo.verify_authority(_id, user):
+            return 401, "Not authorized in this order"
+
+        dbo.manager_submit(_id)
+        
+        return True

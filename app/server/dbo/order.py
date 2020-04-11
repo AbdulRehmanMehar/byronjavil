@@ -97,6 +97,15 @@ class OrderDBO:
 
         return True
 
+    def manager_submit(self, _id):
+
+        order = self.read(_id)
+        order.manager_submit = True
+
+        order.save()
+
+        return True
+
     def set_type(self, _id, _type):
 
         pass
