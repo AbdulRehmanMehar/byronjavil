@@ -105,7 +105,7 @@ class CompanyDetailsResource(Resource):
     
     @api.doc(security='apikey')
     @token_required
-    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER", "DATA"])
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER", "DATA", "MANAGER"])
     def get(self, _id):
 
         dbo = app.company_dbo
