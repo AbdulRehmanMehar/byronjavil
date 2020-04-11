@@ -1,0 +1,9 @@
+Second phase features:
+
+- How the password of admin can be changed
+- Report section is not created for User and client. It should be under admin login
+- I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
+- There should be Archive folder under Manager account.
+- There should be select files option also so the person can select it and move it to archive folder.
+- Select all option too. If I will select any property to archive will it remove from all the user? Let me know about it.
+- How many addresses it will show at a time on page under each account?

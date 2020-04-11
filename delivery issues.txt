@@ -3,18 +3,15 @@ There are many issues in it. You didn't follow the layout sheet properly.
 main and admin
 (Corrected) *) Research spelling is written wrong. Correct it on main page
 (Corrected) *) Removed developed by at bottom
-*) How the password of admin can be changed
 (Corrected) *) Once anyone click on logout it will redirect again to login page
 (Corrected) *) Change the wording of customer tab to company tab and remove client code in it.
 (Corrected) *) Create one more tab of client like order type and client code will come in it.
-*) Report section is not created for User and client. It should be under admin login.
 
 supervisor
 (Corrected) *) I have created orders but due date are not coming up properly - check it out
 (Corrected) *) Assigned date is not mentioned under create order. Assign date should be today date but it should be changeable.
 (Corrected) *) Picture order checkbox is not created under supervisor. It will be like Mark as completed in research tab. Once click on it, the address will move to pictures orders tab
 (Corrected) *) company details should be hyperlink in it
-*) I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
 
 research
 (Corrected) *) File are not uploading under Research person
@@ -31,11 +28,3 @@ manager
 *) Under Manager role, order status will be "pics not uploaded" if data entry person don't click on picture upload button
 *) Management order state wording should be change as Ready to submit state
 *) Those which are in Management or ready to submit status should show their property address as blue.
-
-I tried to create one role as supervisor and Manager but when I click on Manager and click on view address it says Unauthorized.
-
-There should be Archive folder under Manager account. There should be select files option also so the person can select it and move it to archive folder. Select all option too. If I will select any property to archive will it remove from all the user? Let me know about it.
-
-How many addresses it will show at a time on page under each account?
-
-Please make sure you do all these corrections correctly and asap. 
