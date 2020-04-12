@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# app/server/dbo/__init__.py
+# app/server/dbo/attachment.py
 
 from app.models import Attachment, OrderAttachment
 from app.models import generate_key
