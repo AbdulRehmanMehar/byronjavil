@@ -86,6 +86,7 @@ file_types = {
 order_states = {
     "RESEARCH": "Under research",
     "DATA_ENTRY": "Pics not uploaded",
+    "DATA_FINISH": "Data is done",
     "MANAGEMENT": "Ready to submit",
     "FINISH": "Submitted",
     "ARCHIVE": "Archived"

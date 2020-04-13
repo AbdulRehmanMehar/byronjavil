@@ -93,6 +93,9 @@ class OrderDBO:
         order = self.read(_id)
         order.data_picture = True
 
+        self.set_state(_id, "MANAGEMENT")
+        order.data_completed = True
+
         order.save()
 
         return True

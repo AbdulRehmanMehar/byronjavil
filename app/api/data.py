@@ -93,7 +93,7 @@ class DataCompleteActionResource(Resource):
         if not dbo.verify_authority(_id, user):
             return 401, "Not authorized in this order"
 
-        dbo.set_state(_id, "MANAGEMENT")
+        dbo.set_state(_id, "DATA_FINISH")
 
         order = dbo.read(_id)
         order.data_completed = True
