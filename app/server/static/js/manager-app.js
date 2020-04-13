@@ -43,7 +43,13 @@ var vm = new Vue({
                         dom: 'Bfrtip',
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'
-                        ]
+                        ],
+                        "createdRow": function( row, data, dataIndex){
+                            console.log(data);
+                            if( data[7] ==  'Ready to submit'){
+                                $(row).addClass('blueClass');
+                            }
+                        }
                     } );
                 }, function(err){
                     console.log(err);

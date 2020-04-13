@@ -37,6 +37,7 @@ class ManagerOrderCollectionResource(Resource):
             order_id = order.id
             address = order.address
             due_date = str(order.due_date)
+            client_code = order.client_code.code
             company = order.company.name
             research = order.research_user.username
             data = order.data_user.username
@@ -44,14 +45,9 @@ class ManagerOrderCollectionResource(Resource):
             state = order_states[state]
 
             url = '<a href="/manager/orders/{}">View</a>'.format(order_id)
+            company = '<a href="/manager/companies/{}">{}</a>'.format(order.company.id, company)
 
-            result = [order_id, address, due_date, company, research, data, state, url]
-            # result = model_to_dict(order)
-
-            # result["date_assigned"] = str(result["date_assigned"])
-            # result["due_date"] = str(result["due_date"])
-
-            # response.append(result)
+            result = [order_id, address, due_date, client_code, company, research, data, state, url]
 
             order_list.append(result)
 
