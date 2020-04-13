@@ -79,54 +79,131 @@
     </nav>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="my-3 p-3 bg-white rounded shadow-sm">
-                    <h6 class="border-bottom border-gray pb-2 mb-0">Orders</h6>
-                    
-                    <br>
+        <div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#actives" role="tab" aria-controls="home" aria-selected="true">Active Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="finished-tab" data-toggle="tab" href="#finished" role="tab" aria-controls="profile" aria-selected="false">Finished Orders</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-                    {% raw %}
-        
-                    <table id="orders-table" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Order Id</th>
-                                <th>Address</th>
-                                <th>Due Date</th>
-                                <th>Client code</th>
-                                <th>Company</th>
-                                <th>Research User</th>
-                                <th>Data User</th>
-                                <th>Order State</th>
-                                <th>View</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
+    <div class="tab-content" id="myTabContent">
 
-                        <tfoot>
-                            <tr>
-                                <th>Order Id</th>
-                                <th>Address</th>
-                                <th>Due Date</th>
-                                <th>Client code</th>
-                                <th>Company</th>
-                                <th>Research User</th>
-                                <th>Data User</th>
-                                <th>Order State</th>
-                                <th>View</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+        <div class="tab-pane fade show active" id="actives" role="tabpanel" aria-labelledby="home-tab">
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="my-3 p-3 bg-white rounded shadow-sm">
+                            <h6 class="border-bottom border-gray pb-2 mb-0">Orders</h6>
+                            
+                            <br>
         
-                    {% endraw %}
+                            {% raw %}
+                
+                            <table id="active-orders-table" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Order Id</th>
+                                        <th>Address</th>
+                                        <th>Due Date</th>
+                                        <th>Client code</th>
+                                        <th>Company</th>
+                                        <th>Research User</th>
+                                        <th>Data User</th>
+                                        <th>Order State</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+        
+                                <tfoot>
+                                    <tr>
+                                        <th>Order Id</th>
+                                        <th>Address</th>
+                                        <th>Due Date</th>
+                                        <th>Client code</th>
+                                        <th>Company</th>
+                                        <th>Research User</th>
+                                        <th>Data User</th>
+                                        <th>Order State</th>
+                                        <th>View</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                
+                            {% endraw %}
+                
+                        </div>
+                    </div>
         
                 </div>
             </div>
 
         </div>
+
+        <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="profile-tab">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="my-3 p-3 bg-white rounded shadow-sm">
+                            <h6 class="border-bottom border-gray pb-2 mb-0">Orders</h6>
+                            
+                            <br>
+        
+                            {% raw %}
+                
+                            <table id="finished-orders-table" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Order Id</th>
+                                        <th>Address</th>
+                                        <th>Due Date</th>
+                                        <th>Client code</th>
+                                        <th>Company</th>
+                                        <th>Research User</th>
+                                        <th>Data User</th>
+                                        <th>Order State</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+        
+                                <tfoot>
+                                    <tr>
+                                        <th>Order Id</th>
+                                        <th>Address</th>
+                                        <th>Due Date</th>
+                                        <th>Client code</th>
+                                        <th>Company</th>
+                                        <th>Research User</th>
+                                        <th>Data User</th>
+                                        <th>Order State</th>
+                                        <th>View</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                
+                            {% endraw %}
+                
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+    
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

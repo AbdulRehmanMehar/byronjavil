@@ -101,8 +101,10 @@ class OrderDBO:
 
         order = self.read(_id)
         order.manager_submit = True
-
+        
         order.save()
+
+        self.set_state(_id, "FINISH")
 
         return True
 

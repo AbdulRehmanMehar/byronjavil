@@ -36,21 +36,44 @@ var vm = new Vue({
                 .then(function (res){
                     var orders = res.data.data;
 
-                    console.log(orders)
+                    var actives = [];
+                    var finished = [];
 
-                    $('#orders-table').DataTable({
-                        data: orders,
+                    for (var i=0; i<orders.length; i++){
+                        if (orders[i][7] == "Submitted") {
+                            finished.push(orders[i]);
+                        } else {
+                            actives.push(orders[i]);
+                        }
+                    }
+
+                    $('#active-orders-table').DataTable({
+                        data: actives,
                         dom: 'Bfrtip',
                         buttons: [
                             'copy', 'csv', 'excel', 'pdf', 'print'
                         ],
-                        "createdRow": function( row, data, dataIndex){
+                        "createdRow": function(row, data, dataIndex){
                             console.log(data);
                             if( data[7] ==  'Ready to submit'){
                                 $(row).addClass('blueClass');
                             }
                         }
-                    } );
+                    });
+
+                    $('#finished-orders-table').DataTable({
+                        data: finished,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
+                        "createdRow": function(row, data, dataIndex){
+                            console.log(data);
+                            if( data[7] ==  'Ready to submit'){
+                                $(row).addClass('blueClass');
+                            }
+                        }
+                    });
                 }, function(err){
                     console.log(err);
                 })
