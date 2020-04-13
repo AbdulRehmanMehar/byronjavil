@@ -229,4 +229,15 @@ def reset():
     parameters["password"] = hash_password(parameters["password"])
 
     User.create(role_id=data_role.id, **parameters)
+
+    data_role = UserRole.select().where(UserRole.role=="MANAGER").get()
+
+    parameters = {
+        "username": "manager",
+        "password": "prosperity2020",
+        "email": "data@pams.com"
+    }
+    parameters["password"] = hash_password(parameters["password"])
+
+    User.create(role_id=data_role.id, **parameters)
     
