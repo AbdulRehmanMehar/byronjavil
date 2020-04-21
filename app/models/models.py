@@ -7,13 +7,30 @@ This module implements classes for
 modelling of the Property Management System API.
 """
 
+import os
+
 import json
 from datetime import datetime, date
 
+from flask import current_app
 from flask_restplus import fields
-from peewee import Model, SqliteDatabase, TextField, BooleanField, BlobField, FloatField, DateField, DateTimeField, ForeignKeyField
+from peewee import Model, SqliteDatabase, PostgresqlDatabase, TextField, BooleanField, BlobField, FloatField, DateField, DateTimeField, ForeignKeyField
 
-db = SqliteDatabase("id.db")
+# from app.server import server
+
+# api = server.get_api()
+config_name = os.getenv('FLASK_CONFIG')
+
+if config_name == "development":
+    db = SqliteDatabase("id.db")
+else:
+    database = {
+    'user': 'postgres',
+    'password': 'prosperidad2020',
+    'host': '127.0.0.1',
+    'port': 5432
+}
+    db = PostgresqlDatabase("PASM", **database)
 
 
 class BaseModel(Model):
