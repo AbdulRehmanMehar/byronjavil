@@ -110,7 +110,7 @@ class Server(object):
 
             database = self.app.config["DATABASE"]
 
-            self.app.database = PostgresqlDatabase("PASM", **database)
+            self.app.database = PostgresqlDatabase("PAMS", **database)
         
         # API
 
