@@ -50,6 +50,9 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Credentials file
+credentials.txt
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
