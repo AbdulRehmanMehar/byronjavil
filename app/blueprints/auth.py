@@ -57,7 +57,7 @@ def login():
         return abort(401)
     
     if not dbo.login(username, password):
-
+        print("Invalid credentials")
         message = "Login failed"
         description = "Invalid credentials"
 

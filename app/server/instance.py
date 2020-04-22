@@ -12,7 +12,7 @@ from .dbo import *
 
 # configure our database
 DATABASE = {
-    'name': 'id.db',
+    'name': '/var/www/property-management-system/id.db',
     'engine': 'peewee.SqliteDatabase',
 }
 DEBUG = True
