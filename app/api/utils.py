@@ -69,6 +69,7 @@ file_types = {
     "jpg": "jpg",
     "jpeg": "jpeg",
     "png": "png",
+    "gif": "gif",
     "pdf": "application/pdf",
     ".doc": "application/msword",
     ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
