@@ -68,9 +68,7 @@
         <div class="container">
             <h1>Select your role</h1>
             <p class="lead text-muted">
-            Something short and leading about the 
-            collection below—its contents, the creator, etc. Make it short and 
-            sweet, but not too short so folks don’t simply skip over it entirely.</p>
+            Please select in which role you wish to enter.</p>
             <p>
                 <a href="{{ url_for('supervisor.supervisor_page') }}" class="btn btn-primary my-2">Supervisor</a>
                 <a href="{{ url_for('manager.manager_page') }}" class="btn btn-secondary my-2">Manager</a>
@@ -80,15 +78,7 @@
 
     </main>
 
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-            <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="https://getbootstrap.com/docs/4.4/getting-started/introduction/">getting started guide</a>.</p>
-        </div>
-    </footer>
+    {% include 'footer.html' %}
     
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

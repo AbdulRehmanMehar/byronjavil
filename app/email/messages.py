@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # # app/email/messages.py
 
+
 class Message:
 
     def __init__(self, code, subject, message):
@@ -35,19 +36,19 @@ def build_manager():
         {
             "code": "ASSIGN_RESEARCH",
             "subject": "You have been assigned a new order",
-            "message": "You have been assigned order ID {} in the Property Management Addresses System. Start your research as soon as posible."
+            "message": "You have been assigned order address {} in the Property Management Addresses System. Start your research as soon as posible."
         },
 
         {
             "code": "ASSIGN_DATA",
             "subject": "You have been assigned a new order",
-            "message": "You have been assigned order ID {} in the Property Management Addresses System. Start your tasks as soon as posible."
+            "message": "You have been assigned order address {} in the Property Management Addresses System. Start your tasks as soon as posible."
         },
 
         {
             "code": "NOTIFY_MANAGER",
             "subject": "An order have been marked as finished",
-            "message": "Order ID {} have been finished go to the Property Management Addresses System, to search and create reports."
+            "message": "Order address {} have been finished go to the Property Management Addresses System, to search and create reports."
         }
     ]
 
