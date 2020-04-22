@@ -112,3 +112,30 @@ class AdminUserResource(Resource):
         dbo.delete(username)
 
         return True
+
+
+change_password = api.model("change_password", {
+    'username': fields.String(required=True, description='Username'),
+    'password': fields.String(required=True, description='Password')
+})
+
+
+@ns.route('/users/change-password')
+class PasswordUserResource(Resource):
+    
+    @ns.expect(change_password)
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["ADMIN"])
+    def post(self):
+
+        payload = api.payload
+
+        username = payload["username"]
+        password = payload["password"]
+
+        dbo = app.user_dbo
+
+        dbo.change_password(username, password)
+
+        return True

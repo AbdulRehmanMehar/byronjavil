@@ -63,7 +63,6 @@ class AuthLogoutResource(Resource):
         return {"message": "Logout succesfully"}
 
 
-
 @ns.route('/home')
 class AuthHomeResource(Resource):
     

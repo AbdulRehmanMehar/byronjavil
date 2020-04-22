@@ -17,6 +17,8 @@ var users_vm = new Vue({
 
         edit: false,
         editUsername: null,
+
+        newPassword: ""
     },
 
     ready: function(){
@@ -38,6 +40,10 @@ var users_vm = new Vue({
 
         closeModal: function(){
             $('#user-create').modal('hide');
+        },
+
+        closePasswordModal: function(){
+            $('#user-password').modal('hide');
         },
 
         createUser: function(){
@@ -62,6 +68,19 @@ var users_vm = new Vue({
             }
             form.classList.add('was-validated');
 
+        },
+
+        updatePassword: function(){
+
+            var form = document.getElementById('password-form');
+
+            if (form.checkValidity() === true) {
+                this.closePasswordModal();
+                this.postPassword();
+            }
+
+            form.classList.add('was-validated');
+        
         },
 
         fetchUsers: function(){
@@ -89,7 +108,7 @@ var users_vm = new Vue({
                 this.$http.put('/api/admin/users/' + username, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchUsers();
-                        this.resetUser()
+                        this.resetUser();
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -100,7 +119,7 @@ var users_vm = new Vue({
                 this.$http.post('/api/admin/users', payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchUsers();
-                        this.resetUser()
+                        this.resetUser();
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -111,9 +130,38 @@ var users_vm = new Vue({
             
         },
 
+        postPassword: function(){
+            
+            var apiKey = this.apiKey;
+
+            payload = {};
+
+            payload.username = this.editUsername;
+            payload.password = this.newPassword;
+
+            waitingDialog.show('Sending');
+
+            this.$http.post('/api/admin/users/change-password', payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.fetchUsers();
+                    this.resetUser();
+                    waitingDialog.hide();
+                },
+                function (err) {
+                    console.log(err);
+            });
+            
+        },
+
         resetForm: function(){
             
             var form = document.getElementById('user-form');
+            form.classList.remove("was-validated");
+        },
+
+        resetPasswordForm: function(){
+            
+            var form = document.getElementById('password-form');
             form.classList.remove("was-validated");
         },
 
@@ -140,8 +188,14 @@ var users_vm = new Vue({
             };
             this.edit = false;
             this.editUsername = null;
+            this.newPassword = "";
 
             this.resetForm();
+            this.resetPasswordForm();
+        },
+
+        changePassword: function(index){
+            this.editUsername = this.users[index].username;
         },
 
         deleteUser: function(index){
