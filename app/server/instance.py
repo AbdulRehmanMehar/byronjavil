@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 # app/server/instance.py
 
+import os
+
 from flask import Flask, Blueprint
 from flask_login import LoginManager
 from flask_restplus import Api, Namespace
 from flask_peewee.db import Database
 
-from peewee import SqliteDatabase
+from peewee import SqliteDatabase, PostgresqlDatabase
 
 from .dbo import *
 
@@ -93,12 +95,22 @@ class Server(object):
     
     def __init__(self):
     
-        self.app = Flask(__name__)
-        self.app.config.from_object(__name__)
+        config_name = os.getenv('FLASK_CONFIG')
 
-        # Database
-        
-        self.database = SqliteDatabase(DATABASE["name"])
+        if config_name == "development":
+
+            self.app = Flask(__name__)
+            self.app.config.from_object(__name__)
+            self.database = SqliteDatabase(DATABASE["name"])
+
+        elif config_name == "production":
+    
+            self.app = Flask(__name__)
+            self.app.config.from_pyfile('config.py')
+
+            database = self.app.config["DATABASE"]
+
+            self.app.database = PostgresqlDatabase("PASM", **database)
         
         # API
 
@@ -123,14 +135,14 @@ class Server(object):
         @self.app.before_request
         def before_request():
             try:
-                self.database.connect()
+                self.app.database.connect()
             except:
                 pass
         
         @self.app.after_request
         def after_request(response):
             try:
-                self.database.close()
+                self.app.database.close()
             except:
                 pass
             return response
