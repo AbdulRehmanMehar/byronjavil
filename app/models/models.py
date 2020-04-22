@@ -25,11 +25,12 @@ if config_name == "development":
     db = SqliteDatabase("id.db")
 else:
     database = {
-    'user': 'postgres',
-    'password': 'prosperidad2020',
-    'host': '127.0.0.1',
-    'port': 5432
-}
+        'user': 'postgres',
+        'password': 'postgres',
+        'host': '127.0.0.1',
+        'port': 5432
+    }
+
     db = PostgresqlDatabase("PAMS", **database)
 
 
