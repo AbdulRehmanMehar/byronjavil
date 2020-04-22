@@ -30,7 +30,7 @@ else:
     'host': '127.0.0.1',
     'port': 5432
 }
-    db = PostgresqlDatabase("PASM", **database)
+    db = PostgresqlDatabase("PAMS", **database)
 
 
 class BaseModel(Model):

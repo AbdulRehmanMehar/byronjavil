@@ -2,6 +2,7 @@ Flask==1.1.1
 flask_restplus==0.13.0
 flask_peewee==3.0.3
 peewee==3.9.6
+psycopg2==2.8.4
 Werkzeug==0.15.0
 Flask-Script==2.0.6
 Flask-Login==0.4.0
