@@ -1,5 +1,23 @@
 // user-app.js
 
+const user_options = {
+    // isCaseSensitive: false,
+    // findAllMatches: false,
+    // includeMatches: false,
+    // includeScore: false,
+    // useExtendedSearch: false,
+    // minMatchCharLength: 1,
+    // shouldSort: true,
+    // threshold:0.6,
+    // location: 0,
+    // distance: 100,
+    keys: [
+        "username",
+        "email",
+        "role.role"
+    ]
+};
+
 var users_vm = new Vue({
     el: '#users-app',
 
@@ -7,6 +25,7 @@ var users_vm = new Vue({
         visible: true,
         users: [],
         apiKey: null,
+        search: "",
 
         user: {
             username: "",
@@ -167,6 +186,14 @@ var users_vm = new Vue({
 
         editUser: function(index){
 
+            this.users.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
+
             var data = {
                 username: this.users[index].username,
                 password: "*******",
@@ -195,10 +222,27 @@ var users_vm = new Vue({
         },
 
         changePassword: function(index){
+
+            this.users.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
+
             this.editUsername = this.users[index].username;
         },
 
         deleteUser: function(index){
+
+            this.users.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
            
             var username = this.users[index].username;
             var apiKey = this.apiKey;
@@ -234,6 +278,32 @@ var users_vm = new Vue({
                 }
             });
 
+        }
+    },
+
+    filters: {
+        fuzzySearch: function(values, role){
+            var pattern = this.search;
+
+            if (role == 'users'){
+                var options = user_options;
+            }
+
+            if (pattern == ""){
+                return values;
+            }
+            console.log(values);
+
+            var fuse = new Fuse(values, options);
+            var matches = fuse.search(pattern);
+            
+            var output =  [];
+
+            matches.forEach(function(value){
+                output.push(value.item);
+            });
+
+            return output;
         }
     }
 })
