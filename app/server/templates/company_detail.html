@@ -135,16 +135,22 @@
 
     {% include 'partials/footer.html' %}
     
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/fileinput.min.js') }}"></script>
+    <!-- External libraries -->
+
+    <script src="{{ url_for('static', filename='js/external/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/fileinput.min.js') }}"></script>
+
+    <!-- Front-End Framework -->
 
     <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
 
-    <script src="{{ url_for('static', filename='js/company-detail-app.js') }}"></script>
+    <!-- Internal modules -->
+
+    <script src="{{ url_for('static', filename='js/internal/company-detail-app.js') }}"></script>
 
 </body>
 </html>

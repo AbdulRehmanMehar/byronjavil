@@ -203,27 +203,29 @@
 
     </div>
 
+    <!-- External libraries -->
     
-    
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/datatables.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/dataTables.buttons.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/buttons.flash.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/jszip.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/pdfmake.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/vfs_fonts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/buttons.html5.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/external/buttons.print.min.js') }}"></script>
 
-    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/datatables.min.js') }}"></script>
-	
-	<script src="{{ url_for('static', filename='js/dataTables.buttons.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/buttons.flash.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/jszip.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/pdfmake.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/vfs_fonts.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/buttons.html5.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/buttons.print.min.js') }}"></script>
+    <!-- Front-End Framework -->
 
-    <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/vue.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/vue-resource.js') }}"></script>
     
-    <script src="{{ url_for('static', filename='js/manager-app.js') }}"></script>
+    <!-- Internal modules -->
+
+    <script src="{{ url_for('static', filename='js/internal/manager/manager-app.js') }}"></script>
 
 </body>
 </html>
