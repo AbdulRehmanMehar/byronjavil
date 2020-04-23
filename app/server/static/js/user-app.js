@@ -292,7 +292,6 @@ var users_vm = new Vue({
             if (pattern == ""){
                 return values;
             }
-            console.log(values);
 
             var fuse = new Fuse(values, options);
             var matches = fuse.search(pattern);
