@@ -265,7 +265,7 @@ var users_vm = new Vue({
 
                         waitingDialog.show('Sending');
 
-                        self.$http.delete('/api/supervisor/users/' + username, {headers: {'X-API-KEY': apiKey}})
+                        self.$http.delete('/api/admin/users/' + username, {headers: {'X-API-KEY': apiKey}})
                             .then(function (res) {
                                 self.fetchUsers();
                                 waitingDialog.hide();
