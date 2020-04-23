@@ -248,7 +248,7 @@ def reset():
 
     User.create(role_id=data_role.id, **parameters)
 
-    data_role = UserRole.select().where(UserRole.role=="MANAGER").get()
+    data_role = UserRole.select().where(UserRole.role=="SUPERVISOR/MANAGER").get()
 
     parameters = {
         "username": "manager",

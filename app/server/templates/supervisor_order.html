@@ -402,26 +402,24 @@
 
     </main>
 
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-            <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="https://getbootstrap.com/docs/4.4/getting-started/introduction/">getting started guide</a>.</p>
-        </div>
-    </footer>
+    {% include 'partials/footer.html' %}
+
+    <!-- External libraries -->
     
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/fileinput.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/fileinput.min.js') }}"></script>
 
-    <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
+    <!-- Front-End Framework -->
 
-    <script src="{{ url_for('static', filename='js/supervisor-order-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/vue.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/vue-resource.js') }}"></script>
+
+    <!-- Internal modules -->
+
+    <script src="{{ url_for('static', filename='js/internal/supervisor/supervisor-order-app.js') }}"></script>
 
     <script>
         var fileInput = $("#input-b8").fileinput({

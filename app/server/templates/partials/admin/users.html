@@ -1,19 +1,31 @@
 <div id="users-app" class="row" v-show="visible">
+    
+    <div class="col-lg-6 pt-3">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+            </span>
+            <input type="text" class="form-control" placeholder="Search for..." v-model="search">
+        </div><!-- /input-group -->
+    </div>
+
     <div class="col-md-10">
         <div class="my-3 p-3 bg-white rounded shadow-sm">
             <h6 class="border-bottom border-gray pb-2 mb-0">Users</h6>
             
             {% raw %}
 
-            <div class="media text-muted pt-3" v-for="(index, user) in users">
+            <div class="media text-muted pt-3" v-for="(index, user) in users | fuzzySearch 'users'">
                 <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <strong class="text-gray-dark">@{{ user.username }}</strong>
                         <div>
-                            <a href="#" data-toggle="modal" data-target="#user-create" v-on:click="editUser(index)">Edit</a>
+                            <a href="#" data-toggle="modal" data-target="#user-create" v-on:click="editUser(user.id)">Edit</a>
                             <span>-</span>
-                            <a href="#" v-on:click="deleteUser(index)">Delete</a>
+                            <a href="#" data-toggle="modal" data-target="#user-password" v-on:click="changePassword(user.id)">Change Password</a>
+                            <span>-</span>
+                            <a href="#" v-on:click="deleteUser(user.id)">Delete</a>
                         </div>
                     </div>
                     <span class="d-block">{{ user.role.role }} - {{ user.email }}</span>
@@ -96,6 +108,42 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" v-on:click="updateUser" v-if="edit">Update</button>
                         <button type="button" class="btn btn-primary" v-on:click="createUser" v-else>Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetUser">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password modal -->
+
+    <div class="modal" tabindex="-1" id="user-password" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form class="needs-validation" id="password-form" novalidate="">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetUser">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="mb-3">Please type new password</h4>
+                        <p>Fill in the following.</p>
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="" required="" v-model="newPassword">
+                                <div class="invalid-feedback">
+                                    Password is required.
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="updatePassword">Update Password</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetUser">Close</button>
                     </div>
                 </div>

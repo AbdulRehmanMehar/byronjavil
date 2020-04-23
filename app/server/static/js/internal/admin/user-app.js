@@ -1,5 +1,23 @@
 // user-app.js
 
+const user_options = {
+    // isCaseSensitive: false,
+    // findAllMatches: false,
+    // includeMatches: false,
+    // includeScore: false,
+    // useExtendedSearch: false,
+    // minMatchCharLength: 1,
+    // shouldSort: true,
+    // threshold:0.6,
+    // location: 0,
+    // distance: 100,
+    keys: [
+        "username",
+        "email",
+        "role.role"
+    ]
+};
+
 var users_vm = new Vue({
     el: '#users-app',
 
@@ -7,6 +25,7 @@ var users_vm = new Vue({
         visible: true,
         users: [],
         apiKey: null,
+        search: "",
 
         user: {
             username: "",
@@ -17,6 +36,8 @@ var users_vm = new Vue({
 
         edit: false,
         editUsername: null,
+
+        newPassword: ""
     },
 
     ready: function(){
@@ -38,6 +59,10 @@ var users_vm = new Vue({
 
         closeModal: function(){
             $('#user-create').modal('hide');
+        },
+
+        closePasswordModal: function(){
+            $('#user-password').modal('hide');
         },
 
         createUser: function(){
@@ -62,6 +87,19 @@ var users_vm = new Vue({
             }
             form.classList.add('was-validated');
 
+        },
+
+        updatePassword: function(){
+
+            var form = document.getElementById('password-form');
+
+            if (form.checkValidity() === true) {
+                this.closePasswordModal();
+                this.postPassword();
+            }
+
+            form.classList.add('was-validated');
+        
         },
 
         fetchUsers: function(){
@@ -89,7 +127,7 @@ var users_vm = new Vue({
                 this.$http.put('/api/admin/users/' + username, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchUsers();
-                        this.resetUser()
+                        this.resetUser();
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -100,7 +138,7 @@ var users_vm = new Vue({
                 this.$http.post('/api/admin/users', payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                         this.fetchUsers();
-                        this.resetUser()
+                        this.resetUser();
                         waitingDialog.hide();
                     },
                     function (err) {
@@ -111,13 +149,50 @@ var users_vm = new Vue({
             
         },
 
+        postPassword: function(){
+            
+            var apiKey = this.apiKey;
+
+            payload = {};
+
+            payload.username = this.editUsername;
+            payload.password = this.newPassword;
+
+            waitingDialog.show('Sending');
+
+            this.$http.post('/api/admin/users/change-password', payload, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.fetchUsers();
+                    this.resetUser();
+                    waitingDialog.hide();
+                },
+                function (err) {
+                    console.log(err);
+            });
+            
+        },
+
         resetForm: function(){
             
             var form = document.getElementById('user-form');
             form.classList.remove("was-validated");
         },
 
+        resetPasswordForm: function(){
+            
+            var form = document.getElementById('password-form');
+            form.classList.remove("was-validated");
+        },
+
         editUser: function(index){
+
+            this.users.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
 
             var data = {
                 username: this.users[index].username,
@@ -140,11 +215,34 @@ var users_vm = new Vue({
             };
             this.edit = false;
             this.editUsername = null;
+            this.newPassword = "";
 
             this.resetForm();
+            this.resetPasswordForm();
+        },
+
+        changePassword: function(index){
+
+            this.users.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
+
+            this.editUsername = this.users[index].username;
         },
 
         deleteUser: function(index){
+
+            this.users.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
            
             var username = this.users[index].username;
             var apiKey = this.apiKey;
@@ -167,7 +265,7 @@ var users_vm = new Vue({
 
                         waitingDialog.show('Sending');
 
-                        self.$http.delete('/api/supervisor/users/' + username, {headers: {'X-API-KEY': apiKey}})
+                        self.$http.delete('/api/admin/users/' + username, {headers: {'X-API-KEY': apiKey}})
                             .then(function (res) {
                                 self.fetchUsers();
                                 waitingDialog.hide();
@@ -180,6 +278,31 @@ var users_vm = new Vue({
                 }
             });
 
+        }
+    },
+
+    filters: {
+        fuzzySearch: function(values, role){
+            var pattern = this.search;
+
+            if (role == 'users'){
+                var options = user_options;
+            }
+
+            if (pattern == ""){
+                return values;
+            }
+
+            var fuse = new Fuse(values, options);
+            var matches = fuse.search(pattern);
+            
+            var output =  [];
+
+            matches.forEach(function(value){
+                output.push(value.item);
+            });
+
+            return output;
         }
     }
 })

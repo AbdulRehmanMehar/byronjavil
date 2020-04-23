@@ -91,32 +91,38 @@
 
     <main role="main" class="container">
 
-        {% include 'order-type.html' %}
+        {% include 'partials/admin/order-type.html' %}
 
-        {% include 'users.html' %}
+        {% include 'partials/admin/users.html' %}
 
-        {% include 'client-code.html' %}
+        {% include 'partials/admin/client-code.html' %}
 
-        {% include 'companies.html' %}
+        {% include 'partials/admin/companies.html' %}
 
     </main>
     
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-
-    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/gijgo.min.js') }}"></script>
-
-    <script src="{{ url_for('static', filename='js/vue.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/vue-resource.js') }}"></script>
-
-    <script src="{{ url_for('static', filename='js/order-type-app.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/user-app.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/client-code-app.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/company-app.js') }}"></script>
+    <!-- External libraries -->
     
-    <script src="{{ url_for('static', filename='js/admin-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/gijgo.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/fuse.min.js') }}"></script>
+
+    <!-- Front-End Framework -->
+
+    <script src="{{ url_for('static', filename='js/external/vue.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/vue-resource.js') }}"></script>
+
+    <!-- Internal modules -->
+
+    <script src="{{ url_for('static', filename='js/internal/admin/order-type-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/internal/admin/user-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/internal/admin/client-code-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/internal/admin/company-app.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='js/internal/admin/admin-app.js') }}"></script>
     
     <script>
         $('#datepicker').datepicker({

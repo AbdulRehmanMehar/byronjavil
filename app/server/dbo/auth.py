@@ -117,6 +117,15 @@ class UserDBO:
         
         return True
 
+    def change_password(self, username, password):
+
+        user = self.read(username)
+
+        password = hash_password(password)
+
+        user.password = password
+        user.save()
+
     def verify_username(self, username):
 
         try:
