@@ -282,12 +282,10 @@ var users_vm = new Vue({
     },
 
     filters: {
-        fuzzySearch: function(values, role){
+        fuzzySearch: function(values){
             var pattern = this.search;
 
-            if (role == 'users'){
-                var options = user_options;
-            }
+            var options = user_options;
 
             if (pattern == ""){
                 return values;
