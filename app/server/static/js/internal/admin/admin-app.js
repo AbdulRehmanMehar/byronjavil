@@ -17,11 +17,13 @@ var vm = new Vue({
 
     ready: function(){
         order_type_vm.setKey(this.apiKey);
+        research_type_vm.setKey(this.apiKey);
         users_vm.setKey(this.apiKey);
         client_code_vm.setKey(this.apiKey);
         companies_vm.setKey(this.apiKey);
         
         order_type_vm.fetchOrderTypes();
+        research_type_vm.fetchResearchTypes();
         users_vm.fetchUsers();
         client_code_vm.fetchClientCodes();
         companies_vm.fetchCompanies();
@@ -36,6 +38,10 @@ var vm = new Vue({
             
             if (app == 'order-type'){
                 order_type_vm.show();
+            }
+
+            if (app == 'research-type'){
+                research_type_vm.show();
             }
 
             if (app == 'users'){
@@ -54,6 +60,7 @@ var vm = new Vue({
 
         hide: function(){
             order_type_vm.hide();
+            research_type_vm.hide();
             users_vm.hide();
             client_code_vm.hide();
             companies_vm.hide();

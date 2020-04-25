@@ -83,6 +83,7 @@
             </a>
             {% endraw %}
             <a class="nav-link active" href="#" v-on:click="show('order-type')">Order Types</a>
+            <a class="nav-link active" href="#" v-on:click="show('research-type')">Research Types</a>
             <a class="nav-link" href="#" v-on:click="show('users')">Users</a>
             <a class="nav-link active" href="#" v-on:click="show('client-code')">Client Codes</a>
             <a class="nav-link" href="#" v-on:click="show('companies')">Companies</a>
@@ -92,6 +93,8 @@
     <main role="main" class="container">
 
         {% include 'partials/admin/order-type.html' %}
+
+        {% include 'partials/admin/research-type.html' %}
 
         {% include 'partials/admin/users.html' %}
 

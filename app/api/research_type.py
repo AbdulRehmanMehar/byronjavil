@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# app/api/order_type.py
+# app/api/research_type.py
 
 from flask import request
 from flask_restplus import Resource, fields
@@ -18,8 +18,8 @@ research_type_model = api.model("research_type_model", {
 })
 
 
-@ns.route('/order-type')
-class AdminOrderTypeCollectionResource(Resource):
+@ns.route('/research-type')
+class AdminResearchTypeCollectionResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
@@ -30,10 +30,10 @@ class AdminOrderTypeCollectionResource(Resource):
 
         dbo = app.research_type_dbo
 
-        order_types = dbo.read_all()
+        research_types = dbo.read_all()
 
-        for order_type in order_types:
-            result.append(model_to_dict(order_type))
+        for research_type in research_types:
+            result.append(model_to_dict(research_type))
 
         return result
 
@@ -49,13 +49,13 @@ class AdminOrderTypeCollectionResource(Resource):
 
         dbo = app.research_type_dbo
 
-        order_type = dbo.create(_type)
+        research_type = dbo.create(_type)
 
-        return model_to_dict(order_type)
+        return model_to_dict(research_type)
 
 
-@ns.route('/order-type/<int:_id>')
-class AdminOrderTypeResource(Resource):
+@ns.route('/research-type/<int:_id>')
+class AdminResearchTypeResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
@@ -64,9 +64,9 @@ class AdminOrderTypeResource(Resource):
 
         dbo = app.research_type_dbo
 
-        order_type = dbo.read(_id)
+        research_type = dbo.read(_id)
 
-        return model_to_dict(order_type)
+        return model_to_dict(research_type)
     
     @ns.expect(research_type_model)
     @api.doc(security='apikey')

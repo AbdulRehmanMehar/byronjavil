@@ -1,0 +1,79 @@
+<div id="research-type-app" class="row" v-show="visible">
+    <div class="col-md-10">
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <h6 class="border-bottom border-gray pb-2 mb-0">Research Types</h6>
+
+            {% raw %}
+            
+            <div class="media text-muted pt-3" v-for="(index, research) in researchTypes">
+                <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">{{ research.research_type }}</strong>
+                        <div>
+                            <a href="#" data-toggle="modal" data-target="#research-type-create" v-on:click="editResearchType(index)">Edit</a>
+                            <span>-</span>
+                            <a href="#" v-on:click="deleteResearchType(index)">Delete</a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            {% endraw %}
+
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <br>
+        <br>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#research-type-create">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                Create
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Research types modal -->
+
+    <div class="modal" tabindex="-1" id="research-type-create" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form class="needs-validation" id="research-type-form" novalidate="">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><span v-if="edit">Edit</span><span v-else>Create</span> Research Type</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" v-on:click="resetResearchType">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Fill in the following.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="username">Research type</label>
+                                <div class="input-group">
+                                    <input type="text" v-model="researchType" class="form-control" name="research-type" placeholder="Research type" required="">
+                                    <div class="invalid-feedback" style="width: 100%;">
+                                        Research type is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="updateResearchType" v-if="edit">Update</button>
+                        <button type="button" class="btn btn-primary" v-on:click="createResearchType" v-else>Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetResearchType">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
