@@ -46,6 +46,12 @@ class AttachmentDBO:
 
         return result
 
+    def get_owner(self, _id):
+
+        attachment = self.read(_id)
+
+        return attachment.user
+
     def delete(self, _id):
 
         attachment = Attachment.select().where(Attachment.id==_id).get()

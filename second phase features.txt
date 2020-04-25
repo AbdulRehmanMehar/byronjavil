@@ -32,6 +32,7 @@ Research and data entry
 - Dispute column should be added – if research or data entry person write anything in it, it will send email to manage what is written in it and dispute comment should be shown in the manager role under that address.
 - The property map should be display on right hand side. If click on it will zoom it.
 - Z estimate value should be extracted from Zillow site of that address
+
 Data entry
 
 - Data entry person can upload any picture/files if they want to upload it

@@ -113,12 +113,13 @@ class Order(BaseModel):
     manager_submit = BooleanField(default=False)
 
     company = ForeignKeyField(Company)
-    research_user = ForeignKeyField(User)
-    data_user = ForeignKeyField(User)
+    research_user = ForeignKeyField(User, null=True)
+    data_user = ForeignKeyField(User,null=True)
 
     client_code = ForeignKeyField(ClientCode)
 
     kind = ForeignKeyField(OrderType, null=True)
+    research_type = ForeignKeyField(ResearchType, null=True)
     state = ForeignKeyField(OrderState, null=True)    
     
 

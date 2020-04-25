@@ -107,3 +107,25 @@ class OrderUploadResource(Resource):
         }
 
         return response
+
+
+@ns.route('/delete/<int:_id>')
+class DeleteResource(Resource):
+
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"])
+    def delete(self, _id):
+
+        attachment_dbo = app.attachment_dbo
+
+        user = get_current_user()
+        owner = attachment_dbo.get_owner(_id)
+
+        if not user.username == owner.username:
+            return 401, "Not authorized to delete this file"
+
+        attachment_dbo.delete(_id)
+
+        return 200, "File successfully deleted"
+        
