@@ -114,7 +114,7 @@ class Order(BaseModel):
 
     company = ForeignKeyField(Company)
     research_user = ForeignKeyField(User, null=True)
-    data_user = ForeignKeyField(User,null=True)
+    data_user = ForeignKeyField(User, null=True)
 
     client_code = ForeignKeyField(ClientCode)
 
@@ -131,7 +131,7 @@ class Attachment(BaseModel):
 
     base64 = BlobField()
 
-    user = ForeignKeyField(User)
+    user = ForeignKeyField(User, null=True)
 
     created_date = DateTimeField(default=datetime.now)
 
