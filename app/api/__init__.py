@@ -5,6 +5,7 @@ from .auth import *
 from .attachment import *
 from .user import *
 from .order_type import *
+from .research_type import *
 from .client_code import *
 from .company import *
 from .supervisor import *

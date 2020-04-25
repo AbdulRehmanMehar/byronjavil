@@ -1,29 +1,39 @@
 Second phase features:
 
 Admin
-- How the password of admin can be changed
+
+- (Corrected) How the password of admin can be
 - Report section is not created for User and client. It should be under admin login
-- One person which is supervisor and manager when I click on Manager of it, it is not showing Manager screen.
-- Property address should be mentioned instead of Order ID in email
+- (Corrected) One person which is supervisor and manager when I click on Manager of it, it is not showing Manager screen.
+- (Corrected) Property address should be mentioned instead of Order ID in email
+
 Archieve
+
 - There should be Archive folder under Manager account.
 - There should be select files option also so the person can select it and move it to archive folder.
 - Select all option too. If I will select any property to archive will it remove from all the user? Let me know about it.
 - How many addresses it will show at a time on page under each account?
+
 Supervisor
+
 - Research type to be entered at the time of creation of order. It is not necessary to fill it out. Type can be added or removed from admin. These are few of the types
 a) normal b) high value c) high value and rental d) less than z estimate e) proximate
 - Sometimes research is not required in address so the address move to directly to data entry person. In that there will be no research option and it move directly to data entry person.
 I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
+
 Research
+
 - Individual file upload feature should also be there
 - If the research person upload the folder, then folder will be there and if person upload two folder then two separate folders should be there. It shouldn’t mixed up the files.
 - Delete file option should be there to delete the folder or files.
+
 Research and data entry
+
 - Dispute column should be added – if research or data entry person write anything in it, it will send email to manage what is written in it and dispute comment should be shown in the manager role under that address.
 - The property map should be display on right hand side. If click on it will zoom it.
 - Z estimate value should be extracted from Zillow site of that address
 Data entry
+
 - Data entry person can upload any picture/files if they want to upload it
 - One box of Value should be added where data entry person write value in it.
 

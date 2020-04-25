@@ -93,6 +93,11 @@ class OrderState(BaseModel):
     state = TextField()
 
 
+class ResearchType(BaseModel):
+
+    research_type = TextField()
+
+
 class Order(BaseModel):
 
     address = TextField()
@@ -169,6 +174,7 @@ def reset():
         Comment,
         OrderType,
         OrderState,
+        ResearchType,
         Order,
         Attachment,
         OrderComment,
@@ -192,6 +198,14 @@ def reset():
         "Interior inspection across the view"
     ]
 
+    RESEARCH_TYPES = [
+        "Normal",
+        "High value",
+        "High value and rental",
+        "Less than z estimate",
+        "Proximate"
+    ]
+
     for ROLE in ROLES:
 
         UserRole.create(role=ROLE)
@@ -203,6 +217,10 @@ def reset():
     for ORDER_TYPE in ORDER_TYPES:
 
         OrderType.create(order_type=ORDER_TYPE)
+
+    for RESEARCH_TYPE in RESEARCH_TYPES:
+
+        ResearchType.create(research_type=RESEARCH_TYPE)
 
     admin_role = UserRole.select().where(UserRole.role=="ADMIN").get()
 
