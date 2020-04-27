@@ -72,6 +72,26 @@ class SupervisorOrderTypeCollectionResource(Resource):
         return result
 
 
+@ns.route('/research-type')
+class SupervisorResearchTypeCollectionResource(Resource):
+
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
+    def get(self):
+
+        result = list()
+
+        dbo = app.research_type_dbo
+
+        research_types = dbo.read_all()
+
+        for research_type in research_types:
+            result.append(model_to_dict(research_type))
+
+        return result
+
+
 @ns.route('/users')
 class SupervisorUsersCollectionResource(Resource):
 

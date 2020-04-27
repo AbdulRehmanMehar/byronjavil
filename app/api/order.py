@@ -65,22 +65,34 @@ class SupervisorOrderCollection(Resource):
         company_dbo = app.company_dbo
         client_dbo = app.client_code_dbo
 
+        print(payload)
+
         research_id = payload["research_id"]
         data_id = payload["data_id"]
         company_id = payload["company_id"]
 
-        research_user = user_dbo.read_by_id(research_id)
         data_user = user_dbo.read_by_id(data_id)
         company = company_dbo.read(company_id)
         order_type = type_dbo.read_by_type(payload["type"])
         client_code = client_dbo.read_by_code(payload["client_code"])
-        state = "RESEARCH"
-        order_state = OrderState.select().where(OrderState.state==state).get()
+        
+        
 
+        if research_id:
+            research_user = user_dbo.read_by_id(research_id)
+            state = "RESEARCH"
+
+        else:
+            
+            state = "DATA_ENTRY"
+            research_user = None
+
+        order_state = OrderState.select().where(OrderState.state==state).get()
+        
         data = {
             "address": payload["address"],
-            "research_user": research_user,
             "data_user": data_user,
+            "research_user": research_user,
             "company": company,
             "due_date": payload["due_date"],
             "assigned_date": payload["assigned_date"],
@@ -88,7 +100,7 @@ class SupervisorOrderCollection(Resource):
             "kind": order_type,
             "state": order_state
         }
-
+        
         order = dbo.create(**data)
 
         order.save()
@@ -99,7 +111,10 @@ class SupervisorOrderCollection(Resource):
         response["due_date"] = str(response["due_date"])
         response["state"]["state"] = order_states[response["state"]["state"]]
 
-        send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username, from_email="admin@pams.com", to_emails=[research_user.email])
+        if research_id:
+            send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username, from_email="admin@pams.com", to_emails=[research_user.email])
+        else:
+            send_mail_template("ASSIGN_DATA", order, username=data_user.username, from_email="admin@pams.com", to_emails=[data_user.email])
 
         return response
 

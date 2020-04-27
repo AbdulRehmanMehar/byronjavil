@@ -15,6 +15,7 @@ var orders_vm = new Vue({
             company_id: "",
             client_code: "",
             type: "",
+            research: "",
             assigned_date: "",
             due_date: ""
         },
@@ -23,6 +24,7 @@ var orders_vm = new Vue({
         data_users: [],
         companies: [],
         order_types: [],
+        research_types: [],
         client_codes: [],
         states: [],
 
@@ -101,6 +103,7 @@ var orders_vm = new Vue({
             this.fetchCompanies();
             this.fetchClientCodes();
             this.fetchOrderTypes();
+            this.fetchResearchTypes();
             this.fetchStates();
         },
 
@@ -144,6 +147,17 @@ var orders_vm = new Vue({
             this.$http.get('api/supervisor/order-type', {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.order_types = res.data;
+                }, function(err){
+                    console.log(err);
+                })
+        },
+
+        fetchResearchTypes: function(){
+            var apiKey = this.apiKey;
+
+            this.$http.get('api/supervisor/research-type', {headers: {'X-API-KEY': apiKey}})
+                .then(function (res){
+                    this.research_types = res.data;
                 }, function(err){
                     console.log(err);
                 })
@@ -223,6 +237,7 @@ var orders_vm = new Vue({
                 company_id: this.orders[index].company.id,
                 client_code: this.orders[index].client_code.code,
                 type: this.orders[index].kind.order_type,
+                research: this.orders[index].research_type.research_type,
                 state: this.orders[index].state.state,
                 assigned_date: this.orders[index].assigned_date,
                 due_date: this.orders[index].due_date
@@ -248,6 +263,7 @@ var orders_vm = new Vue({
                 company_id: "",
                 client_code: "",
                 type: "",
+                research: "",
                 state: ""
             };
 
