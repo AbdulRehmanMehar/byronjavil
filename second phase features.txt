@@ -16,9 +16,9 @@ Archieve
 
 Supervisor
 
-- Research type to be entered at the time of creation of order. It is not necessary to fill it out. Type can be added or removed from admin. These are few of the types
+- (Corrected) Research type to be entered at the time of creation of order. It is not necessary to fill it out. Type can be added or removed from admin. These are few of the types
 a) normal b) high value c) high value and rental d) less than z estimate e) proximate
-- Sometimes research is not required in address so the address move to directly to data entry person. In that there will be no research option and it move directly to data entry person.
+- (Corrected) Sometimes research is not required in address so the address move to directly to data entry person. In that there will be no research option and it move directly to data entry person.
 I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
 
 Research
