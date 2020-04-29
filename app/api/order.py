@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # app/api/order.py
 
+from datetime import datetime
+
 from flask import request
 from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
@@ -65,8 +67,6 @@ class SupervisorOrderCollection(Resource):
         company_dbo = app.company_dbo
         client_dbo = app.client_code_dbo
 
-        print(payload)
-
         research_id = payload["research_id"]
         data_id = payload["data_id"]
         company_id = payload["company_id"]
@@ -88,14 +88,17 @@ class SupervisorOrderCollection(Resource):
             research_user = None
 
         order_state = OrderState.select().where(OrderState.state==state).get()
+
+        due_date = datetime.strptime(payload["due_date"], "%m/%d/%Y").date()
+        assigned_date = datetime.strptime(payload["assigned_date"], "%m/%d/%Y").date()
         
         data = {
             "address": payload["address"],
             "data_user": data_user,
             "research_user": research_user,
             "company": company,
-            "due_date": payload["due_date"],
-            "assigned_date": payload["assigned_date"],
+            "due_date": due_date,
+            "assigned_date": assigned_date,
             "client_code": client_code,
             "kind": order_type,
             "state": order_state
