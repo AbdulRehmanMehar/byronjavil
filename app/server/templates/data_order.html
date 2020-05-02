@@ -296,6 +296,9 @@
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="home" aria-selected="true">Comments</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="profile" aria-selected="false">Upload File</a>
+                    </li>
+                    <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#attachments" role="tab" aria-controls="profile" aria-selected="false">Attachments</a>
                     </li>
                 </ul>
@@ -346,7 +349,7 @@
                     <div class="row tab-container">
                         <div class="col-12">
                             <div dir=rtl class="file-loading">
-                                <input id="input-b8" name="input-b8[]" type="file">
+                                <input id="input-b8" name="input-b8[]" type="file"multiple>
                             </div>
                         </div>
                     </div>
@@ -372,7 +375,6 @@
                                         <th scope="col">Filetype</th>
                                         <th scope="col">Uploaded by</th>
                                         <th scope="col">Uploaded date</th>
-                                        <th scope="col">Download</th>
                                      </tr>
                                 </thead>
                                 <tbody>
@@ -381,11 +383,10 @@
                                     
                                     <tr v-for="(index, attachment) in attachments">
                                         <th scope="row">{{ index + 1 }}</th>
-                                        <td>{{ attachment.filename }}</td>
+                                        <td><a v-bind:href="attachment.url">{{ attachment.filename }}</a></td>
                                         <td>{{ attachment.filetype }}</td>
                                         <td>{{ attachment.username }} ({{ attachment.userrole }})</td>
-                                        <td>{{ attachment.created_date  }}</td>
-                                        <td><a v-bind:href="attachment.url">Download</a></td>
+                                        <td>{{ attachment.created_date }}</td>
                                     </tr>
                                     
                                     {% endraw %}
@@ -409,6 +410,7 @@
     <script src="{{ url_for('static', filename='js/external/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/external/dialog.js') }}"></script>
     <script src="{{ url_for('static', filename='js/external/bootbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/external/fileinput.min.js') }}"></script>
 
     <!-- Front-End Framework -->
 
@@ -419,5 +421,24 @@
 
     <script src="{{ url_for('static', filename='js/internal/data/data-order-app.js') }}"></script>
 
+    <script>
+        var fileInput = $("#input-b8").fileinput({
+            browseLabel: 'Select Files...',
+            dropZoneEnabled: false,
+            allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+        });
+
+        $(document).ready(function() {    
+
+            $('button.fileinput-upload').on('click', function(event){
+                console.log("click");
+
+                var file = $('#input-b8')[0].files[0];
+                var files = $('#input-b8')[0].files;
+                var fileArray = Array.from(files);
+                vm.postListAttachment(fileArray);
+            })
+        });
+    </script>
 </body>
 </html>

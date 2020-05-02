@@ -85,7 +85,7 @@ class OrderUploadResource(Resource):
     @api.doc(security='apikey')
     @ns.expect(upload_model)
     @token_required
-    @role_required(["SUPERVISOR", "RESEARCH"])
+    @role_required(["SUPERVISOR", "RESEARCH", "DATA"])
     def post(self, _id):
 
         order_dbo = app.order_dbo
