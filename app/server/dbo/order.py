@@ -163,3 +163,32 @@ class OrderDBO:
             result.append(attachment)
 
         return result
+
+    def delete_attachment(self, _id, attachment_id):
+
+        order = self.read(_id)
+        
+        order_attachment = OrderAttachment.select().where(OrderAttachment.order_id==order.id).get()
+
+        if order_attachment.attachment_id == attachment_id:
+
+            order_attachment.delete_instance()
+
+            return True
+
+        return False
+
+
+    def read_by_attachment(self, attachment_id):
+        
+        order_attachments = OrderAttachment.select()
+
+        for order_attachment in order_attachments:
+
+            if order_attachment.attachment_id == attachment_id:
+                
+                _id = order_attachment.order_id
+
+        order = self.read(_id)
+
+        return order

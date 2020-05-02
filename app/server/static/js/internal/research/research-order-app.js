@@ -196,6 +196,28 @@ var vm = new Vue({
             };
         },
 
+        deleteAttachment: function(index){
+
+            var apiKey = this.apiKey;
+            var attachment_id = this.attachments[index].uuid;
+            
+            waitingDialog.show('Sending');
+
+            this.$http.delete('/api/attachment/delete/' + attachment_id, {headers: {'X-API-KEY': apiKey}})
+                .then(function (res) {
+                    this.fetchAttachments();
+                    this.resetAttachment();
+                    waitingDialog.hide();
+                    bootbox.alert("File deleted successfully!");
+                },
+                function (err) {
+                    waitingDialog.hide();
+                    bootbox.alert("Unauthorized to delete this file!");
+                    console.log(err);
+            });
+
+        },
+
         markCompleted: function(){
 
             var apiKey = this.apiKey;

@@ -23,7 +23,7 @@ I also need the functions of copy, CSV, Excel, PDF and Print under supervisor
 
 Research
 
-- Individual file upload feature should also be there
+- (Drag and Drop) Individual file upload feature should also be there
 - If the research person upload the folder, then folder will be there and if person upload two folder then two separate folders should be there. It shouldn’t mixed up the files.
 - Delete file option should be there to delete the folder or files.
 

@@ -352,7 +352,7 @@
                                         <th scope="col">Filetype</th>
                                         <th scope="col">Uploaded by</th>
                                         <th scope="col">Uploaded date</th>
-                                        <th scope="col">Download</th>
+                                        <th scope="col">Delete</th>
                                      </tr>
                                 </thead>
                                 <tbody>
@@ -361,11 +361,11 @@
                                     
                                     <tr v-for="(index, attachment) in attachments">
                                         <th scope="row">{{ index + 1 }}</th>
-                                        <td>{{ attachment.filename }}</td>
+                                        <td><a v-bind:href="attachment.url">{{ attachment.filename }}</a></td>
                                         <td>{{ attachment.filetype }}</td>
                                         <td>{{ attachment.username }} ({{ attachment.userrole }})</td>
                                         <td>{{ attachment.created_date  }}</td>
-                                        <td><a v-bind:href="attachment.url">Download</a></td>
+                                        <td><a href="#" v-on:click="deleteAttachment(index)">Delete</a></td>
                                     </tr>
                                     
                                     {% endraw %}
@@ -415,7 +415,6 @@
                 var file = $('#input-b8')[0].files[0];
                 var files = $('#input-b8')[0].files;
                 var fileArray = Array.from(files);
-                console.log(files);
                 vm.postListAttachment(fileArray);
             })
         });
