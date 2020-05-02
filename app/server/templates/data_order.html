@@ -9,6 +9,7 @@
     <title>Data Entry</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fileinput.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
 
     <style>
@@ -348,8 +349,8 @@
                 <div class="container">
                     <div class="row tab-container">
                         <div class="col-12">
-                            <div dir=rtl class="file-loading">
-                                <input id="input-b8" name="input-b8[]" type="file"multiple>
+                            <div class="file-loading">
+                                <input id="input-b5" name="input-b5" type="file" multiple>
                             </div>
                         </div>
                     </div>
@@ -422,19 +423,21 @@
     <script src="{{ url_for('static', filename='js/internal/data/data-order-app.js') }}"></script>
 
     <script>
-        var fileInput = $("#input-b8").fileinput({
-            browseLabel: 'Select Files...',
-            dropZoneEnabled: false,
-            allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
-        });
+        
 
         $(document).ready(function() {    
+
+            var fileInput = $("#input-b5").fileinput({
+                browseLabel: 'Select Files...',
+                dropZoneEnabled: false,
+                allowedFileExtensions: ["bmp", "jpg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx"]
+            });
 
             $('button.fileinput-upload').on('click', function(event){
                 console.log("click");
 
-                var file = $('#input-b8')[0].files[0];
-                var files = $('#input-b8')[0].files;
+                var file = $('#input-b5')[0].files[0];
+                var files = $('#input-b5')[0].files;
                 var fileArray = Array.from(files);
                 vm.postListAttachment(fileArray);
             })

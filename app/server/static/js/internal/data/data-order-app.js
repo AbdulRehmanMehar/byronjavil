@@ -76,7 +76,7 @@ var vm = new Vue({
         },
 
         resetAttachment: function(){
-            var fileInput = $("#input-b8").fileinput("reset");
+            var fileInput = $("#input-b5").fileinput("reset");
         },
 
         postComment: function(){
