@@ -1,5 +1,23 @@
 // company-app.js
 
+const company_options = {
+    // isCaseSensitive: false,
+    // findAllMatches: false,
+    // includeMatches: false,
+    // includeScore: false,
+    // useExtendedSearch: false,
+    // minMatchCharLength: 1,
+    // shouldSort: true,
+    // threshold:0.6,
+    // location: 0,
+    // distance: 100,
+    keys: [
+        "name",
+        "website",
+        "user"
+    ]
+};
+
 var companies_vm = new Vue({
     el: '#companies-app',
 
@@ -7,6 +25,7 @@ var companies_vm = new Vue({
         visible: true,
         companies: [],
         apiKey: null,
+        search: "", 
 
         company: {
             name: "",
@@ -33,7 +52,6 @@ var companies_vm = new Vue({
 
         show: function(){
             this.visible = true;
-            this.fetchClientCodes();
         },
 
         setKey: function(key){
@@ -127,6 +145,14 @@ var companies_vm = new Vue({
 
         editCompany: function(index){
 
+            this.companies.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
+
             var data = {
                 name: this.companies[index].name,
                 website: this.companies[index].website,
@@ -157,7 +183,15 @@ var companies_vm = new Vue({
         },
 
         deleteCompany: function(index){
-           
+            
+            this.companies.every(function(item, _index){
+                if (item.id == index){
+                    index = _index;
+                    return false;
+                }
+                return true;
+            });
+
             var id = this.companies[index].id;
             var apiKey = this.apiKey;
             var self = this;
@@ -192,6 +226,29 @@ var companies_vm = new Vue({
                 }
             });
 
+        }
+    },
+
+    filters: {
+        fuzzySearch: function(values){
+            var pattern = this.search;
+
+            var options = company_options;
+
+            if (pattern == ""){
+                return values;
+            }
+
+            var fuse = new Fuse(values, options);
+            var matches = fuse.search(pattern);
+            
+            var output =  [];
+
+            matches.forEach(function(value){
+                output.push(value.item);
+            });
+
+            return output;
         }
     }
 })

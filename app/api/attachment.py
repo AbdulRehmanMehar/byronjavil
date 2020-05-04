@@ -85,7 +85,7 @@ class OrderUploadResource(Resource):
     @api.doc(security='apikey')
     @ns.expect(upload_model)
     @token_required
-    @role_required(["SUPERVISOR", "RESEARCH"])
+    @role_required(["SUPERVISOR", "RESEARCH", "DATA"])
     def post(self, _id):
 
         order_dbo = app.order_dbo
@@ -107,3 +107,32 @@ class OrderUploadResource(Resource):
         }
 
         return response
+
+
+@ns.route('/delete/<uuid>')
+class DeleteResource(Resource):
+
+    @api.doc(security='apikey')
+    @token_required
+    @role_required(["SUPERVISOR", "RESEARCH", "DATA", "MANAGER", "SUPERVISOR/MANAGER"])
+    def delete(self, uuid):
+
+        order_dbo = app.order_dbo
+        attachment_dbo = app.attachment_dbo
+
+        user = get_current_user()
+        attachment = attachment_dbo.read_by_uuid(uuid)
+        owner = attachment_dbo.get_owner(attachment.id)
+
+        if not user.username == owner.username:
+
+            if not user.role.role in ["ADMIN"]:
+                return 401, "Not authorized to delete this file"
+
+        order = order_dbo.read_by_attachment(attachment.id)
+        
+        if order_dbo.delete_attachment(order.id, attachment.id):
+            attachment_dbo.delete(attachment.id)
+
+        return 200, "File successfully deleted"
+        

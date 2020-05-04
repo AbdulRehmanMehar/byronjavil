@@ -123,6 +123,7 @@ class Server(object):
         self.app.client_code_dbo = ClientCodeDBO()
         self.app.company_dbo = CompanyDBO()
         self.app.order_type_dbo = OrderTypeDBO()
+        self.app.research_type_dbo = ResearchTypeDBO()
         self.app.order_dbo = OrderDBO()
         self.app.comment_dbo = CommentDBO()
 

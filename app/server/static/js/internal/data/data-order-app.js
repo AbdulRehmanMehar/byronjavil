@@ -18,6 +18,7 @@ var vm = new Vue({
 
     ready: function(){
         this.fetchAll();
+        this.resetAttachment();
     },
 
     methods: {
@@ -74,6 +75,10 @@ var vm = new Vue({
                 })
         },
 
+        resetAttachment: function(){
+            var fileInput = $("#input-b5").fileinput("reset");
+        },
+
         postComment: function(){
             var apiKey = this.apiKey;
             var id = this.orderId;
@@ -91,6 +96,61 @@ var vm = new Vue({
                 function (err) {
                     console.log(err);
             });
+        },
+
+        postListAttachment: function(files){
+            var file = files.pop();
+
+            var apiKey = this.apiKey;
+            var id = this.orderId;
+            
+            var filename = file.name.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
+            self = this;
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                
+                var result = reader.result;
+                var chunks = result.split(";");
+                var filetype = chunks[0].split("/")[1].split(";")[0]
+                var base64 = chunks[1].replace("base64,", "");
+
+                var payload = {
+                    filename: filename,
+                    filetype: filetype,
+                    base64: base64
+                };
+
+                waitingDialog.show('Sending');
+
+                self.$http.post('/api/attachment/order/' + id, payload, {headers: {'X-API-KEY': apiKey}})
+                    .then(function (res) {
+                        
+                        waitingDialog.hide();
+                        bootbox.alert("File "+ filename + " uploaded successfully!");
+                        
+                        window.setTimeout(function(){
+                            bootbox.hideAll();
+                        }, 750);
+                        
+                        if (files.length > 0){
+                            self.postListAttachment(files);
+                        } else {
+                            self.fetchAttachments();
+                            self.resetAttachment();
+                            bootbox.alert("All Files were uploaded successfully!");
+                        }
+                            
+                    },
+                    function (err) {
+                        console.log(err);
+                });
+
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
         },
 
         resetComment: function(){

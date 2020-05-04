@@ -9,40 +9,12 @@
     <title>{{ credentials['role'].capitalize() }}</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
     <link href="{{ url_for('static', filename='css/fileinput.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/fileinput-rtl.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
-
-    <style>
-
-        .nav-tabs {
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .tab-pane {
-            margin: 10px;
-        }
-
-        .tab-container {
-            margin: 25px;
-        }
-
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-
+    
 </head>
 <body id="company-detail-app">
     <input type="hidden" id="api-key" name="api-key" value="{{ credentials['api-key'] }}" v-model="apiKey">
@@ -50,7 +22,7 @@
     <input type="hidden" id="username" name="username" value="{{ credentials['username'] }}" v-model="username">
 
     <header>
-        <div class="bg-dark collapse" id="navbarHeader" style="">
+        <div class="bg-dark collapse" id="navbarHeader">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-8 col-md-7 py-4">

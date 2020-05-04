@@ -15,7 +15,7 @@
             
             {% raw %}
 
-            <div class="media text-muted pt-3" v-for="(index, user) in users | fuzzySearch 'users'">
+            <div class="media text-muted pt-3" v-for="(index, user) in users | fuzzySearch">
                 <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
@@ -93,6 +93,7 @@
                             <div class="col-md-6 mb-3">
                                 <label for="role">Role</label>
                                 <select class="custom-select d-block w-100" id="role" required="" v-model="user.role">
+                                    <option>ADMIN</option>
                                     <option>SUPERVISOR</option>
                                     <option>RESEARCH</option>
                                     <option>DATA</option>

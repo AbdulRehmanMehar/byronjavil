@@ -9,25 +9,10 @@
     <title>Admin</title>
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    
     <link href="{{ url_for('static', filename='css/gijgo.min.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#563d7c">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 
 </head>
 <body id="app" class="bg-light">
@@ -83,6 +68,7 @@
             </a>
             {% endraw %}
             <a class="nav-link active" href="#" v-on:click="show('order-type')">Order Types</a>
+            <a class="nav-link active" href="#" v-on:click="show('research-type')">Research Types</a>
             <a class="nav-link" href="#" v-on:click="show('users')">Users</a>
             <a class="nav-link active" href="#" v-on:click="show('client-code')">Client Codes</a>
             <a class="nav-link" href="#" v-on:click="show('companies')">Companies</a>
@@ -92,6 +78,8 @@
     <main role="main" class="container">
 
         {% include 'partials/admin/order-type.html' %}
+
+        {% include 'partials/admin/research-type.html' %}
 
         {% include 'partials/admin/users.html' %}
 
@@ -118,6 +106,7 @@
     <!-- Internal modules -->
 
     <script src="{{ url_for('static', filename='js/internal/admin/order-type-app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/internal/admin/research-type-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/internal/admin/user-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/internal/admin/client-code-app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/internal/admin/company-app.js') }}"></script>
