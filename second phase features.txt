@@ -35,7 +35,7 @@ Research and data entry
 
 Data entry
 
-- Data entry person can upload any picture/files if they want to upload it
+- (Corrected) Data entry person can upload any picture/files if they want to upload it
 - One box of Value should be added where data entry person write value in it.
 
 Manager
@@ -45,9 +45,10 @@ Manager
 
 I also need this
 
-I want that when the person want to create the order under Supervisor, 
+(Corrected) I want that when the person want to create the order under Supervisor, 
 it is not necessary to assign to research and data entry at that time. 
 Right now the order cann’t be created without it. It should be optional. 
+
 If he want to do it at that time otherwise he can click on edit then 
 assign to particular research and data entry person. At the time of 
 assigning the supervisor also know how many orders are active under 
