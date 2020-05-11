@@ -77,8 +77,6 @@ class SupervisorOrderCollection(Resource):
         order_type = type_dbo.read_by_type(payload["type"])
         client_code = client_dbo.read_by_code(payload["client_code"])
         
-        
-
         if research_id:
             research_user = user_dbo.read_by_id(research_id)
             state = "RESEARCH"
@@ -94,7 +92,7 @@ class SupervisorOrderCollection(Resource):
         assigned_date = datetime.strptime(payload["assigned_date"], "%m/%d/%Y").date()
 
         full_address = geo_address(payload["address"])
-        _lat, _long = geo_address(payload["address"])
+        _lat, _long = geo_coordinates(payload["address"])
         
         data = {
             "address": payload["address"],
@@ -176,7 +174,7 @@ class SupervisorOrder(Resource):
         order_state = OrderState.select().where(OrderState.state==state).get()
 
         full_address = geo_address(payload["address"])
-        _lat, _long = geo_address(payload["address"])
+        _lat, _long = geo_coordinates(payload["address"])
 
         data = {
             "address": payload["address"],
