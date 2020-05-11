@@ -101,6 +101,11 @@ class ResearchType(BaseModel):
 class Order(BaseModel):
 
     address = TextField()
+
+    full_address = TextField(default="")
+
+    latitude = FloatField(default=0.0)
+    longitude = FloatField(default=0.0)
     
     assigned_date = DateField(default=date.today)
     due_date = DateField(default=date.today)

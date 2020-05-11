@@ -7,3 +7,4 @@ Werkzeug==0.15.0
 Flask-Script==2.0.6
 Flask-Login==0.4.0
 sendgrid==6.2.1
+geopy==1.22.0
