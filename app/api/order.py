@@ -12,6 +12,7 @@ from app.models import OrderState, OrderType
 from app.email import send_mail_template
 
 from .utils import token_required, role_required, order_states
+from .geo import geo_address, geo_coordinates
 
 api = server.get_api()
 app = server.get_app()
@@ -91,9 +92,15 @@ class SupervisorOrderCollection(Resource):
 
         due_date = datetime.strptime(payload["due_date"], "%m/%d/%Y").date()
         assigned_date = datetime.strptime(payload["assigned_date"], "%m/%d/%Y").date()
+
+        full_address = geo_address(payload["address"])
+        _lat, _long = geo_address(payload["address"])
         
         data = {
             "address": payload["address"],
+            "full_address": full_address,
+            "latitude": _lat,
+            "longitude": _long,
             "data_user": data_user,
             "research_user": research_user,
             "company": company,
@@ -168,8 +175,14 @@ class SupervisorOrder(Resource):
         state = "RESEARCH"
         order_state = OrderState.select().where(OrderState.state==state).get()
 
+        full_address = geo_address(payload["address"])
+        _lat, _long = geo_address(payload["address"])
+
         data = {
             "address": payload["address"],
+            "full_address": full_address,
+            "latitude": _lat,
+            "longitude": _long,
             "research_user": research_user,
             "data_user": data_user,
             "company": company,

@@ -15,3 +15,5 @@ from .comment import *
 from .research import *
 from .data import *
 from .manager import *
+
+from .geo import geo_address, geo_coordinates
