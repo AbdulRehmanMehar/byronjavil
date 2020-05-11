@@ -78,6 +78,7 @@
                     <div class="row no-gutters overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-md-12 p-4 d-flex flex-column position-static">
                             <h3 class="mb-0">{{ order.address }} ({{ order.id }})</h3>
+                            <p class="card-text mb-auto">Full Address: <b>{{ order.full_address }}</b> <br>Coordinates: ({{ order.latitude }}, {{ order.longitude }})</p>
                             <p class="card-text mb-auto">Due date: {{ order.due_date }}</p>
                         </div>
                     </div>

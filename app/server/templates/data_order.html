@@ -91,6 +91,7 @@
                             </div>
                             <h3 class="mb-0">{{ order.address }} ({{ order.id }})</h3>
                             <div class="mb-1 text-muted">{{ order.kind.order_type }}</div>
+                            <p class="card-text mb-auto">Full Address: <b>{{ order.full_address }}</b> <br>Coordinates: ({{ order.latitude }}, {{ order.longitude }})</p>
                             <p class="card-text mb-auto">Assigned Date: {{ order.assigned_date }} - Due date: {{ order.due_date }}</p>
                         </div>
                     </div>

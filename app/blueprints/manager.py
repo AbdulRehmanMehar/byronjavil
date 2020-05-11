@@ -18,7 +18,7 @@ def manager_page():
 
 @manager.route('/manager/orders/<int:order_id>')
 @login_required
-@role_required(["MANAGER"])
+@role_required(["SUPERVISOR/MANAGER", "MANAGER"])
 def manager_order_page(order_id):
 
     credentials = get_credentials()
