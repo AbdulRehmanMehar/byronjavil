@@ -9,4 +9,7 @@ DATABASE = {
     'port': 5432
 }
 
+
+ZWSID = "X1-ZWz179bo49g7wr_8mfo0"
+
 DEBUG = False
