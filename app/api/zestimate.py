@@ -3,23 +3,24 @@
 from requests import get, Session
 from bs4 import BeautifulSoup
 
-url = "https://www.zillow.com/homes/{}_rb"
+ZWSID = "X1-ZWz179bo49g7wr_8mfo0"
+
+url = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id={ZWSID}&address={ADDRESS}&citystatezip={STATEZIP}"
 
 address = "426 S CLARA AVENUE DELAND FL 32720"
 
 def get_zestimate(address):
 
-    address = address.replace(" ", "-")
+    
 
-    zurl = url.format(address)
+    city_zip = "+".join(address.split(" ")[-2:])
+    address = "+".join(address.split(" ")[:-2])
 
-    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-    headers = {'User-Agent': user_agent}
+    zurl = url.format(ZWSID=ZWSID, ADDRESS=address, STATEZIP=city_zip)
 
-    session = Session()
-
-    # response = get(zurl, headers=headers)
-    response = session.get(zurl)
+    print(zurl)
+    
+    response = get(zurl)
 
     print(response.content)
     soup = BeautifulSoup(response.content, "html.parser")

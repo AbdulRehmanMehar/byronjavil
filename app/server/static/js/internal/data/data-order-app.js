@@ -23,6 +23,15 @@ var vm = new Vue({
 
     methods: {
 
+        initMap: function(){
+            var uluru = {lat: this.order.latitude, lng: this.order.longitude};
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 10, center: uluru});
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({position: uluru, map: map});
+        },
+
         viewCompanyDetails: function(){
             var id = this.order.company.id;
             location.href = "/data/companies/" + id;
@@ -46,6 +55,7 @@ var vm = new Vue({
             this.$http.get('/api/data/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.order = res.data;
+                    this.initMap();
                 }, function(err){
                     console.log(err);
                 })
