@@ -58,6 +58,7 @@ var order_vm = new Vue({
             this.$http.get('/api/supervisor/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.order = res.data;
+                    this.initMap();
                 }, function(err){
                     console.log(err);
                 })

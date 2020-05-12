@@ -55,6 +55,7 @@ var vm = new Vue({
             this.$http.get('/api/data/orders/' + id, {headers: {'X-API-KEY': apiKey}})
                 .then(function (res){
                     this.order = res.data;
+                    this.initMap();
                 }, function(err){
                     console.log(err);
                 })
