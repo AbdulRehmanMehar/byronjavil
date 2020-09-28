@@ -328,16 +328,14 @@ var orders_vm = new Vue({
             let mywindow = window.open('', 'PRINT');
             let stylesheets = ""
 
-            for (let stylesheet of document.styleSheets) {
+            for (stylesheet of document.styleSheets) {
                 stylesheets += `<link rel="stylesheet" href="${stylesheet.href}">`
             }
 
             mywindow.document.write('<html><head>'+ stylesheets +'<title>' + document.title  + '</title>');
-            mywindow.document.write('</head><body >');
-            mywindow.document.write('<h1>' + document.title  + '</h1>');
+            mywindow.document.write('</head><body>');
             mywindow.document.write(document.getElementById('divToBePrinted').innerHTML);
             mywindow.document.write('</body></html>');
-            mywindow.document.styleSheets = document.styleSheets
 
             mywindow.document.close(); // necessary for IE >= 10
             mywindow.focus(); // necessary for IE >= 10*/
