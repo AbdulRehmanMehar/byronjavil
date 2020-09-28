@@ -7,7 +7,7 @@ var orders_vm = new Vue({
         visible: true,
         orders: [],
         apiKey: null,
-
+        use_research: "",
         order: {
             address: "",
             research_id: "",
@@ -29,7 +29,9 @@ var orders_vm = new Vue({
         states: [],
 
         edit: false,
-        editID: null
+        editID: null,
+
+        xlsxToUpload: null,
     },
 
     ready: function(){
@@ -193,8 +195,9 @@ var orders_vm = new Vue({
 
             waitingDialog.show('Sending');
 
-            if (this.edit){
+            payload.use_research = this.use_research
 
+            if (this.edit){
                 var id = this.editID;
                 this.$http.put('/api/supervisor/orders/' + id, payload, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
@@ -233,7 +236,7 @@ var orders_vm = new Vue({
             var research_type = null;
             if (this.orders[index].research_user !== null){
                 research_id = this.orders[index].research_user.id;
-                research_type = this.orders[index].research_type.research_type
+                research_type = this.orders[index].research_type? this.orders[index].research_type.id : null
             }
 
             var data = {
@@ -251,6 +254,7 @@ var orders_vm = new Vue({
             };
             
             this.order = data;
+            this.use_research = !!research_id;
             this.edit = true;
             this.editID = this.orders[index].id;
         },
@@ -318,6 +322,69 @@ var orders_vm = new Vue({
                 }
             });
 
+        },
+
+        printTheOrders: function() {
+            let mywindow = window.open('', 'PRINT');
+            let stylesheets = ""
+
+            for (let stylesheet of document.styleSheets) {
+                stylesheets += `<link rel="stylesheet" href="${stylesheet.href}">`
+            }
+
+            mywindow.document.write('<html><head>'+ stylesheets +'<title>' + document.title  + '</title>');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write('<h1>' + document.title  + '</h1>');
+            mywindow.document.write(document.getElementById('divToBePrinted').innerHTML);
+            mywindow.document.write('</body></html>');
+            mywindow.document.styleSheets = document.styleSheets
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+
+        },
+
+        exportOrdersAsPDF: function () {
+            let html = document.getElementById('divToBePrinted')
+            let opts = {
+                margin:       1,
+                filename:     'export.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opts).from(html).save()
+        },
+
+        selectXLSXToUpload: function ($event) {
+            this.xlsxToUpload = $event.target.files[0]
+        },
+
+        uploadXLSX: function () {
+            if (this.xlsxToUpload && (this.xlsxToUpload.name.split('.').pop() == 'xlsx' || this.xlsxToUpload.name.split('.').pop() == 'xls')) {
+                var apiKey = this.apiKey;
+                let formData = new FormData()
+                formData.append('xlsx', this.xlsxToUpload)
+                waitingDialog.show('Sending');
+                this.$http.post('/api/supervisor/orders/create/from-xlsx', formData, {headers: {'X-API-KEY': apiKey}})
+                    .then(function (res) {
+                            console.log(res)
+                            this.fetchOrders();
+                            this.resetOrder()
+                            waitingDialog.hide();
+                        },
+                        function (err) {
+                            console.log(err);
+                        });
+
+            } else {
+                alert('Select a valid Excel File!')
+            }
         }
 
     }
