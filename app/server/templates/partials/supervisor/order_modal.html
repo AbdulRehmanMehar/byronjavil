@@ -19,7 +19,17 @@
                             Please enter Property Address.
                         </div>
                     </div>
-                    <div class="row">
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" v-model="use_research" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1" title="If not checked, the default research options will be ignored!">
+                                Use Research?
+                            </label>
+                        </div>
+                    </div>
+
+                    <div v-if="use_research" class="row">
                         <div class="col-md-6 mb-3">
                             <label for="research-user">Assign Research User</label>
                             {% raw %}
@@ -38,7 +48,7 @@
                             {% raw %}
                             <select class="custom-select d-block w-100" id="research-type" v-model="order.research">
                                 
-                                <option v-for="(index, research_type) in research_types">{{ research_type.research_type }}</option>
+                                <option v-for="(index, research_type) in research_types" v-bind:value="research_type.id">{{ research_type.research_type }}</option>
                                 
                             </select>
                             {% endraw %}
@@ -128,6 +138,45 @@
                     <button type="button" class="btn btn-primary" v-on:click="updateOrder" v-if="edit">Update</button>
                     <button type="button" class="btn btn-primary" v-on:click="createOrder" v-else>Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="resetOrder">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{# EXCEL WORKBOOK UPLOAD #}
+
+<div class="modal" tabindex="-1" id="xlsx-upload" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form class="needs-validation" id="order-form" novalidate="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload XLSX</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Fill in the following.</p>
+                    <div class="mb-3">
+                        <label for="customFile">Choose File</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile"  accept=".xlsx" required v-on:change="selectXLSXToUpload($event)">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="uploadXLSX" data-dismiss="modal" >Uplaod</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </form>
