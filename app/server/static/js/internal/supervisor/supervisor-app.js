@@ -368,7 +368,7 @@ var orders_vm = new Vue({
                 var apiKey = this.apiKey;
                 let formData = new FormData()
                 formData.append('xlsx', this.xlsxToUpload)
-                waitingDialog.show('Sending');
+                waitingDialog.show('Uploading...');
                 this.$http.post('/api/supervisor/orders/create/from-xlsx', formData, {headers: {'X-API-KEY': apiKey}})
                     .then(function (res) {
                             console.log(res)
@@ -378,6 +378,14 @@ var orders_vm = new Vue({
                         },
                         function (err) {
                             console.log(err);
+                            waitingDialog.hide();
+                            alert("Something is not right! Make sure the Excel file has correct data format!")
+
+                            if (confirm("Download a sample Excel File?")) {
+                                let sample = window.open('/api/supervisor/orders/generate/sample-xlsx')
+                                sample.location
+                            }
+
                         });
 
             } else {
