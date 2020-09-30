@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # app/email/send.py
 
-import os
+import os, jinja2
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import Mail, To, HtmlContent
 
 from flask import render_template, request, url_for, current_app
 
@@ -12,12 +12,12 @@ from .messages import build_manager
 
 
 def parse_template(username, message, url):
-
-    return render_template("email.html", username=username, message=message, url=url)
+    response = render_template("email.html", username=username, message=message, url=url)
+    return response
 
 def send_mail(from_email, to_emails, subject, content):
 
-    message = Mail(from_email=from_email, to_emails=to_emails, subject=subject, html_content=content)
+    message = Mail(from_email=from_email, to_emails=To(to_emails), subject=subject, html_content=HtmlContent(content))
     
     try:
         api_key = current_app.config["SENDGRID_API_KEY"]
@@ -54,7 +54,5 @@ def send_mail_template(template_code, order, **kwargs):
     subject = message.subject
 
     content = parse_template(username, message_content, url)
-
     send_mail(from_email, to_emails, subject, content)
 
-    
