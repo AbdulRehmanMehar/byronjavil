@@ -10,7 +10,7 @@ from playhouse.shortcuts import model_to_dict
 from sendgrid.helpers.mail import To
 
 from app.server import server
-from app.models import OrderState, OrderType, ResearchType
+from app.models import OrderState, Order, OrderType, ResearchType, Company, User, ClientCode, UserRole
 from app.email import send_mail_template
 
 from .utils import token_required, role_required, order_states
@@ -393,7 +393,7 @@ class SupervisorCreateOrdersFromXLSX(Resource):
     @token_required
     @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def post(self):
-        try:
+        # try:
             dbo = app.order_dbo
             user_dbo = app.user_dbo
             type_dbo = app.order_type_dbo
@@ -408,12 +408,12 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                 "address",
                 "assigned_date",
                 "due_date",
-                "company_id",
-                "research_user_id",
-                "data_user_id",
-                "client_code_id",
-                "kind_id",
-                "research_type_id",
+                "company",
+                "research_user",
+                "data_user",
+                "client_code",
+                "kind",
+                "research_type",
             ]
             for sheet in workbook.sheetnames:
                 row_idx = -1
@@ -428,23 +428,23 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                     else:
                         order_data = []
                         for idxs in field_idxs:
-                            order_data.append(row[idxs].value)
-
-                        if order_data and len(field_idxs) == len(field_names):
-                            data_user = user_dbo.read_by_id(order_data[4])
-                            company = company_dbo.read(order_data[3])
-                            order_type = type_dbo.read(order_data[7])
-                            client_code = client_dbo.read(order_data[6])
+                            if row and row[idxs]:
+                                order_data.append(row[idxs].value)
+                            else:
+                                break
+                        if order_data:
+                            # data_user = user_dbo.read_by_id(order_data[4])
+                            # company = company_dbo.read(order_data[3])
+                            # client_code = client_dbo.read(order_data[6])
 
                             if order_data[8]:
-                                research_type = ResearchType.select().where(ResearchType.id == order_data[8]).get()
+                                research_type = ResearchType.select().where(ResearchType.research_type == order_data[8]).get()
                             else:
                                 research_type = None
 
-                            if order_data[6]:
-                                research_user = user_dbo.read_by_id(order_data[6])
+                            if order_data[4]:
+                                research_user = User.select().where(User.username == order_data[4]).get()
                                 state = "RESEARCH"
-
                             else:
 
                                 state = "DATA_ENTRY"
@@ -452,26 +452,47 @@ class SupervisorCreateOrdersFromXLSX(Resource):
 
                             order_state = OrderState.select().where(OrderState.state == state).get()
 
-                            # due_date = datetime.strptime(str(order_data[2]), "%m/%d/%Y").date()
-                            # assigned_date = datetime.strptime(str(order_data[1]), "%m/%d/%Y").date()
-                            due_date = order_data[2].date()
-                            assigned_date = order_data[1].date()
+                            # due_date = datetime.strptime(str(order_data[2]), "%m-%d-%Y").date()
+                            # assigned_date = datetime.strptime(str(order_data[1]), "%m-%d-%Y").date()
+                            due_date = str(order_data[2])
+                            assigned_date = str(order_data[1])
                             full_address = geo_address(order_data[0])
                             _lat, _long = geo_coordinates(order_data[0])
+
+                            if order_data[3]:
+                                company = Company.select().where(Company.name == order_data[3]).get()
+                            else:
+                                company = None
+
+                            if order_data[5]:
+                                data_user = User.select().where(User.username == order_data[5]).get()
+                                print (data_user)
+                            else:
+                                data_user = None
+
+                            if order_data[6]:
+                                client_code = ClientCode.select().where(ClientCode.code == order_data[6]).get()
+                            else:
+                                client_code = None
+
+                            if order_data[7]:
+                                kind = OrderType.select().where(OrderType.order_type == order_data[7]).get()
+                            else:
+                                kind = None
 
                             data = {
                                 "address": order_data[0],
                                 "full_address": full_address,
                                 "latitude": _lat,
                                 "longitude": _long,
-                                "data_user": data_user,
-                                "research_type": research_type,
-                                "research_user": research_user,
-                                "company": company,
+                                "data_user": data_user.id if data_user else None,
+                                "research_type": research_type.id if research_type else None,
+                                "research_user": research_user.id if research_user else None,
+                                "company": company.id if company else None,
                                 "due_date": due_date,
                                 "assigned_date": assigned_date,
-                                "client_code": client_code,
-                                "kind": order_type or None,
+                                "client_code": client_code.id if client_code else None,
+                                "kind": kind.id if kind else None,
                                 "state": order_state
                             }
 
@@ -486,12 +507,12 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                                 send_mail_template("ASSIGN_DATA", order, username=data_user.username,
                                                    from_email="admin@pams.com", to_emails=[data_user.email])
 
-                        else:
-                            return BaseException("Invalid File")
+                        # else:
+                        #     return BaseException("Invalid File")
 
             return True
-        except BaseException:
-            return BaseException
+        # except BaseException:
+        #     return BaseException
 
 
 @ns.route('/orders/generate/sample-xlsx')
@@ -508,24 +529,53 @@ class SupervisorGenerateSampleXLSX(Resource):
             "address",
             "assigned_date",
             "due_date",
-            "company_id",
-            "research_user_id",
-            "data_user_id",
-            "client_code_id",
-            "kind_id",
-            "research_type_id",
+            "company",
+            "research_user",
+            "data_user",
+            "client_code",
+            "kind",
+            "research_type",
         ]
+        order = Order.select().get()
+        try:
+            company = Company.select().where(Company.id == order.company).get()
+        except:
+            company = None
+
+        try:
+            research_user = User.select().where(User.id == order.research_user).get()
+        except:
+            research_user = None
+
+        try:
+            data_user = User.select().where(User.id == order.data_user).get()
+        except:
+            research_user = None
+
+        try:
+            client_code = ClientCode.select().where(ClientCode.id == order.client_code).get()
+        except:
+            client_code = None
+
+        try:
+            kind = OrderType.select().where(OrderType.id == order.kind).get()
+        except:
+            kind = None
+        try:
+            reseach_type = ResearchType.select().where(ResearchType.id == order.research_type).get()
+        except:
+            reseach_type = None
+
         data = [
-            "90  Carolyns Circle",
-            "2020-09-18",
-            "2020-09-18",
-            "1",
-            "1",
-            "1",
-            "1",
-            "1",
-            "1",
-            "1",
+            order.address,
+            str(order.assigned_date),
+            str(order.due_date),
+            company.name if company else "",
+            research_user.username if research_user else "",
+            data_user.username if data_user else "",
+            client_code.code if client_code else "",
+            kind.order_type if kind else "",
+            reseach_type.research_type if reseach_type else "",
         ]
         worksheet.write_row('A1', head, bold)
         worksheet.write_row(1, 0, data)
