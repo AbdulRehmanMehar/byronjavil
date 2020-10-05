@@ -8,9 +8,14 @@
                     <div class="col-md-10">
                         <div class="my-4">
                             <button href="#" class="d-inline-block btn mx-2" v-on:click="exportOrdersAsPDF">Export PDF</button>
-                            <button href="/api/supervisor/orders/get-csv" class="d-inline-block btn mx-2">Export CSV</button>
-                            <button href="/api/supervisor/orders/get-xlsx" class="d-inline-block btn mx-2">Export XLS</button>
+                            <button href="/api/supervisor/orders/get-csv" class="d-inline-block btn mx-2" onclick="document.getElementById('downloadCSVFile').click()">Export CSV</button>
+                            <button href="/api/supervisor/orders/get-xlsx" class="d-inline-block btn mx-2" onclick="document.getElementById('downloadXLSXFile').click()">Export XLS</button>
                             <button href="#" class="d-inline-block btn mx-2" v-on:click="printTheOrders">Print</button>
+
+                            <div class="d-none">
+                                <a id="downloadCSVFile" href="/api/supervisor/orders/get-csv"></a>
+                                <a id="downloadXLSXFile" href="/api/supervisor/orders/get-xlsx"></a>
+                            </div>
                         </div>
                         <div class="my-3 p-3 bg-white rounded shadow-sm">
                             <div>
