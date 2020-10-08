@@ -393,50 +393,40 @@ class SupervisorCreateOrdersFromXLSX(Resource):
     @token_required
     @role_required(["SUPERVISOR", "SUPERVISOR/MANAGER"])
     def post(self):
-        # try:
-            dbo = app.order_dbo
-            user_dbo = app.user_dbo
-            type_dbo = app.order_type_dbo
-            company_dbo = app.company_dbo
-            client_dbo = app.client_code_dbo
+        dbo = app.order_dbo
 
-            file = request.files['xlsx']
-            workbook = load_workbook(file, read_only=True)
+        file = request.files['xlsx']
+        workbook = load_workbook(file, read_only=True)
 
-            field_idxs = []
-            field_names = [
-                "address",
-                "assigned_date",
-                "due_date",
-                "company",
-                "research_user",
-                "data_user",
-                "client_code",
-                "kind",
-                "research_type",
-            ]
-            for sheet in workbook.sheetnames:
-                row_idx = -1
-                for row in workbook[sheet]:
-                    row_idx += 1
-                    if row_idx == 0:
-                        col_idx = -1
-                        for col in row:
-                            col_idx += 1
-                            if col.value in field_names:
-                                field_idxs.append(col_idx)
-                    else:
-                        order_data = []
-                        for idxs in field_idxs:
-                            if row and row[idxs]:
-                                order_data.append(row[idxs].value)
-                            else:
-                                break
-                        if order_data:
-                            # data_user = user_dbo.read_by_id(order_data[4])
-                            # company = company_dbo.read(order_data[3])
-                            # client_code = client_dbo.read(order_data[6])
+        for sheet in workbook.sheetnames:
+            row_idx = -1
+            for row in workbook[sheet]:
+                row_idx += 1
+                if row_idx == 0:
+                    continue
+                else:
+                    order_data = []
 
+                    col_idx = 0
+                    for col in row:
+                        if col_idx <= 8:
+                            order_data.append(col.value or None)
+                        else:
+                            break
+                        col_idx += 1
+
+                    print(len(order_data))
+                    if len(order_data) == 8: # The last column gets ignored, if there's no data
+                        order_data.append(None)
+
+                    if order_data:
+                        try:
+                            existing_order = Order.select().where(Order.address == order_data[0]).get()
+                        except:
+                            existing_order = None
+                        print (existing_order)
+
+                        if not existing_order:
                             if order_data[8]:
                                 research_type = ResearchType.select().where(ResearchType.research_type == order_data[8]).get()
                             else:
@@ -507,12 +497,10 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                                 send_mail_template("ASSIGN_DATA", order, username=data_user.username,
                                                    from_email="admin@pams.com", to_emails=[data_user.email])
 
-                        # else:
-                        #     return BaseException("Invalid File")
+                    # else:
+                    #     return BaseException("Invalid File")
 
-            return True
-        # except BaseException:
-        #     return BaseException
+        return True
 
 
 @ns.route('/orders/generate/sample-xlsx')
@@ -536,49 +524,53 @@ class SupervisorGenerateSampleXLSX(Resource):
             "kind",
             "research_type",
         ]
-        order = Order.select().get()
-        try:
-            company = Company.select().where(Company.id == order.company).get()
-        except:
-            company = None
 
-        try:
-            research_user = User.select().where(User.id == order.research_user).get()
-        except:
-            research_user = None
-
-        try:
-            data_user = User.select().where(User.id == order.data_user).get()
-        except:
-            research_user = None
-
-        try:
-            client_code = ClientCode.select().where(ClientCode.id == order.client_code).get()
-        except:
-            client_code = None
-
-        try:
-            kind = OrderType.select().where(OrderType.id == order.kind).get()
-        except:
-            kind = None
-        try:
-            reseach_type = ResearchType.select().where(ResearchType.id == order.research_type).get()
-        except:
-            reseach_type = None
-
-        data = [
-            order.address,
-            str(order.assigned_date),
-            str(order.due_date),
-            company.name if company else "",
-            research_user.username if research_user else "",
-            data_user.username if data_user else "",
-            client_code.code if client_code else "",
-            kind.order_type if kind else "",
-            reseach_type.research_type if reseach_type else "",
-        ]
         worksheet.write_row('A1', head, bold)
-        worksheet.write_row(1, 0, data)
+        try:
+            order = Order.select().get()
+            try:
+                company = Company.select().where(Company.id == order.company).get()
+            except:
+                company = None
+            try:
+                research_user = User.select().where(User.id == order.research_user).get()
+            except:
+                research_user = None
+
+            try:
+                data_user = User.select().where(User.id == order.data_user).get()
+            except:
+                research_user = None
+
+            try:
+                client_code = ClientCode.select().where(ClientCode.id == order.client_code).get()
+            except:
+                client_code = None
+
+            try:
+                kind = OrderType.select().where(OrderType.id == order.kind).get()
+            except:
+                kind = None
+            try:
+                reseach_type = ResearchType.select().where(ResearchType.id == order.research_type).get()
+            except:
+                reseach_type = None
+
+            data = [
+                order.address,
+                str(order.assigned_date),
+                str(order.due_date),
+                company.name if company else "",
+                research_user.username if research_user else "",
+                data_user.username if data_user else "",
+                client_code.code if client_code else "",
+                kind.order_type if kind else "",
+                reseach_type.research_type if reseach_type else "",
+            ]
+            worksheet.write_row(1, 0, data)
+        except:
+            None
+
         workbook.close()
         output = make_response(output.getvalue())
         output.headers["Content-Disposition"] = "attachment; filename=sample-upload.xlsx"
