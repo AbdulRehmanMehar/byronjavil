@@ -19,8 +19,7 @@ DATABASE = {
 }
 DEBUG = True
 SECRET_KEY = 'ssshhhh'
-# SENDGRID_API_KEY = "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"
-SENDGRID_API_KEY = "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"
+SENDGRID_API_KEY = "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"
 
 authorizations = {
     'apikey' : {
