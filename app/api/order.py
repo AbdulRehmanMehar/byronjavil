@@ -410,21 +410,27 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                     col_idx = 0
                     for col in row:
                         if col_idx <= 8:
-                            order_data.append(col.value or None)
+                            if type(col.value) is unicode:
+                                the_col_data = str(col.value)
+                            else:
+                                the_col_data = col.value
+                            print(type(the_col_data))
+                            order_data.append(the_col_data or None)
                         else:
                             break
+
                         col_idx += 1
 
-                    print(len(order_data))
+                    print(order_data)
                     if len(order_data) == 8: # The last column gets ignored, if there's no data
                         order_data.append(None)
-
-                    if order_data:
+                    if order_data and len(order_data) == 9:
+                        new_order_address = order_data[0]
+                        print(new_order_address)
                         try:
-                            existing_order = Order.select().where(Order.address == order_data[0]).get()
+                            existing_order = Order.select().where(Order.address == new_order_address).get()
                         except:
                             existing_order = None
-                        print (existing_order)
 
                         if not existing_order:
                             if order_data[8]:
@@ -446,8 +452,16 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                             # assigned_date = datetime.strptime(str(order_data[1]), "%m-%d-%Y").date()
                             due_date = str(order_data[2])
                             assigned_date = str(order_data[1])
-                            full_address = geo_address(order_data[0])
-                            _lat, _long = geo_coordinates(order_data[0])
+                            try:
+                                full_address = geo_address(new_order_address)
+                            except:
+                                full_address = None
+
+                            try:
+                                _lat, _long = geo_coordinates(new_order_address)
+                            except:
+                                _lat = None
+                                _long = None
 
                             if order_data[3]:
                                 company = Company.select().where(Company.name == order_data[3]).get()
@@ -471,10 +485,10 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                                 kind = None
 
                             data = {
-                                "address": order_data[0],
-                                "full_address": full_address,
-                                "latitude": _lat,
-                                "longitude": _long,
+                                "address": new_order_address,
+                                "full_address": full_address if full_address else new_order_address,
+                                "latitude": _lat if _lat else 0,
+                                "longitude": _long if _long else 0,
                                 "data_user": data_user.id if data_user else None,
                                 "research_type": research_type.id if research_type else None,
                                 "research_user": research_user.id if research_user else None,
@@ -496,6 +510,7 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                             else:
                                 send_mail_template("ASSIGN_DATA", order, username=data_user.username,
                                                    from_email="admin@pams.com", to_emails=[data_user.email])
+                            print('Seeded: ' + new_order_address)
 
                     # else:
                     #     return BaseException("Invalid File")
