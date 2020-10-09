@@ -502,15 +502,14 @@ class SupervisorCreateOrdersFromXLSX(Resource):
 
                             order = dbo.create(**data)
 
-                            order.save()
-
                             if research_user:
                                 send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username,
                                                    from_email="admin@pams.com", to_emails=[research_user.email])
                             else:
                                 send_mail_template("ASSIGN_DATA", order, username=data_user.username,
                                                    from_email="admin@pams.com", to_emails=[data_user.email])
-                            print('Seeded: ' + new_order_address)
+
+                            order.save()
 
                     # else:
                     #     return BaseException("Invalid File")
