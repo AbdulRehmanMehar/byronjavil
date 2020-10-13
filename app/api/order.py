@@ -127,9 +127,6 @@ class SupervisorOrderCollection(Resource):
         }
 
         order = dbo.create(**data)
-
-        order.save()
-
         response = model_to_dict(order)
 
         response["assigned_date"] = str(response["assigned_date"])
@@ -139,9 +136,11 @@ class SupervisorOrderCollection(Resource):
         if research_id:
             send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username, from_email="admin@pams.com",
                                to_emails=[research_user.email])
-        else:
+        if data_user:
             send_mail_template("ASSIGN_DATA", order, username=data_user.username, from_email="admin@pams.com",
                                to_emails=[data_user.email])
+
+        order.save()
 
         return response
 
@@ -505,7 +504,7 @@ class SupervisorCreateOrdersFromXLSX(Resource):
                             if research_user:
                                 send_mail_template("ASSIGN_RESEARCH", order, username=research_user.username,
                                                    from_email="admin@pams.com", to_emails=[research_user.email])
-                            else:
+                            if data_user:
                                 send_mail_template("ASSIGN_DATA", order, username=data_user.username,
                                                    from_email="admin@pams.com", to_emails=[data_user.email])
 
